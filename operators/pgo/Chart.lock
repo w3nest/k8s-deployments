@@ -1,0 +1,6 @@
+dependencies:
+- name: pgo
+  repository: https://gitlab.com/api/v4/projects/15166395/packages/helm/stable/
+  version: 5.3.0
+digest: sha256:32131145758b64b3c937a6f3a1275165660ff47a9b0df2e72e106b4ea347d2d5
+generated: "2023-01-12T13:15:50.083624611+01:00"
