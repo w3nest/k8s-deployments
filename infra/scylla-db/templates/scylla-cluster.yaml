@@ -1,0 +1,36 @@
+apiVersion: scylla.scylladb.com/v1
+kind: ScyllaCluster
+metadata:
+  name: {{ .Release.Name }}
+spec:
+  version: 4.6.3
+  agentVersion: 2.6.3
+  developerMode: true
+  cpuset: false
+  automaticOrphanedNodeCleanup: true
+  repairs:
+    - name: "weekly dc repair"
+      intensity: "2"
+      interval: "7d"
+      dc: ["dc"]
+  backups:
+    - name: "daily backup"
+      rateLimit: ["50"]
+      location: ["s3:scylla-backup"]
+      interval: "1d"
+  datacenter:
+    name: dc
+    racks:
+      - name: rack
+        scyllaAgentConfig: {{ .Release.Name }}-agent-config-secret
+        members: 3
+        storage:
+          capacity: 10G
+#          storageClassName: local-storage
+        resources:
+          requests:
+            cpu: 500m
+            memory: 2Gi
+          limits:
+            cpu: 500m
+            memory: 2Gi
