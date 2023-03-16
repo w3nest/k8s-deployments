@@ -1,0 +1,20 @@
+{{/* LICENSE: Taken from https://github.com/baarde/cert-manager-webhook-ovh */}}
+apiVersion: v1
+kind: Service
+
+metadata:
+  name: {{ include "cert-manager-webhook-ovh.fullname" . }}
+  namespace: {{ .Release.Namespace }}
+  labels:
+    {{- include "cert-manager-webhook-ovh.labels" . | nindent 4 }}
+
+spec:
+  type: ClusterIP
+  ports:
+    - port: 443
+      targetPort: https
+      protocol: TCP
+      name: https
+
+  selector:
+    {{- include "cert-manager-webhook-ovh.selectorLabels" . | nindent 4 }}

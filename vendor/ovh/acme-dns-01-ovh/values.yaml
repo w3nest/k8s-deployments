@@ -1,0 +1,20 @@
+## Configure OVh API access
+ovh:
+  applicationKey: 16b4b05ec16db832
+  consumerKey : dc234e0320d46aea6429368dccac982d
+  # applicationSecret can be either a string (not stored in this file but passed to the command line)
+  # or it can be an existing Secret reference
+  # applicationSecret: 1234567890abcdeffedcba0987654321
+  # applicationSecret:
+  #   name: toto
+  #   key: tata
+  endPoint: ovh-eu
+
+acme:
+  accountEmail: nestor@youwol.com
+  accountShared: true
+  server: https://acme-v02.api.letsencrypt.org/directory
+
+certManager:
+  namespace: cert-manager
+  serviceAccountName: cert-manager

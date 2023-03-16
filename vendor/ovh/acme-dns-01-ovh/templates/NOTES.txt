@@ -1,0 +1,16 @@
+{{ $ins := .Release.IsInstall }}
+#### {{ .Chart.Name }}-{{ .Chart.Version }}
+
+Acme issuer solving DNS-01 challenges with OVH API, adapted from https://github.com/baarde/cert-manager-webhook-ovh
+Release '{{ .Release.Name }}' {{ if $ins }}installed{{ else }}upgraded to revision{{ .Release.Revision }}
+{{- end }} into namespace '{{ .Release.Namespace }}'.
+
+Acme configuration :
+- account email : {{ .Values.acme.accountEmail }}.
+-        server : {{ .Values.acme.server }}
+
+OVH API configuration :
+- Application key : {{ .Values.ovh.applicationKey }}
+-    Consumer key : {{ .Values.ovh.consumerKey }}
+- Consumer secret : {{ if kindIs "string" .Values.ovh.applicationSecret}}from ovh.applicationSecret value
+{{- else }}from secret {{ .Values.ovh.applicationSecret.name}}.data.{{ .Values.ovh.applicationSecret.key}}{{end}}

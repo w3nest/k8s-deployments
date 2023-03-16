@@ -1,0 +1,54 @@
+{{/* LICENSE: Taken from https://github.com/baarde/cert-manager-webhook-ovh */}}
+# Deployment for the webhook API
+apiVersion: apps/v1
+kind: Deployment
+
+metadata:
+  name: {{ include "cert-manager-webhook-ovh.fullname" . }}
+  namespace: {{ .Release.Namespace }}
+  labels:
+    {{- include "cert-manager-webhook-ovh.labels" . | nindent 4}}
+
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      {{- include "cert-manager-webhook-ovh.selectorLabels" . | nindent 6}}
+  template:
+    metadata:
+      labels:
+        {{- include "cert-manager-webhook-ovh.selectorLabels" . | nindent 8}}
+    spec:
+      serviceAccountName: {{ include "cert-manager-webhook-ovh.fullname" . }}
+      containers:
+        - name: cert-manager-webhook-ovh
+          image: {{ include "cert-manager-webhook-ovh.image" . }}
+          imagePullPolicy: IfNotPresent
+          args:
+            - --tls-cert-file=/tls/tls.crt
+            - --tls-private-key-file=/tls/tls.key
+          env:
+            - name: GROUP_NAME
+              value: {{ include "cert-manager-webhook-ovh.groupName" . | quote }}
+          ports:
+            - name: https
+              containerPort: 443
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              scheme: HTTPS
+              path: /healthz
+              port: https
+          readinessProbe:
+            httpGet:
+              scheme: HTTPS
+              path: /healthz
+              port: https
+          volumeMounts:
+            - name: certs
+              mountPath: /tls
+              readOnly: true
+      volumes:
+        - name: certs
+          secret:
+            secretName: {{ include "cert-manager-webhook-ovh.servingCertificate" . }}

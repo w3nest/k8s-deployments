@@ -1,0 +1,28 @@
+# This is the ACME issuer
+apiVersion: cert-manager.io/v1
+kind: ClusterIssuer
+
+metadata:
+  name: {{ .Release.Name }}
+  labels:
+    {{- include "acme-dns-ovh.labels" . | nindent 4}}
+
+spec:
+  acme:
+    server: {{ .Values.acme.server}}
+    email: {{ .Values.acme.accountEmail }}
+    privateKeySecretRef:
+      name: acme-dns-ovh
+      key: {{ include "acme-dns-ovh.privateKeySecretRef" . }}
+    solvers:
+      - dns01:
+          webhook:
+            groupName: {{ include "cert-manager-webhook-ovh.groupName" . }}
+            solverName: ovh
+            config:
+              endpoint: {{ .Values.ovh.endPoint }}
+              applicationKey: {{ .Values.ovh.applicationKey }}
+              applicationSecretRef:
+                name: {{ include "acme-dns-ovh.ovhCredentialsSecret.name" . }}
+                key: {{ include "acme-dns-ovh.ovhCredentialsSecret.key" . }}
+              consumerKey: {{ .Values.ovh.consumerKey }}

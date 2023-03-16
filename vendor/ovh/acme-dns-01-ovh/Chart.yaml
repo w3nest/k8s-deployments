@@ -1,0 +1,10 @@
+apiVersion: v2
+name: acme-dns-01-ovh
+description: Issuer using Acme’s DNS-01 challenges with OVH API
+
+type: application
+
+version: 1.0.0
+
+# Will be used as the tag for pulling cert-manager-webhook-ovh docker image
+appVersion: 0.3.0
