@@ -1,0 +1,17 @@
+kong:
+  fullnameOverride: kong
+  serviceMonitor:
+    enabled: true
+  ingressController:
+    enabled: true
+    installCRDs: false
+  udpProxy:
+    enabled: false
+  proxy:
+    externalTrafficPolicy: "Local" # Allow kong to see real client IP
+  admin:
+    enabled: true
+    tls:
+        # Temporary workaround: disable HTTP2 on admin endpoint
+        # https://github.com/Kong/kubernetes-ingress-controller/issues/2435
+        parameters: []
