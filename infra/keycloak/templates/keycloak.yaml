@@ -1,0 +1,70 @@
+{{ $hostname := (lookup "v1" "ConfigMap" "apps" "cluster-config").data.clusterDomain}}
+{{/*{{ $hostname := "platform.dev.youwol.com" }}*/}}
+apiVersion: k8s.keycloak.org/v2alpha1
+kind: Keycloak
+metadata:
+  name: keycloak
+spec:
+  instances: 1
+  hostname: {{ $hostname }}
+  tlsSecret: INSECURE-DISABLE
+  disableDefaultIngress: true
+  serverConfiguration:
+    - name: features
+      value: "token-exchange"
+    - name: health-enabled
+      value: "true"
+    - name: metrics-enabled
+      value: "true"
+    - name: proxy
+      value: "edge"
+    - name: http-relative-path
+      value: "/auth"
+    - name: db
+      value: postgres
+    - name: db-url-host
+      secret:
+        name: keycloak-db-pguser-keycloak-db
+        key: host
+    - name: db-url-port
+      secret:
+        name: keycloak-db-pguser-keycloak-db
+        key: port
+    - name: db-url-database
+      secret:
+        name: keycloak-db-pguser-keycloak-db
+        key: dbname
+    - name: db-username
+      secret:
+        name: keycloak-db-pguser-keycloak-db
+        key: user
+    - name: db-password
+      secret:
+        name: keycloak-db-pguser-keycloak-db
+        key: password
+  unsupported:
+    podTemplate:
+      spec:
+        imagePullSecrets:
+          - name: gitlab-docker
+        initContainers:
+          - name: deploy-youwol-keycloak-theme
+            image: {{ printf "registry.gitlab.com/youwol/platform/youwol-keycloak-theme:%s" .Values.youwolKeycloakThemeVersion}}
+            imagePullPolicy: Always
+            command:
+              - sh
+            args:
+              - -c
+              - |
+                echo "Copying theme …"
+                cp -R /theme/* /target
+            volumeMounts:
+              - name: youwol-keycloak-theme
+                mountPath: /target
+        containers:
+          - volumeMounts:
+              - name: youwol-keycloak-theme
+                mountPath: /opt/keycloak/themes/youwol
+        volumes:
+          - name: youwol-keycloak-theme
+            emptyDir: {}

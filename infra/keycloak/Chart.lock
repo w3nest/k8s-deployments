@@ -1,0 +1,6 @@
+dependencies:
+- name: lib-configuration
+  repository: file:///home/julien/projects/youwol/infra/helm-libs/lib-configuration
+  version: 0.0.1
+digest: sha256:3e553043913c7525bc173bfcdb53ec9cc153d195bf7f952b0bf0da711365d0b8
+generated: "2022-09-19T18:51:54.917275118+02:00"
