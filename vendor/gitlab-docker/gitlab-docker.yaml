@@ -1,0 +1,8 @@
+kind: Secret
+apiVersion: v1
+metadata:
+  name: gitlab-docker
+data:
+  .dockerconfigjson: >-
+    <TO_BE_CONFIGURED>
+type: kubernetes.io/dockerconfigjson
