@@ -1,0 +1,48 @@
+minio:
+  fullnameOverride: "minio"
+  mode: "standalone"
+  replicas: 1
+  resources:
+    requests:
+      memory: 2Gi
+  persistence:
+    enabled: true
+    #    existingClaim: minio-data-claim
+    size: 30Gi
+  policies:
+    - name: scylla-backup-policy
+      statements:
+        - resources:
+            - 'arn:aws:s3:::scylla-backup'
+          actions:
+            - "s3:GetBucketLocation"
+            - "s3:ListBucket"
+            - "s3:ListBucketMultipartUploads"
+        - resources:
+            - 'arn:aws:s3:::scylla-backup/*'
+          actions:
+            - "s3:PutObject"
+            - "s3:GetObject"
+            - "s3:DeleteObject"
+            - "s3:AbortMultipartUpload"
+            - "s3:ListMultipartUploadParts"
+  # TODO : is this necessary ?
+  # buckets:
+  #  - name: scylla-backup
+  #    policy: none
+  users:
+    - accessKey: scylla-backup
+      existingSecret: minio-scylla-backup-secret
+      existingSecretKey: scylla-backup-secret-key
+      policy: scylla-backup-policy
+    - accessKey: admin
+      existingSecret: minio-admin-secret
+      existingSecretKey: admin-secret-key
+      policy: consoleAdmin
+    - accessKey: backup
+      existingSecret: minio-backup-secret
+      existingSecretKey: backup-secret-key
+    - accessKey: app
+      existingSecret: minio-app-secret
+      existingSecretKey: app-secret-key
+      policy: readwrite

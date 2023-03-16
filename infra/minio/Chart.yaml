@@ -1,0 +1,13 @@
+apiVersion: v2
+name: minio
+version: 1.0.0
+appVersion: 4.0.14
+
+dependencies:
+  - name: minio
+    version: 4.0.14
+    repository: https://charts.min.io
+
+  - name: lib-configuration
+    version: 0.0.1
+    repository: https://gitlab.com/api/v4/projects/15166395/packages/helm/stable/
