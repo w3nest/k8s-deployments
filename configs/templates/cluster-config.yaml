@@ -1,0 +1,3 @@
+{{- $values := .Files.Get "config/cluster.yaml" }}
+{{- $args := dict "root" . "name" "cluster-config" "values" $values }}
+{{- include "lib-configuration.config-map" $args }}

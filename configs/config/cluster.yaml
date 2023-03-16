@@ -1,0 +1,4 @@
+clusterDomain: platform.pre-prod.youwol.com
+permalinkDomain: l.pre-prod.youwol.com
+staticDomain: static.pre-prod.youwol.com
+version: v1
