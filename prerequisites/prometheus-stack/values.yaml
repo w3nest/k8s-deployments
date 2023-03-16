@@ -1,0 +1,26 @@
+fullnameOverride: prometheus-stack
+kube-prometheus-stack:
+  grafana:
+    grafana.ini:
+      server:
+        domain: "tooling.pre-prod.youwol.com"
+        root_url: "%(protocol)s://%(domain)s/grafana"
+        serve_from_sub_path: true
+    ingress:
+      enabled: true
+      annotations:
+        # modify to match your certificates issuer
+        cert-manager.io/cluster-issuer: letsencrypt-youwol
+        konghq.com/https-redirect-status-code: "301"
+        konghq.com/protocols: https
+        kubernetes.io/tls-acme: "true"
+      ingressClassName: kong
+      hosts:
+        - "tooling.pre-prod.youwol.com"
+      path: "/grafana"
+      tls:
+      - hosts:
+        - "tooling.pre-prod.youwol.com"
+        secretName: tooling-tls
+    admin:
+      existingSecret: grafana-secret
