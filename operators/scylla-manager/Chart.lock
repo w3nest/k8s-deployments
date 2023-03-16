@@ -1,0 +1,6 @@
+dependencies:
+- name: scylla-manager
+  repository: https://scylla-operator-charts.storage.googleapis.com/stable
+  version: v1.8.0
+digest: sha256:962659e160be163f31e4e1acd216897688c783d4b4fac64e830c8fcf838143c8
+generated: "2023-03-16T15:09:53.238802614+01:00"

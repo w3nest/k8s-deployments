@@ -1,0 +1,22 @@
+scylla-manager:
+  scylla:
+    developerMode: true
+    scyllaImage:
+      tag: 4.3.0
+    agentImage:
+      tag: 3.0.0
+    datacenter: manager-dc
+    racks:
+    - name: manager-rack
+      members: 1
+      storage:
+        capacity: 10Gi
+      resources:
+        limits:
+          cpu: 1
+          memory: 200Mi
+        requests:
+          cpu: 1
+          memory: 200Mi
+  serviceMonitor:
+    create: true
