@@ -3,7 +3,7 @@ kube-prometheus-stack:
   grafana:
     grafana.ini:
       server:
-        domain: "tooling.pre-prod.youwol.com"
+        domain: "tooling.youwol.com"
         root_url: "%(protocol)s://%(domain)s/grafana"
         serve_from_sub_path: true
     ingress:
@@ -16,11 +16,11 @@ kube-prometheus-stack:
         kubernetes.io/tls-acme: "true"
       ingressClassName: kong
       hosts:
-        - "tooling.pre-prod.youwol.com"
+        - "tooling.youwol.com"
       path: "/grafana"
       tls:
       - hosts:
-        - "tooling.pre-prod.youwol.com"
+        - "tooling.youwol.com"
         secretName: tooling-tls
     admin:
       existingSecret: grafana-secret
