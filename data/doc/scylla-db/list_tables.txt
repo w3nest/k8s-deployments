@@ -1,0 +1,14 @@
+prod_assets.access_history
+prod_assets.access_policy
+prod_assets.entities
+prod_cdn.libraries
+prod_data.entities
+prod_flux.projects
+prod_permalink.hits_permalink
+prod_permalink.permalink
+prod_stories.documents
+prod_stories.stories
+prod_tree_db.deleted
+prod_tree_db.drives
+prod_tree_db.folders
+prod_tree_db.items
