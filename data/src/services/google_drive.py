@@ -1,7 +1,8 @@
+import io
 from google.auth.identity_pool import Credentials
 from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
-from googleapiclient.http import MediaFileUpload
+from googleapiclient.http import MediaFileUpload, MediaIoBaseDownload
 from pathlib import Path
 from typing import Optional
 
@@ -67,7 +68,7 @@ class GoogleDrive:
             results = self._get_service().files().list(pageSize=10, corpora="drive", driveId=self._drive_id,
                                                        supportsAllDrives=True,
                                                        includeItemsFromAllDrives=True,
-                                                       fields="nextPageToken, files(id, name)").execute()
+                                                       fields="nextPageToken, files(id, name, mimeType)").execute()
             items = results.get('files', [])
 
             if not items:
@@ -75,11 +76,34 @@ class GoogleDrive:
             else:
                 print('Files:')
                 for item in items:
-                    print(u'{0} ({1})'.format(item['name'], item['id']))
+                    print(u'{0} ({1}:{2})'.format(item['name'], item['id'], item['mimeType']))
 
         except HttpError as error:
             # TODO - Handle errors from drive API.
             print(f'An error occurred: {error}')
+
+    def list_archives(self):
+        try:
+            files, page_token = self._list_archives_page()
+            result = [*files]
+            while page_token is not None:
+                files, page_token = self._list_archives_page(page_token)
+                result = [*result, *files]
+
+            return result
+
+        except HttpError as error:
+            # TODO - Handle errors from drive API.
+            print(f'An error occurred: {error}')
+
+    def _list_archives_page(self, page_token=None):
+        results = self._get_service().files().list(q="mimeType='application/x-tar'", pageSize=10, corpora="drive",
+                                                   driveId=self._drive_id,
+                                                   supportsAllDrives=True,
+                                                   includeItemsFromAllDrives=True,
+                                                   fields="nextPageToken, files(id, name, mimeType)",
+                                                   pageToken=page_token).execute()
+        return results.get('files', []), results.get('nextPageToken', None)
 
     def upload(self, path_local_file: Path, file_name: str, folder_name: str):
         report = self._report.get_sub_report("upload", init_status="in function")
@@ -118,6 +142,24 @@ class GoogleDrive:
             report.debug(f"file_id={result}")
             report.set_status("exit function")
             return result
+
+        except HttpError as error:
+            report.fatal(f"HTTP error '{error}'")
+            # TODO - Handle errors from drive API.
+            print(f'An error occurred: {error}')
+
+    def download(self, file_id: str, path_file: Path):
+        report = self._report.get_sub_report("download", init_status="in function")
+        try:
+            request = self._service.files().get_media(fileId=file_id)
+            io_file = io.FileIO(file=path_file, mode="x")
+            downloader = MediaIoBaseDownload(fd=io_file, request=request)
+
+            done = False
+            while done is False:
+                status, done = downloader.next_chunk()
+                if status:
+                    report.notify("Downloaded %d%%." % int(status.progress() * 100))
 
         except HttpError as error:
             report.fatal(f"HTTP error '{error}'")
@@ -166,6 +208,29 @@ class GoogleDrive:
 
             if len(files_id) > 1:
                 raise RuntimeError(f"More than one file named '{file_name}'")
+
+            return files_id[0]['id']
+        except HttpError as error:
+            # TODO - Handle errors from drive API.
+            print(f'An error occurred: {error}')
+
+    def get_archive_id(self, archive_name: str) -> Optional[str]:
+        try:
+            request_q = f"mimeType=='application/x-tar' " \
+                        f"and name='{archive_name}'"
+            response = self._get_service().files().list(pageSize=10, q=request_q,
+                                                        corpora='drive',
+                                                        driveId=self._drive_id,
+                                                        includeItemsFromAllDrives=True,
+                                                        supportsAllDrives=True,
+                                                        fields="files(id)").execute()
+            files_id = response.get('files', [])
+
+            if len(files_id) == 0:
+                return None
+
+            if len(files_id) > 1:
+                raise RuntimeError(f"More than one archive named '{archive_name}'")
 
             return files_id[0]['id']
         except HttpError as error:

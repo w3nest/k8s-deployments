@@ -74,7 +74,7 @@ class McCommands:
         source = f"{McCommands.ALIAS_CLUSTER}/{bucket}"
         target = f"{McCommands.ALIAS_LOCAL}/{bucket}"
         report.set_status("CreateLocalBucket")
-        self._run_command(report, "mb", target)
+        self._run_command(report, "mb", "--ignore-existing", target)
         report.set_status("DiskUsageClusterBucket")
 
         bucket_size = 0
@@ -98,17 +98,18 @@ class McCommands:
                 transferred_objects = json['totalCount']
                 report.debug(f"transferred {transferred_objects} objects on {bucket_objects}")
 
-        self._run_command(report, "du", "--depth=1", "--versions", source, on_success=on_success_du)
+        self._run_command(report, "du", "--versions", source, on_success=on_success_du)
         report.notify(f"source bucket : {bucket_objects} objects / {bucket_size} bytes")
 
         report.set_status("Transfert")
-        self._run_command(report, "mirror", "--overwrite", "--preserve", source, target, on_success=on_success_mirror)
+        self._run_command(report, "mirror", "--overwrite", "--preserve", "--remove", source, target,
+                          on_success=on_success_mirror)
         report.notify("Done")
 
         report.set_status("VerifyLocalBucket")
         old_bucket_size = bucket_size
         old_bucket_objects = bucket_objects
-        self._run_command(report, "du", "--depth=1", "--versions", target, on_success=on_success_du)
+        self._run_command(report, "du", "--versions", target, on_success=on_success_du)
         if old_bucket_objects != bucket_objects or old_bucket_size != bucket_size:
             msg = f"Mirror bucket {bucket} failed: expected {old_bucket_size} / {old_bucket_objects} " \
                   f"actual {bucket_size} / {bucket_objects}"

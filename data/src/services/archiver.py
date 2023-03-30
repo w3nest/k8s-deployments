@@ -17,6 +17,9 @@ class Archiver:
     def new_archive(self):
         return NewArchive(report=self._report, path_work_dir=self._path_work_dir, job_uuid=self._job_uuid)
 
+    def existing_archive(self, path_archive: Path):
+        return ExistingArchive(report=self._report, path_archive=path_archive, path_work_dir=self._path_work_dir)
+
 
 class NewArchive:
 
@@ -57,3 +60,17 @@ class NewArchive:
         report = self._report.get_sub_report("_add__item", init_status="in function")
         self._items[archive_item] = path
         report.set_status("exit function")
+
+
+class ExistingArchive:
+    def __init__(self, report: Report, path_archive: Path, path_work_dir: Path):
+        self._report = report
+        self._path_archive = path_archive
+        self._path_work_dir = path_work_dir
+
+    def extract_dir_item(self,  archive_item: str):
+        report = self._report.get_sub_report("extract_dir_item", init_status="in function")
+        report.debug(f"extraction {archive_item} in {self._path_work_dir}")
+        with tarfile.open(name=self._path_archive, mode="r:gz") as archive:
+            item_members = [tarinfo for tarinfo in archive.getmembers() if tarinfo.name.startswith(f"{archive_item}/")]
+            archive.extractall(path=self._path_work_dir, members=item_members)

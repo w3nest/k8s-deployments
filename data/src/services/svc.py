@@ -1,8 +1,10 @@
+from pathlib import Path
+
 from services import env
 
 
 def get_report_builder():
-    path_log_file = env.non_existing_path(env.path_log_file)
+    path_log_file = Path(env.not_empty_string(env.path_log_file))
 
     def builder():
         from services import svc_context

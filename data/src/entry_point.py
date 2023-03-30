@@ -3,8 +3,11 @@ import sys
 
 def main(task: str):
     if task == "backup":
-        from tasks.backup.tasks import get_task_backup_builder
+        from tasks import get_task_backup_builder
         get_task_backup_builder()().run()
+    elif task == "setup_backup":
+        from tasks import get_task_setup_backup_builder
+        get_task_setup_backup_builder()().run()
     else:
         raise RuntimeError(f"Unknown task {task}")
 
