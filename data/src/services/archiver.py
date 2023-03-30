@@ -2,7 +2,7 @@ import tarfile
 import uuid
 from pathlib import Path
 
-from services.reporting.reporting import Report
+from services.reporting import Report
 
 
 class Archiver:

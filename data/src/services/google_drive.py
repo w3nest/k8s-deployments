@@ -6,7 +6,7 @@ from pathlib import Path
 from typing import Optional
 
 from services.keycloak_client import KeycloakClient
-from services.reporting.reporting import Report
+from services.reporting import Report
 
 
 class GoogleDrive:

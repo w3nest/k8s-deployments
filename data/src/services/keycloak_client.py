@@ -1,7 +1,7 @@
 import urllib.parse
 import urllib.request
 
-from services.reporting.reporting import Report
+from services.reporting import Report
 
 
 class OidcClientConfig:

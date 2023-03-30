@@ -1,7 +1,7 @@
 from pathlib import Path
 
 from services.mc_commands import McCommands
-from services.reporting.reporting import Report
+from services.reporting import Report
 
 
 class TaskBackupS3:

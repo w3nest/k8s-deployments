@@ -2,7 +2,7 @@ import datetime
 import subprocess
 from pathlib import Path
 
-from services.reporting.reporting import Report
+from services.reporting import Report
 
 
 class CqlInstance:

@@ -4,7 +4,7 @@ import subprocess
 from pathlib import Path
 from typing import Any
 
-from services.reporting.reporting import Report
+from services.reporting import Report
 
 
 def default_on_error(json: Any):

@@ -1,7 +1,7 @@
 from pathlib import Path
 
 from services.cqlsh_commands import CqlshCommands
-from services.reporting.reporting import Report
+from services.reporting import Report
 from tasks.common import OnPathDirMissing, TaskCassandra
 
 
