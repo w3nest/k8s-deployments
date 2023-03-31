@@ -54,8 +54,8 @@ COPY src /opt/app
 ENV PATH_MINIO_CLIENT="/opt/minio-client/bin/mc"
 ENV PATH_MINIO_CLIENT_CONFIG="/opt/minio-client/config"
 ENV CQLSH_COMMAND="/opt/venv/bin/cqlsh"
-ENV PATH_LOG_FILE="/tmp/entry_point.log"
 RUN mkdir -p /var/tmp/app
+ENV PATH_LOG_FILE="/var/tmp/app/entry_point.log"
 ENV PATH_WORK_DIR="/var/tmp/app"
 
 VOLUME ["/var/tmp/app"]
