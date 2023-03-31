@@ -1,7 +1,7 @@
 import datetime
 
 from services import get_report_builder, env, get_mc_commands_builder, get_cqlsh_commands_builder, \
-    get_google_drive_builder, get_archiver_builder
+    get_google_drive_builder, get_archiver_builder, get_cluster_maintenance_builder
 
 
 def get_task_backup_s3_builder():
@@ -53,6 +53,7 @@ def get_task_backup_builder():
     task_backup_cassandra_builder = get_task_backup_cassandra_builder()
     archiver_builder = get_archiver_builder()
     google_drive_builder = get_google_drive_builder()
+    cluster_maintenance_builder = get_cluster_maintenance_builder()
 
     path_log_file = env.not_empty_string(env.path_log_file)
     job_uuid = env.not_empty_string(env.job_uuid)
@@ -73,6 +74,7 @@ def get_task_backup_builder():
                 archive=archiver_builder().new_archive(),
                 google_drive_upload_file_name=google_drive_upload_file_name,
                 google_drive_upload_folder=google_drive_upload_folder,
+                cluster_maintenance=cluster_maintenance_builder(),
                 path_log_file=path_log_file
             )
 

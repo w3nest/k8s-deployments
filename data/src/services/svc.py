@@ -127,3 +127,19 @@ def get_archiver_builder():
         return svc_context.archiver
 
     return builder
+
+
+def get_cluster_maintenance_builder():
+    report_builder = get_report_builder()
+
+    def builder():
+        from services import svc_context
+        if svc_context.cluster_maintenance is None:
+            from .cluster_maintenance import ClusterMaintenance
+            svc_context.cluster_maintenance = ClusterMaintenance(
+                report=report_builder()
+            )
+
+        return svc_context.cluster_maintenance
+
+    return builder
