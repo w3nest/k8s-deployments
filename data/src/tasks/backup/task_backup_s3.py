@@ -2,17 +2,16 @@ from pathlib import Path
 
 from services.mc_commands import McCommands
 from services.reporting import Report
+from tasks.common import TaskS3, OnPathDirMissing
 
 
-class TaskBackupS3:
+class TaskBackupS3(TaskS3):
     RELATIVE_PATH = "minio"
 
     def __init__(self, report: Report, path_work_dir: Path, mc_commands: McCommands, buckets: [str]):
-        self._path_work_dir = path_work_dir
+        super().__init__(report, path_work_dir, mc_commands, buckets)
         self._report = report.get_sub_report("BackupS3", default_status_level="NOTIFY",
                                              init_status="ComponentInitialized")
-        self._mc_commands = mc_commands
-        self._buckets = buckets
 
     def run(self):
         mc_commands = self._mc_commands
@@ -28,11 +27,4 @@ class TaskBackupS3:
         mc_commands.stop_local()
 
     def task_path_dir_and_archive_item(self):
-        result = self._path_work_dir / TaskBackupS3.RELATIVE_PATH
-        if not result.exists():
-            result.mkdir(parents=True)
-
-        if not result.is_dir():
-            raise RuntimeError(f"path '{result}' is not a directory")
-
-        return result, TaskBackupS3.RELATIVE_PATH
+        return self._task_path_dir_and_archive_item(on_missing=OnPathDirMissing.ERROR)
