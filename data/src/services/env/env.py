@@ -1,6 +1,7 @@
 import os
 from dotenv import load_dotenv
 from pathlib import Path
+from typing import Optional
 
 load_dotenv()
 
@@ -58,6 +59,15 @@ def not_empty_string(env_name: str):
 
     if result.strip() == "":
         raise RuntimeError(f"Env {env_name} set but empty once striped")
+
+    return result
+
+
+def maybe_string(env_name: str, default: Optional[str] = None):
+    result = os.getenv(env_name)
+
+    if result is None:
+        return default
 
     return result
 

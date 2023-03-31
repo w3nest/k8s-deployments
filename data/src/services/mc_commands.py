@@ -73,9 +73,74 @@ class McCommands:
         report = self._report.get_sub_report(f"backup_{bucket}", init_status="in function")
         source = f"{McCommands.ALIAS_CLUSTER}/{bucket}"
         target = f"{McCommands.ALIAS_LOCAL}/{bucket}"
+
         report.set_status("CreateLocalBucket")
         self._run_command(report, "mb", "--ignore-existing", target)
-        report.set_status("DiskUsageClusterBucket")
+
+        report.set_status("Transfert")
+        self._mirror_buckets(report, source, target)
+
+        report.set_status("exit function")
+
+    def restore_bucket(self, bucket, remove_existing_bucket=False):
+        self._need_aliases()
+        report = self._report.get_sub_report("restore", init_status="in function")
+        source = f"{McCommands.ALIAS_LOCAL}/{bucket}"
+        target = f"{McCommands.ALIAS_CLUSTER}/{bucket}"
+
+        if remove_existing_bucket:
+            self._run_command(report, "rb", "--force", target)
+
+        report.set_status("CreateClusterBucket")
+        self._run_command(report, "mb", target)
+
+        report.set_status("Transfert")
+        self._mirror_buckets(report, source, target)
+
+        report.set_status("exit function")
+
+    def stop_local(self):
+        self._need_aliases()
+        report = self._report.get_sub_report("stop_local", init_status="in function")
+        self._run_command(report, "admin", "service", "stop", McCommands.ALIAS_LOCAL)
+        report.set_status("exit function")
+
+    def _mirror_buckets(self, report: Report, source: str, target: str):
+        self._need_aliases()
+        report = report.get_sub_report("MirrorBucket", init_status="in function")
+
+        report.set_status("DiskUsageSourceBucket")
+        source_bucket_objects, source_bucket_size = self._du_bucket(report, source)
+        report.notify(f"source bucket : {source_bucket_objects} objects / {source_bucket_size} bytes")
+
+        last_message_timestamp = datetime.datetime.now().timestamp()
+
+        def on_success_mirror(json: Any):
+            # report.debug(f"json={json}")
+            nonlocal last_message_timestamp
+            now = datetime.datetime.now().timestamp()
+            if 'target' in json and (now - last_message_timestamp > 5):
+                last_message_timestamp = now
+                transferred_objects = json['totalCount']
+                report.debug(f"transferred {transferred_objects} objects on {source_bucket_objects}")
+
+        report.set_status("Transfert")
+        self._run_command(report, "mirror", "--overwrite", "--preserve", "--remove", source, target,
+                          on_success=on_success_mirror)
+        report.notify("Done")
+
+        report.set_status("VerifyTargetBucket")
+
+        target_bucket_objects, target_bucket_size = self._du_bucket(report, target)
+        if source_bucket_objects != target_bucket_objects or source_bucket_size != target_bucket_size:
+            msg = f"Mirror {source} to {target} failed: expected {source_bucket_objects} / {source_bucket_size} " \
+                  f"actual {target_bucket_objects} / {target_bucket_size}"
+            report.fatal(msg)
+            raise RuntimeError(msg)
+
+        report.set_status("exit function")
+
+    def _du_bucket(self, report: Report, bucket: str):
 
         bucket_size = 0
         bucket_objects = 0
@@ -87,49 +152,8 @@ class McCommands:
             nonlocal bucket_objects
             bucket_objects = json['objects']
 
-        last_message_timestamp = datetime.datetime.now().timestamp()
-
-        def on_success_mirror(json: Any):
-            # report.debug(f"json={json}")
-            nonlocal last_message_timestamp
-            now = datetime.datetime.now().timestamp()
-            if 'target' in json and (now - last_message_timestamp > 5):
-                last_message_timestamp = now
-                transferred_objects = json['totalCount']
-                report.debug(f"transferred {transferred_objects} objects on {bucket_objects}")
-
-        self._run_command(report, "du", "--versions", source, on_success=on_success_du)
-        report.notify(f"source bucket : {bucket_objects} objects / {bucket_size} bytes")
-
-        report.set_status("Transfert")
-        self._run_command(report, "mirror", "--overwrite", "--preserve", "--remove", source, target,
-                          on_success=on_success_mirror)
-        report.notify("Done")
-
-        report.set_status("VerifyLocalBucket")
-        old_bucket_size = bucket_size
-        old_bucket_objects = bucket_objects
-        self._run_command(report, "du", "--versions", target, on_success=on_success_du)
-        if old_bucket_objects != bucket_objects or old_bucket_size != bucket_size:
-            msg = f"Mirror bucket {bucket} failed: expected {old_bucket_size} / {old_bucket_objects} " \
-                  f"actual {bucket_size} / {bucket_objects}"
-            report.fatal(msg)
-            raise RuntimeError(msg)
-
-        report.set_status("exit function")
-
-    def restore(self):
-        self._need_aliases()
-        report = self._report.get_sub_report("restore", init_status="in function")
-        self._run_command(report, "mirror", "--overwrite", "--preserve", "--remove", McCommands.ALIAS_LOCAL,
-                          McCommands.ALIAS_CLUSTER)
-        report.set_status("exit function")
-
-    def stop_local(self):
-        self._need_aliases()
-        report = self._report.get_sub_report("stop_local", init_status="in function")
-        self._run_command(report, "admin", "service", "stop", McCommands.ALIAS_LOCAL)
-        report.set_status("exit function")
+        self._run_command(report, "du", "--versions", bucket, on_success=on_success_du)
+        return bucket_objects, bucket_size
 
     def _mc_alias(self, alias: str, instance: S3Instance):
         report = self._report.get_sub_report(f"_mc_alias_{alias}", init_status="in function")

@@ -216,7 +216,7 @@ class GoogleDrive:
 
     def get_archive_id(self, archive_name: str) -> Optional[str]:
         try:
-            request_q = f"mimeType=='application/x-tar' " \
+            request_q = f"mimeType='application/x-tar' " \
                         f"and name='{archive_name}'"
             response = self._get_service().files().list(pageSize=10, q=request_q,
                                                         corpora='drive',

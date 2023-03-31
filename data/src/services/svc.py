@@ -19,7 +19,7 @@ def get_report_builder():
 def get_cqlsh_commands_builder():
     report_builder = get_report_builder()
     cqlsh_command = env.not_empty_string(env.cqlsh_command)
-    cql_instance_host = env.not_empty_string(env.cql_host)
+    cql_instance_host = env.maybe_string(env.cql_host)
 
     def builder():
         from services import svc_context
