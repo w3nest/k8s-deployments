@@ -1,0 +1,146 @@
+{{- if eq .Values.manual.templating "restore" }}
+{{- $restore_overwrite := default .Values.manual.restore.overwrite "n" }}
+{{- $restore_archive_name := required "job restore expects value '.manual.restore.archiveName'" .Values.manual.restore.archiveName }}
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: restore
+spec:
+  template:
+    spec:
+      volumes:
+        - name: work
+          ephemeral:
+            volumeClaimTemplate:
+              spec:
+                accessModes:
+                  - ReadWriteOnce
+                resources:
+                  requests:
+                    storage: 30Gi
+
+      restartPolicy: OnFailure
+      imagePullSecrets:
+      - name: gitlab-docker
+      initContainers:
+        - name: setup
+          image: registry.gitlab.com/youwol/platform/backup:alpha
+          args:
+            - setup_restore
+          env:
+            - name: RESTORE_ARCHIVE_NAME
+              value: {{ $restore_archive_name }}
+            - name: JOB_UUID
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.labels['controller-uid']
+            - name: GOOGLE_DRIVE_ID
+              valueFrom:
+                secretKeyRef:
+                  name: data-manager-secret
+                  key: google_drive_id
+            - name: OIDC_ISSUER
+              valueFrom:
+                configMapKeyRef:
+                  name: data-manager-config
+                  key: oidc_issuer
+            - name: OIDC_CLIENT_ID
+              valueFrom:
+                configMapKeyRef:
+                  name: data-manager-config
+                  key: oidc_client_id
+            - name: OIDC_CLIENT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: data-manager-secret
+                  key: oidc_client_secret
+          volumeMounts:
+            - mountPath: /var/tmp/app
+              name: work
+      containers:
+        - name: main
+          image: registry.gitlab.com/youwol/platform/backup:alpha
+          args:
+            - restore
+          env:
+            - name: RESTORE_OVERWRITE
+              value: {{ $restore_overwrite }}
+            - name: JOB_UUID
+              valueFrom:
+                 fieldRef:
+                   fieldPath: metadata.labels['controller-uid']
+            - name: S3_BUCKETS
+              valueFrom:
+                configMapKeyRef:
+                  name: data-manager-config
+                  key: s3_buckets
+            - name: MINIO_LOCAL_ACCESS_KEY
+              value: root
+            - name: MINIO_LOCAL_SECRET_KEY
+              valueFrom:
+                secretKeyRef:
+                  key: minio_local_secret_key
+                  name: data-manager-secret
+            - name: S3_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: data-manager-config
+                  key: s3_host
+            - name: S3_TLS
+              value: "no"
+            - name: S3_ACCESS_KEY
+              value: admin # From cluster
+            - name: S3_SECRET_KEY
+              valueFrom:
+                secretKeyRef:
+                  key: admin-secret-key
+                  name: minio-admin-secret # From cluster
+            - name: SCYLLA_HOST
+              value: scylla-db-client.infra.svc.cluster.local # TODO: from template
+            - name: CQL_KEYSPACES
+              valueFrom:
+                configMapKeyRef:
+                  name: data-manager-config
+                  key: cql_keyspaces
+            - name: CQL_TABLES
+              valueFrom:
+                configMapKeyRef:
+                  key: cql_tables
+                  name: data-manager-config
+            - name: OIDC_ISSUER
+              valueFrom:
+                configMapKeyRef:
+                  name: data-manager-config
+                  key: oidc_issuer
+            - name: OIDC_CLIENT_ID
+              valueFrom:
+                configMapKeyRef:
+                  name: data-manager-config
+                  key: oidc_client_id
+            - name: OIDC_CLIENT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: data-manager-secret
+                  key: oidc_client_secret
+
+          volumeMounts:
+            - mountPath: /var/tmp/app
+              name: work
+        - name: minio
+          image: quay.io/minio/minio:latest
+          args:
+            - minio
+            - server
+            - /data/minio
+          env:
+            - name: MINIO_ROOT_USER
+              value: root
+            - name: MINIO_ROOT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  key: minio_local_secret_key
+                  name: data-manager-secret
+          volumeMounts:
+            - mountPath: /data
+              name: work
+{{- end }}

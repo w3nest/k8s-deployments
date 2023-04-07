@@ -1,0 +1,5 @@
+s3_buckets: assets:cdn:cdn-sessions-storage:data:flux:stories
+cql_keyspaces: prod_assets:prod_cdn:prod_data:prod_flux:prod_permalink:prod_stories:prod_tree_db
+cql_tables: prod_assets.access_history:prod_assets.access_policy:prod_assets.entities:prod_cdn.libraries:prod_data.entities:prod_flux.projects:prod_permalink.hits_permalink:prod_permalink.permalink:prod_stories.documents:prod_stories.stories:prod_tree_db.deleted:prod_tree_db.drives:prod_tree_db.items:prod_tree_db.folders
+oidc_issuer: https://platform.int.youwol.com/auth/realms/kubernetes
+oidc_client_id: google-workload-idp

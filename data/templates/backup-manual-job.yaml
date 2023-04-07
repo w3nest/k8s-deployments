@@ -1,0 +1,4 @@
+{{- if eq .Values.manual.templating "backup" }}
+{{ $args := dict "root" . "typeBackup" "manual" }}
+{{ include "cluster-data-manager.backup-job-spec" $args }}
+{{- end }}

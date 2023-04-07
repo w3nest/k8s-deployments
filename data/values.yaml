@@ -1,0 +1,7 @@
+
+manual:
+  # Set to "restore" or "backup" to template manual jobs
+  templating: none
+  restore:
+    archiveName: "archive_name"
+    overwrite: "no"

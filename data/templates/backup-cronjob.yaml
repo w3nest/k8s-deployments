@@ -1,0 +1,8 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: backup-cron
+spec:
+  schedule: "53 2 * * mon" # Run everything monday at 2:53
+  jobTemplate:
+    {{- include "cluster-data-manager.backup-job-spec" (dict "root" . "typeBackup" "cron") | nindent 4 }}

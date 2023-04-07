@@ -1,0 +1,7 @@
+{{- $configsObject := lookup "v1" "ConfigMap" "apps" "env-config" }}
+{{- $s3_host := get ( get $configsObject  "data" ) "minio_host" }}
+{{- $cql_host := get ( get $configsObject  "data" ) "minio_host" }}
+{{- $values_file := .Files.Get "config/backup.yaml" | fromYaml }}
+{{- $values := merge $values_file (dict "s3_host" $s3_host) }}
+{{- $args := dict "root" . "name" "data-manager-config" "values" ($values | toYaml) }}
+{{- include "lib-configuration.config-map" $args }}
