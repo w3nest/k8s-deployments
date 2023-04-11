@@ -10,7 +10,7 @@ dashboard:
     hosts:
       - tooling.youwol.com
     annotations:
-      cert-manager.io/cluster-issuer: letsencrypt
+      cert-manager.io/cluster-issuer: letsencrypt-youwol
       konghq.com/https-redirect-status-code: '301'
       konghq.com/protocols: https
       konghq.com/regex-priority: '0'
