@@ -1,11 +1,13 @@
-{{- if eq .Values.manual.templating "restore" }}
-{{- $restore_overwrite := default .Values.manual.restore.overwrite "n" }}
-{{- $restore_archive_name := required "job restore expects value '.manual.restore.archiveName'" .Values.manual.restore.archiveName }}
+{{- if eq .Values.jobs.manualJobs.templating "restore" }}
+{{- $restore_overwrite :=  .Values.jobs.manualJobs.restore.overwrite | quote | default "no" }}
+{{- $restore_archive_name := required "job restore expects value '.manual.restore.archiveName'" .Values.jobs.manualJobs.restore.archiveName }}
+{{- $suspend := dig "suspend" true  .Values.jobs.manualJobs.restore }}
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: restore
+  name: restore-job
 spec:
+  suspend: {{ $suspend }}
   template:
     spec:
       volumes:
@@ -107,21 +109,6 @@ spec:
                 configMapKeyRef:
                   key: cql_tables
                   name: data-manager-config
-            - name: OIDC_ISSUER
-              valueFrom:
-                configMapKeyRef:
-                  name: data-manager-config
-                  key: oidc_issuer
-            - name: OIDC_CLIENT_ID
-              valueFrom:
-                configMapKeyRef:
-                  name: data-manager-config
-                  key: oidc_client_id
-            - name: OIDC_CLIENT_SECRET
-              valueFrom:
-                secretKeyRef:
-                  name: data-manager-secret
-                  key: oidc_client_secret
 
           volumeMounts:
             - mountPath: /var/tmp/app

@@ -1,7 +1,15 @@
 
-manual:
-  # Set to "restore" or "backup" to template manual jobs
-  templating: none
-  restore:
-    archiveName: "archive_name"
-    overwrite: "no"
+jobs:
+  cron:
+    schedule: "53 0 * * mon" # Run everything monday at 00:53
+    suspend: false
+
+  manualJobs:
+    # Set to "restore" or "backup" to template manual jobs − other values have no effect
+    templating: none
+    backup:
+      suspend: true # default
+    restore:
+      suspend: true # default
+      archiveName: "archive.tgz" # must be provided
+      overwrite: "no" # default

@@ -1,8 +1,15 @@
+{{- $schedule := .Values.jobs.cron.schedule }}
+{{- $argsJobSpec := dict "root" . "typeBackup" "cron" "suspend" "false" }}
 apiVersion: batch/v1
 kind: CronJob
 metadata:
-  name: backup-cron
+  name: backup
 spec:
-  schedule: "53 2 * * mon" # Run everything monday at 2:53
+  schedule: {{ $schedule }}
+  suspend: {{ .Values.jobs.cron.suspend }}
+  concurrencyPolicy: Replace
   jobTemplate:
-    {{- include "cluster-data-manager.backup-job-spec" (dict "root" . "typeBackup" "cron") | nindent 4 }}
+    metadata:
+      name: backup-cronjob
+    spec:
+      {{- include "cluster-data-manager.backup-job-spec" $argsJobSpec | indent 6 }}

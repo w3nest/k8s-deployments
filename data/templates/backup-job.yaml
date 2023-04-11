@@ -1,0 +1,9 @@
+{{- if eq .Values.jobs.manualJobs.templating "backup" }}
+{{ $argsJobSpec := dict "root" . "typeBackup" "manual" "suspend" .Values.jobs.manualJobs.backup.suspend }}
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: backup-job
+spec:
+  {{- include "cluster-data-manager.backup-job-spec" $argsJobSpec | indent 2 }}
+{{- end }}
