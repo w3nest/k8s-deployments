@@ -46,3 +46,7 @@ minio:
       existingSecret: minio-app-secret
       existingSecretKey: app-secret-key
       policy: readwrite
+
+  metrics:
+    serviceMonitor:
+      enabled: true
