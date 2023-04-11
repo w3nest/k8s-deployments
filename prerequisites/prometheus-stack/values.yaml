@@ -1,6 +1,8 @@
 fullnameOverride: prometheus-stack
 kube-prometheus-stack:
   grafana:
+    sidecar:
+      skipTlsVerify: true
     grafana.ini:
       server:
         domain: "tooling.youwol.com"
@@ -24,3 +26,6 @@ kube-prometheus-stack:
         secretName: tooling-tls
     admin:
       existingSecret: grafana-secret
+  prometheus:
+    prometheusSpec:
+      serviceMonitorSelectorNilUsesHelmValues: false
