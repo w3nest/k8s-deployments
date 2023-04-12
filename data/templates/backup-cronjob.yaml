@@ -1,5 +1,5 @@
 {{- $schedule := .Values.jobs.cron.schedule }}
-{{- $argsJobSpec := dict "root" . "typeBackup" "cron" "suspend" "false" }}
+{{- $argsJobSpec := dict "root" . "typeJob" "cronBackup" "suspend" "false" }}
 apiVersion: batch/v1
 kind: CronJob
 metadata:

@@ -1,7 +1,10 @@
 {{- define "cluster-data-manager.backup-job-spec" -}}
-{{- $type_backup := required "cluster-data-manager.backup-job-spec template expects key '.typeBackup' in scope" .typeBackup -}}
+{{- $type_job := required "cluster-data-manager.backup-job-spec template expects key '.typeJob' in scope" .typeJob -}}
 {{- $root := required "cluster-data-manager.backup-job-spec template expects key '.typeBackup' in scope" .root -}}
 {{- $suspend := dig "suspend" true . }}
+{{- if not (has $type_job (list "manualBackup" "cronBackup" "manualRestore")) }}
+{{- fail "cluster-data-manager.backup-job-spec template expects key '.typeJob' to be either 'manualBackup', 'cronBackup' or 'manualRestore'" }}
+{{- end }}
 suspend: {{ $suspend }}
 parallelism: 1
 template:
@@ -16,15 +19,19 @@ template:
               resources:
                 requests:
                   storage: 30Gi
-    restartPolicy: OnFailure
+    restartPolicy: Never
     imagePullSecrets:
     - name: gitlab-docker
     initContainers:
       - name: setup
         image: "registry.gitlab.com/youwol/platform/cluster-data-manager:{{ $root.Chart.AppVersion }}"
         args:
-          - setup_backup
+          - {{ternary "setup_restore" "setup_backup" (eq $type_job  "manualRestore") }}
         env:
+          {{- if (eq $type_job "manualRestore") }}
+          - name: RESTORE_ARCHIVE_NAME
+            value: {{ required "job restore expects value '.manual.restore.archiveName'" $root.Values.jobs.manualJobs.restore.archiveName }}
+          {{- end }}
           - name: JOB_UUID
             valueFrom:
               fieldRef:
@@ -56,19 +63,12 @@ template:
       - name: main
         image: "registry.gitlab.com/youwol/platform/cluster-data-manager:{{ $root.Chart.AppVersion }}"
         args:
-          - backup
+          - {{ ternary "restore" "backup" (eq $type_job "manualRestore") }}
         env:
           - name: JOB_UUID
             valueFrom:
                fieldRef:
                  fieldPath: metadata.labels['controller-uid']
-          - name: TYPE_BACKUP
-            value: {{ $type_backup }}
-          - name: GOOGLE_DRIVE_ID
-            valueFrom:
-              secretKeyRef:
-                name: data-manager-secret
-                key: google_drive_id
           - name: S3_BUCKETS
             valueFrom:
               configMapKeyRef:
@@ -107,6 +107,18 @@ template:
               configMapKeyRef:
                 name: data-manager-config
                 key: cql_tables
+
+          {{- if (eq $type_job "manualRestore") }}
+          - name: RESTORE_OVERWRITE
+            value: {{ $root.Values.jobs.manualJobs.restore.overwrite | quote | default "no" }}
+          {{- else }}
+          - name: TYPE_BACKUP
+            value: {{ ternary "cron" "manual" (eq $type_job "cronBackup") }}
+          - name: GOOGLE_DRIVE_ID
+            valueFrom:
+              secretKeyRef:
+                name: data-manager-secret
+                key: google_drive_id
           - name: OIDC_ISSUER
             valueFrom:
               configMapKeyRef:
@@ -122,6 +134,7 @@ template:
               secretKeyRef:
                 name: data-manager-secret
                 key: oidc_client_secret
+          {{- end }}
         volumeMounts:
           - mountPath: /var/tmp/app
             name: work
