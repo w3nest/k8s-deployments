@@ -1,0 +1,44 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: {{ include "static-assets.service-maintenance.name" . }}
+  annotations:
+    konghq.com/strip-path: "false"
+    konghq.com/preserve-host: "false"
+    konghq.com/regex-priority: "1000"
+  labels:
+    {{- include "static-assets.labels" . | nindent 4 }}
+    app.kubernetes.io/component: maintenance
+spec:
+  ingressClassName: {{ include "static-assets.ingress-maintenance.ingressClass" . }}
+  rules:
+    - host: {{ include "static-assets.platform-host" . }}
+      http:
+        paths:
+          - backend:
+              service:
+                name: {{ include "static-assets.service-maintenance.name" . }}
+                port:
+                  name: http
+            pathType: Prefix
+            path: /auth/realms/youwol/(.*)
+    - host: {{ include "static-assets.platform-host" . }}
+      http:
+        paths:
+          - backend:
+              service:
+                name: {{ include "static-assets.service-maintenance.name" . }}
+                port:
+                  name: http
+            pathType: Prefix
+            path: /api/(.*)
+    - host: {{ include "static-assets.platform-host" . }}
+      http:
+        paths:
+          - backend:
+              service:
+                name: {{ include "static-assets.service-maintenance.name" . }}
+                port:
+                  name: http
+            pathType: Prefix
+            path: /applications/(.*)

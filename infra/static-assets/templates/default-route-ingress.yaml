@@ -1,0 +1,17 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: {{ include "static-assets.service-default-route.name" . }}
+  annotations:
+    konghq.com/strip-path: "true"
+    konghq.com/preserve-host: "false"
+  labels:
+    {{- include "static-assets.labels" . | nindent 4 }}
+    app.kubernetes.io/component: default-route
+spec:
+  ingressClassName: kong
+  defaultBackend:
+    service:
+      name: {{ include "static-assets.service-default-route.name" . }}
+      port:
+        name: http

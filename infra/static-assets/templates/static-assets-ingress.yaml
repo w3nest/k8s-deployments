@@ -1,19 +1,22 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: static-assets-ingress
+  name: {{ include "static-assets.service-static-assets.name" . }}
   annotations:
     konghq.com/strip-path: "true"
     konghq.com/preserve-host: "false"
+  labels:
+    {{- include "static-assets.labels" . | nindent 4 }}
+    app.kubernetes.io/component: static-assets
 spec:
   ingressClassName: kong
   rules:
-    - host: platform.int.youwol.com
+    - host: {{ include "static-assets.platform-host" . }}
       http:
         paths:
           - backend:
               service:
-                name: static-assets
+                name: {{ include "static-assets.service-static-assets.name" . }}
                 port:
                   name: http
             pathType: Prefix

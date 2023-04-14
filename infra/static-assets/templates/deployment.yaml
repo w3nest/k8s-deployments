@@ -1,0 +1,54 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "static-assets.fullname" . }}
+  labels:
+    {{- include "static-assets.labels" . | nindent 4 }}
+    app.kubernetes.io/component: backend
+spec:
+  selector:
+    matchLabels:
+      {{- include "static-assets.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "static-assets.selectorLabels" . | nindent 8 }}
+      annotations:
+        youwol.com/configmap-sha: {{ .Files.Get "maintenance-details.txt" | sha1sum }}
+    spec:
+      volumes:
+        - name: nginx-customization
+          emptyDir: {}
+        - name: includes-maintenance
+          configMap:
+            name: {{ include "static-assets.includes-maintenance-configmap.name" . }}
+      initContainers:
+        - name: clone-static-html
+          image: alpine/git
+          args:
+            - clone
+            - --branch
+            - {{ include "static-assets.repo.branch" . }}
+            - --depth
+            - "1"
+            - {{ .Values.repo.url }}
+          volumeMounts:
+            - mountPath: /git
+              name: nginx-customization
+      containers:
+        - name: nginx
+          image: nginx
+          env:
+            - name: PLATFORM_HOST
+              value: {{ include "static-assets.platform-host" . }}
+          ports:
+            - containerPort: 80
+          volumeMounts:
+            - mountPath: /etc/nginx/templates/
+              name: nginx-customization
+              subPath: cluster-static-assets/templates
+            - mountPath: /usr/share/nginx
+              name: nginx-customization
+              subPath: cluster-static-assets/sites
+            - mountPath: /usr/share/nginx/includes/maintenance
+              name: includes-maintenance

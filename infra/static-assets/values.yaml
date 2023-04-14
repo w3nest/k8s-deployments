@@ -1,0 +1,5 @@
+repo:
+#  ref: main # by default, use Chart appVersion
+  url: https://github.com/youwol/cluster-static-assets.git
+#maintenance:
+#  enable: false
