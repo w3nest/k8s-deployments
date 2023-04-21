@@ -1,7 +1,7 @@
 apiVersion: v2
 name: backup
 version: 0.9.1
-appVersion: alpha
+appVersion: beta
 
 dependencies:
   - name: lib-configuration

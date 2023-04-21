@@ -14,12 +14,14 @@
 {{- end }}
 
 
-{{- define "static-assets.ingress-maintenance.ingressClass" -}}
+{{- define "static-assets.ingress-maintenance.ingressClassName" -}}
 {{- $maintenance := .Values.maintenance | default dict }}
-{{- $disabledIngressClass := $maintenance.disableIngressClass | default "disabled" }}
+{{- $disabledIngressClass := $maintenance.disableIngressClass | default "" }}
 {{- if ($maintenance.enable | default false) }}
-{{- printf "kong"}}
+ingressClassName: "kong"
 {{- else }}
-{{- printf $disabledIngressClass }}
+{{- if $maintenance.disableIngressClass }}
+ingressClassName: {{ $maintenance.disableIngressClass }}
+{{- end }}
 {{- end }}
 {{- end }}

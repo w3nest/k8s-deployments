@@ -13,3 +13,13 @@ jobs:
       suspend: true # default
       archiveName: "archive.tgz" # must be provided
       overwrite: "no" # default
+
+  maintenance:
+    namespace: "infra"
+    ingress:
+      name: "static-assets-maintenance"
+      ingressClassName: "kong"
+    configMap:
+      name: "static-assets-maintenance-includes"
+      key: "details.txt"
+      value: "<span>Backup in progress</span><br><span>Try again in a few minutes</span>"

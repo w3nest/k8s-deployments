@@ -134,6 +134,18 @@ template:
               secretKeyRef:
                 name: data-manager-secret
                 key: oidc_client_secret
+          - name: MAINTENANCE_NAME
+            value: {{ $root.Values.jobs.maintenance.ingress.name }}
+          - name: MAINTENANCE_INGRESS_NAMESPACE
+            value: {{ $root.Values.jobs.maintenance.namespace }}
+          - name: MAINTENANCE_INGRESS_CLASS_NAME
+            value: {{ $root.Values.jobs.maintenance.ingress.ingressClassName }}
+          - name: MAINTENANCE_CONFIG_MAP_NAME
+            value: {{ $root.Values.jobs.maintenance.configMap.name }}
+          - name: MAINTENANCE_CONFIG_MAP_KEY
+            value: {{ $root.Values.jobs.maintenance.configMap.key}}
+          - name: MAINTENANCE_CONFIG_MAP_VALUE
+            value: {{ $root.Values.jobs.maintenance.configMap.value | quote }}
           {{- end }}
         volumeMounts:
           - mountPath: /var/tmp/app

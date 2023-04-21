@@ -1,0 +1,13 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: maintenance-switcher
+rules:
+  - apiGroups: [ "" ]
+    verbs: [ 'get', 'patch' ]
+    resources: [ 'configmaps' ]
+    resourceNames: [ {{ include "static-assets.includes-maintenance-configmap.name" . | quote }} ]
+  - apiGroups: [ "networking.k8s.io" ]
+    verbs: ['get', 'patch']
+    resources: ['ingresses']
+    resourceNames: [  {{ include "static-assets.service-maintenance.name" . | quote }} ]

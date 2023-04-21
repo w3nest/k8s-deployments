@@ -1,3 +1,1 @@
-<span>Backup in progress.</span>
-<br>
-<span>Try again in a few minutes.</span>
+<span>No further information at the moment</span>

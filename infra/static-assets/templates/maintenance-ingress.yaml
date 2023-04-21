@@ -10,7 +10,7 @@ metadata:
     {{- include "static-assets.labels" . | nindent 4 }}
     app.kubernetes.io/component: maintenance
 spec:
-  ingressClassName: {{ include "static-assets.ingress-maintenance.ingressClass" . }}
+  {{- include "static-assets.ingress-maintenance.ingressClassName" . | nindent 2 }}
   rules:
     - host: {{ include "static-assets.platform-host" . }}
       http:
