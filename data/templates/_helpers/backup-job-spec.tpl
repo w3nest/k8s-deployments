@@ -22,6 +22,10 @@ template:
     restartPolicy: Never
     imagePullSecrets:
     - name: gitlab-docker
+    securityContext:
+      runAsUser: 1000
+      runAsGroup: 1000
+      fsGroup: 1000
     initContainers:
       - name: setup
         image: "registry.gitlab.com/youwol/platform/cluster-data-manager:{{ $root.Chart.AppVersion }}"
@@ -57,7 +61,7 @@ template:
                 name: data-manager-secret
                 key: oidc_client_secret
         volumeMounts:
-          - mountPath: /var/tmp/app
+          - mountPath: /var/opt/data-manager
             name: work
     containers:
       - name: main
@@ -95,7 +99,7 @@ template:
               secretKeyRef:
                 name: minio-admin-secret
                 key: admin-secret-key
-          - name: SCYLLA_HOST
+          - name: CQL_HOST
             value: scylla-db-client.infra.svc.cluster.local # TODO: from template
           - name: CQL_KEYSPACES
             valueFrom:
@@ -134,10 +138,24 @@ template:
               secretKeyRef:
                 name: data-manager-secret
                 key: oidc_client_secret
-          - name: MAINTENANCE_NAME
-            value: {{ $root.Values.jobs.maintenance.ingress.name }}
-          - name: MAINTENANCE_INGRESS_NAMESPACE
+          - name: KEYCLOAK_BASE_URL
+            value: "https://platform.youwol.com/auth"
+          - name: KEYCLOAK_USERNAME
+            valueFrom:
+              secretKeyRef:
+                key: username
+                name: keycloak-initial-admin
+                optional: false
+          - name: KEYCLOAK_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                key: password
+                name: keycloak-initial-admin
+                optional: false
+          - name: MAINTENANCE_NAMESPACE
             value: {{ $root.Values.jobs.maintenance.namespace }}
+          - name: MAINTENANCE_INGRESS_NAME
+            value: {{ $root.Values.jobs.maintenance.ingress.name }}
           - name: MAINTENANCE_INGRESS_CLASS_NAME
             value: {{ $root.Values.jobs.maintenance.ingress.ingressClassName }}
           - name: MAINTENANCE_CONFIG_MAP_NAME
@@ -148,7 +166,7 @@ template:
             value: {{ $root.Values.jobs.maintenance.configMap.value | quote }}
           {{- end }}
         volumeMounts:
-          - mountPath: /var/tmp/app
+          - mountPath: /var/opt/data-manager
             name: work
       - name: minio
         image: quay.io/minio/minio:latest
@@ -167,4 +185,74 @@ template:
         volumeMounts:
           - mountPath: /data
             name: work
+      - name: keycloak
+        image: quay.io/keycloak/keycloak:19.0.3
+        env:
+          - name: PATH_WORK_DIR
+            value: "/data/kc"
+          - name: PATH_KEYCLOAK_STATUS_FILE
+            value: "/data/kc/kc_status"
+          - name: KC_CACHE_STACK
+            value: kubernetes
+          - name: KC_CACHE
+            value: ispn
+          - name: KC_FEATURES
+            value: token-exchange
+          - name: KC_PROXY
+            value: edge
+          - name: KC_HTTP_RELATIVE_PATH
+            value: /auth
+          - name: KC_DB
+            value: postgres
+          - name: KC_DB_URL_HOST
+            valueFrom:
+              secretKeyRef:
+                key: host
+                name: keycloak-db-pguser-keycloak-db
+          - name: KC_DB_URL_PORT
+            valueFrom:
+              secretKeyRef:
+                key: port
+                name: keycloak-db-pguser-keycloak-db
+          - name: KC_DB_URL_DATABASE
+            valueFrom:
+              secretKeyRef:
+                key: dbname
+                name: keycloak-db-pguser-keycloak-db
+          - name: KC_DB_USERNAME
+            valueFrom:
+              secretKeyRef:
+                key: user
+                name: keycloak-db-pguser-keycloak-db
+          - name: KC_DB_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                key: password
+                name: keycloak-db-pguser-keycloak-db
+          - name: KEYCLOAK_ADMIN
+            valueFrom:
+              secretKeyRef:
+                key: username
+                name: keycloak-initial-admin
+                optional: false
+          - name: KEYCLOAK_ADMIN_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                key: password
+                name: keycloak-initial-admin
+                optional: false
+          - name: jgroups.dns.query
+            value: keycloak-discovery.infra
+          - name: KC_HOSTNAME
+            value: platform.youwol.com
+          - name: KC_HTTP_ENABLED
+            value: "true"
+          - name: KC_HOSTNAME_STRICT_HTTPS
+            value: "false"
+        command: ["/bin/bash"]
+        args: ["/data/kc/kc_script.sh"]
+        volumeMounts:
+          - mountPath: /data
+            name: work
+
 {{- end }}
