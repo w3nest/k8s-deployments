@@ -13,7 +13,9 @@ kong:
   udpProxy:
     enabled: false
   proxy:
-    externalTrafficPolicy: "Local" # Allow kong to see real client IP
+    # see https://docs.konghq.com/kubernetes-ingress-controller/2.9.x/guides/preserve-client-ip/
+    # also, for OVH, https://docs.ovh.com/gb/en/kubernetes/getting-source-ip-behind-loadbalancer/
+    externalTrafficPolicy: "Local"
     annotations:
       service.beta.kubernetes.io/ovh-loadbalancer-proxy-protocol: "v2"
   admin:
