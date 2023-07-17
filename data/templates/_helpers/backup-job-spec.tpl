@@ -41,10 +41,14 @@ template:
               fieldRef:
                 fieldPath: metadata.labels['controller-uid']
           - name: GOOGLE_DRIVE_ID
+          {{- if (and (eq $type_job "manualRestore") ( $root.Values.jobs.manualJobs.restore.googleDriveId )) }}
+            value: {{ $root.Values.jobs.manualJobs.restore.googleDriveId }}
+          {{- else }}
             valueFrom:
               secretKeyRef:
                 name: data-manager-secret
                 key: google_drive_id
+          {{- end }}
           - name: OIDC_ISSUER
             valueFrom:
               configMapKeyRef:

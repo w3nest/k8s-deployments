@@ -11,6 +11,7 @@ jobs:
       suspend: true # default
     restore:
       suspend: true # default
+      googleDriveId: "" # default from secret
       archiveName: "archive.tgz" # must be provided
       overwrite: "no" # default
 
