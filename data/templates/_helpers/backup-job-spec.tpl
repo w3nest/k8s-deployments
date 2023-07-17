@@ -185,6 +185,11 @@ template:
         volumeMounts:
           - mountPath: /data
             name: work
+
+      {{- if (eq $type_job "manualRestore") }}
+
+      # Not including keycloak container
+      {{- else }}
       - name: keycloak
         image: quay.io/keycloak/keycloak:19.0.3
         env:
@@ -254,5 +259,6 @@ template:
         volumeMounts:
           - mountPath: /data
             name: work
+       {{- end }}
 
 {{- end }}
