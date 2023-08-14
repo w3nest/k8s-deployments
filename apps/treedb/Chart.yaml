@@ -1,5 +1,5 @@
 apiVersion: v2
-name: treedb-backend # Will be used as docker image name
+name: treedb # Will be used as docker image name
 description: Deployment of youwol platform treedb-backend
 type: application
 
