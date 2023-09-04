@@ -1,4 +1,4 @@
-assets-gatewayBaseUrl: "http://assets-gateway.apps.svc.cluster.local"
+assets-gatewayBaseUrl: "https://platform.youwol.com/api/assets-gateway/"
 default_cdn_client_version: "latest"
 oidc_issuer: "https://platform.youwol.com/auth/realms/youwol"
 client_id: "webpm"
