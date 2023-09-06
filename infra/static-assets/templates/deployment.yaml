@@ -23,7 +23,7 @@ spec:
           configMap:
             name: {{ include "static-assets.includes-maintenance-configmap.name" . }}
       initContainers:
-        - name: clone-static-html
+        - name: clone-data
           image: alpine/git
           args:
             - clone
@@ -32,6 +32,7 @@ spec:
             - --depth
             - "1"
             - {{ .Values.repo.url }}
+            - .
           volumeMounts:
             - mountPath: /git
               name: nginx-customization
@@ -46,9 +47,9 @@ spec:
           volumeMounts:
             - mountPath: /etc/nginx/templates/
               name: nginx-customization
-              subPath: cluster-static-assets/templates
+              subPath: templates
             - mountPath: /usr/share/nginx
               name: nginx-customization
-              subPath: cluster-static-assets/sites
+              subPath: sites
             - mountPath: /usr/share/nginx/includes/maintenance
               name: includes-maintenance
