@@ -1,5 +1,5 @@
 repo:
-#  ref: main # by default, use Chart appVersion
+#  ref: main # if not set, use Chart appVersion
   url: https://github.com/youwol/cluster-static-assets.git
 #maintenance:
 #  enable: false
