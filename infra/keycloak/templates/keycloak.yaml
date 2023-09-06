@@ -45,26 +45,25 @@ spec:
   unsupported:
     podTemplate:
       spec:
-        imagePullSecrets:
-          - name: gitlab-docker
         initContainers:
-          - name: deploy-youwol-keycloak-theme
-            image: {{ printf "registry.gitlab.com/youwol/platform/youwol-keycloak-theme:%s" .Values.youwolKeycloakThemeVersion}}
-            imagePullPolicy: Always
-            command:
-              - sh
+          - name: clone-theme
+            image: alpine/git
             args:
-              - -c
-              - |
-                echo "Copying theme …"
-                cp -R /theme/* /target
+              - clone
+              - --branch
+              - {{ .Values.youwolKeycloakTheme.branchOrTag }}
+              - --depth
+              - "1"
+              - {{ .Values.youwolKeycloakTheme.url }}
+              - .
             volumeMounts:
               - name: youwol-keycloak-theme
-                mountPath: /target
+                mountPath: /git
         containers:
           - volumeMounts:
               - name: youwol-keycloak-theme
                 mountPath: /opt/keycloak/themes/youwol
+                subPath: theme
         volumes:
           - name: youwol-keycloak-theme
             emptyDir: {}
