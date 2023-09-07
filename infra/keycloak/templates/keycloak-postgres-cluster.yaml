@@ -25,4 +25,4 @@ spec:
           requests:
             storage: 10G
 
-  postgresVersion: 14
+  postgresVersion: 15

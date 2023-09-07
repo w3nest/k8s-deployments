@@ -5,43 +5,32 @@ kind: Keycloak
 metadata:
   name: keycloak
 spec:
-  instances: 1
-  hostname: {{ $hostname }}
-  tlsSecret: INSECURE-DISABLE
-  disableDefaultIngress: true
-  serverConfiguration:
-    - name: features
-      value: "token-exchange"
-    - name: health-enabled
-      value: "true"
-    - name: metrics-enabled
-      value: "true"
+  instances: 2
+  {{- if .Values.keycloakImage }}
+  image: {{ include "keycloak.image" . }}
+  {{- if .Values.keycloakImage.imagePullSecrets }}
+  imagePullSecrets:
+    - name: {{ .Values.keycloakImage.imagePullSecrets }}
+  {{- end }}
+  {{- end }}
+  hostname:
+    hostname: {{ $hostname }}
+  db:
+    usernameSecret:
+      name: keycloak-db-pguser-keycloak-db
+      key: user
+    passwordSecret:
+      name: keycloak-db-pguser-keycloak-db
+      key: password
+  additionalOptions:
+    - name: db-url
+      secret:
+        name: keycloak-db-pguser-keycloak-db
+        key: jdbc-uri
     - name: proxy
-      value: "edge"
+      value: edge
     - name: http-relative-path
       value: "/auth"
-    - name: db
-      value: postgres
-    - name: db-url-host
-      secret:
-        name: keycloak-db-pguser-keycloak-db
-        key: host
-    - name: db-url-port
-      secret:
-        name: keycloak-db-pguser-keycloak-db
-        key: port
-    - name: db-url-database
-      secret:
-        name: keycloak-db-pguser-keycloak-db
-        key: dbname
-    - name: db-username
-      secret:
-        name: keycloak-db-pguser-keycloak-db
-        key: user
-    - name: db-password
-      secret:
-        name: keycloak-db-pguser-keycloak-db
-        key: password
   unsupported:
     podTemplate:
       spec:
