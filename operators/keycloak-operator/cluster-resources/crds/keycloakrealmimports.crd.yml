@@ -547,7 +547,6 @@ spec:
                   id:
                     type: string
                   clientPolicies:
-                    type: object
                     x-kubernetes-preserve-unknown-fields: true
                   webAuthnPolicyUserVerificationRequirement:
                     type: string
@@ -703,16 +702,14 @@ spec:
                               type: array
                             decisionStrategy:
                               enum:
-                              - AFFIRMATIVE
-                              - stableIndex
                               - CONSENSUS
                               - UNANIMOUS
+                              - AFFIRMATIVE
                               type: string
                             name:
                               type: string
                             policyEnforcementMode:
                               enum:
-                              - stableIndex
                               - PERMISSIVE
                               - ENFORCING
                               - DISABLED
@@ -751,14 +748,12 @@ spec:
                                     type: array
                                   decisionStrategy:
                                     enum:
-                                    - AFFIRMATIVE
-                                    - stableIndex
                                     - CONSENSUS
                                     - UNANIMOUS
+                                    - AFFIRMATIVE
                                     type: string
                                   logic:
                                     enum:
-                                    - stableIndex
                                     - POSITIVE
                                     - NEGATIVE
                                     type: string
@@ -938,8 +933,9 @@ spec:
                           type: array
                       type: object
                     type: array
+                  otpPolicyCodeReusable:
+                    type: boolean
                   clientProfiles:
-                    type: object
                     x-kubernetes-preserve-unknown-fields: true
                   userFederationMappers:
                     items:
@@ -1561,16 +1557,14 @@ spec:
                               type: array
                             decisionStrategy:
                               enum:
-                              - AFFIRMATIVE
-                              - stableIndex
                               - CONSENSUS
                               - UNANIMOUS
+                              - AFFIRMATIVE
                               type: string
                             name:
                               type: string
                             policyEnforcementMode:
                               enum:
-                              - stableIndex
                               - PERMISSIVE
                               - ENFORCING
                               - DISABLED
@@ -1609,14 +1603,12 @@ spec:
                                     type: array
                                   decisionStrategy:
                                     enum:
-                                    - AFFIRMATIVE
-                                    - stableIndex
                                     - CONSENSUS
                                     - UNANIMOUS
+                                    - AFFIRMATIVE
                                     type: string
                                   logic:
                                     enum:
-                                    - stableIndex
                                     - POSITIVE
                                     - NEGATIVE
                                     type: string
@@ -1937,16 +1929,14 @@ spec:
                               type: array
                             decisionStrategy:
                               enum:
-                              - AFFIRMATIVE
-                              - stableIndex
                               - CONSENSUS
                               - UNANIMOUS
+                              - AFFIRMATIVE
                               type: string
                             name:
                               type: string
                             policyEnforcementMode:
                               enum:
-                              - stableIndex
                               - PERMISSIVE
                               - ENFORCING
                               - DISABLED
@@ -1985,14 +1975,12 @@ spec:
                                     type: array
                                   decisionStrategy:
                                     enum:
-                                    - AFFIRMATIVE
-                                    - stableIndex
                                     - CONSENSUS
                                     - UNANIMOUS
+                                    - AFFIRMATIVE
                                     type: string
                                   logic:
                                     enum:
-                                    - stableIndex
                                     - POSITIVE
                                     - NEGATIVE
                                     type: string
@@ -2231,7 +2219,14 @@ spec:
                 items:
                   properties:
                     status:
-                      type: boolean
+                      properties:
+                        value:
+                          type: object
+                      x-kubernetes-preserve-unknown-fields: true
+                    lastTransitionTime:
+                      type: string
+                    observedGeneration:
+                      type: integer
                     type:
                       type: string
                     message:

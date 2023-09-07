@@ -1,0 +1,60 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "keycloak-operator.name" . }}
+  labels:
+    {{- include "keycloak-operator.labels" . | nindent 4 }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      {{- include "keycloak-operator.selector-labels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "keycloak-operator.labels" . | nindent 8 }}
+    spec:
+      containers:
+        - env:
+            - name: KUBERNETES_NAMESPACE
+              value: {{ .Release.Namespace }}
+            - name: OPERATOR_KEYCLOAK_IMAGE
+              value: {{ printf "quay.io/keycloak/keycloak:%s" .Chart.AppVersion }}
+          image: {{ printf "quay.io/keycloak/keycloak-operator:%s" .Chart.AppVersion }}
+          imagePullPolicy: Always
+          livenessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /q/health/live
+              port: 8080
+              scheme: HTTP
+            initialDelaySeconds: 5
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 10
+          name: keycloak-operator
+          ports:
+            - containerPort: 8080
+              name: http
+              protocol: TCP
+          readinessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /q/health/ready
+              port: 8080
+              scheme: HTTP
+            initialDelaySeconds: 5
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 10
+          startupProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /q/health/started
+              port: 8080
+              scheme: HTTP
+            initialDelaySeconds: 5
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 10
+      serviceAccountName: {{ include "keycloak-operator.name" . }}
