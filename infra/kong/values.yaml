@@ -1,6 +1,7 @@
 kong:
   fullnameOverride: kong
   env:
+    NGINX_PROXY_PROXY_BUFFER_SIZE: 8k
     TRUSTED_IPS: "0.0.0.0/0,::/0"
     PROXY_LISTEN: "0.0.0.0:8000 proxy_protocol, 0.0.0.0:8443 ssl proxy_protocol"
     REAL_IP_HEADER: proxy_protocol
