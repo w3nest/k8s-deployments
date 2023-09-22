@@ -1,7 +1,7 @@
 apiVersion: v2
-name: backup
-version: 0.9.1
-appVersion: 1.0.0
+name: data-manager
+version: 1.0.0
+appVersion: "1.1.0"
 
 dependencies:
   - name: lib-configuration

@@ -1,5 +1,11 @@
 
 jobs:
+  keycloakImage:
+    tag: 19.0.3
+#    name: "registry.gitlab.com/youwol/platform/keycloak-custom"
+
+  # subtasks: "keycloak" # could be "s3:keycloak:minio"
+
   cron:
     schedule: "53 0 * * mon" # Run everything monday at 00:53
     suspend: false
@@ -11,9 +17,8 @@ jobs:
       suspend: true # default
     restore:
       suspend: true # default
-      googleDriveId: "" # default from secret
-      archiveName: "archive.tgz" # must be provided
-      overwrite: "no" # default
+#      googleDriveId: "" # default from secret
+#      archiveName: "archive.tgz"
 
   maintenance:
     namespace: "infra"
@@ -23,4 +28,5 @@ jobs:
     configMap:
       name: "static-assets-maintenance-includes"
       key: "details.txt"
-      value: "<span>Backup in progress</span><br><span>Try again in a few minutes</span>"
+      valueBackup: "<span>Backup in progress …</span><br><span>Try again in a few minutes</span>"
+      valueRestore: "<span>Restoration in progress …</span><br><span>Try again in a few minutes</span>"
