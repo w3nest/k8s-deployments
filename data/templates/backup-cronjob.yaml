@@ -1,15 +1,17 @@
-{{- $schedule := .Values.jobs.cron.schedule }}
-{{- $argsJobSpec := dict "root" . "typeJob" "cronBackup" "suspend" "false" }}
+{{- $schedule := .Values.cron.schedule }}
+{{- $suspend := .Values.cron.suspend | default false }}
+{{- $subtasks := .Values.cron.subtasks | default nil }}
+{{- $argsJobSpec := dict "root" . "typeJob" "cronBackup" "suspend" $suspend "subtasks" $subtasks }}
 apiVersion: batch/v1
 kind: CronJob
 metadata:
   name: {{ include "data-manager.cronjob-backup.name" . }}
 spec:
   schedule: {{ $schedule }}
-  suspend: {{ .Values.jobs.cron.suspend }}
+  suspend: {{ $suspend }}
   concurrencyPolicy: Replace
   jobTemplate:
     metadata:
       name: {{ include "data-manager.cronjob-backup.job.name" . }}
     spec:
-      {{- include "data-manager.backup-job-spec" $argsJobSpec | indent 6 }}
+      {{- include "data-manager.job-spec" $argsJobSpec | indent 6 }}
