@@ -299,6 +299,34 @@ template:
             value: "true"
           - name: KC_HOSTNAME_STRICT_HTTPS
             value: "false"
+          {{- if (eq $type_job "manualRestore") }}
+          - name: ADMIN_CLI_CLIENT_SECRET
+            valueFrom:
+              secretKeyRef:
+                key: keycloak_admin_client_secret
+                name: keycloak-admin-secret
+                optional: false
+          - name: INTEGRATION_TESTS_CLIENT_SECRET
+            valueFrom:
+              secretKeyRef:
+                key: integration_tests_client_secret
+                name: data-manager-secret
+                optional: false
+          - name: YOUWOL_PLATFORM_CLIENT_SECRET
+            valueFrom:
+              secretKeyRef:
+                key: openid_client_secret
+                name: openid-app-secret
+                optional: false
+          - name: WEBPM_CLIENT_SECRET
+            valueFrom:
+              secretKeyRef:
+                key: client_secret
+                name: webpm
+                optional: false
+          - name: YOUWOL_PLATFORM_CLIENT_REDIRECT_URIS
+            value: {{ printf "\"https://%s/*\"" (include "data-manager.hosts.clusterDomain" $root) | quote }}
+          {{- end }}
         command: ["/bin/bash"]
         args: ["/data/kc/kc_script.sh"]
         volumeMounts:
