@@ -7,6 +7,7 @@
 {{- $subtask_s3 := $subtasks | default "s3" | contains "s3" }}
 {{- $subtask_cassandra := $subtasks | default "cassandra" | contains "cassandra" }}
 {{- $maintenance := list nil true | has .maintenance }}
+{{- $keycloakRealmKeysRotation := .keycloakRealmKeysRotation | default "rotate" }}
 {{- if not (has $type_job (list "manualBackup" "cronBackup" "manualRestore")) }}
 {{- fail "data-manager.job-spec template expects key '.typeJob' to be either 'manualBackup', 'cronBackup' or 'manualRestore'" }}
 {{- end }}
@@ -300,6 +301,10 @@ template:
           - name: KC_HOSTNAME_STRICT_HTTPS
             value: "false"
           {{- if (eq $type_job "manualRestore") }}
+          {{- if (list "rotate" "reset" | has $keycloakRealmKeysRotation )}}
+          - name: KEYS_ROTATION
+            value: {{ $keycloakRealmKeysRotation }}
+          {{- end }}
           - name: ADMIN_CLI_CLIENT_SECRET
             valueFrom:
               secretKeyRef:

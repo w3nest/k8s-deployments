@@ -33,3 +33,6 @@ maintenance:
 #     maintenance: true # true by default
 #     googleDriveId: "" # default from secret
 #     archiveName: "archive.tgz"
+#     keycloakRealmKeysRotation: rotate # default is 'rotate',
+                                        # can be 'reset' to delete imported keys
+                                        # or any other value to keep imported keys as is

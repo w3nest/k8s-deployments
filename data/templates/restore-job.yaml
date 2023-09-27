@@ -2,7 +2,13 @@
 {{- $suspend := list nil true | has ((.Values.manual).restore).suspend }}
 {{- $subtasks := ((.Values.manual).restore).subtasks | default nil }}
 {{- $maintenance := ((.Values.manual).restore).maintenance }}
-{{- $argsJobSpec := dict "root" . "typeJob" "manualRestore" "suspend" $suspend "subtasks" $subtasks "maintenance" $maintenance }}
+{{- $keycloackRealmKeysRotation := ((.Values.manual).restore).keycloakRealmKeysRotation}}
+{{- $argsJobSpec := dict "root" .
+                         "typeJob" "manualRestore"
+                         "suspend" $suspend
+                         "subtasks" $subtasks
+                         "maintenance" $maintenance
+                         "keycloakRealmKeysRotation" $keycloackRealmKeysRotation }}
 apiVersion: batch/v1
 kind: Job
 metadata:
