@@ -1,7 +1,7 @@
 {{- $schedule := .Values.cron.schedule }}
 {{- $suspend := .Values.cron.suspend | default false }}
 {{- $subtasks := .Values.cron.subtasks | default nil }}
-{{- $argsJobSpec := dict "root" . "typeJob" "cronBackup" "suspend" $suspend "subtasks" $subtasks }}
+{{- $argsJobSpec := dict "root" . "typeJob" "cronBackup" "suspend" false "subtasks" $subtasks }}
 apiVersion: batch/v1
 kind: CronJob
 metadata:
