@@ -1,0 +1,67 @@
+{{ $keycloakUseCustomImage := not (empty .Values.keycloakImage.name) }}
+{{ $keycloaImageName := .Values.keycloakImage.name | default "quay.io/keycloak/keycloak"}}
+{{ $keycloakImageFull := printf "%s:%s" $keycloaImageName .Values.keycloakImage.tag }}
+
+data-manager-{{.Chart.Version}} (using application cluster-data-manager-{{.Chart.AppVersion}})
+{{- $suspend := ((.Values.cron).suspend) }}
+{{- $crontab_guru_url := printf "http://crontab.guru/#%s" (.Values.cron.schedule | replace " " "_")}}
+* CronJob has been deployed{{if $suspend }}, but its suspended{{end}}.
+  - It is scheduled to run according the following expression : '{{.Values.cron.schedule}}'
+    See {{$crontab_guru_url}} to a human version of the expression.
+  {{- if $suspend}}
+
+  To schedule that CronJob, run the following command:
+  # kubectl patch \
+        --namespace {{ .Release.Namespace}} \
+        cronjobs {{ include "data-manager.cronjob-backup.name" . }} \
+        --patch='{"spec" : {"suspend" : false }}'
+  {{- end}}
+
+* Keycloak sidecar container will use {{if $keycloakUseCustomImage }}custom image{{else}}official image{{end}} {{$keycloakImageFull}}
+{{ if eq ((.Values.manual).templating) "restore" }}
+
+{{- $suspend := list nil true | has (((.Values.manual).restore).suspend) }}
+* A manual restoration job has been deployed{{if not $suspend}} and will start right away{{end}}.
+  {{- if (((.Values.manual).restore).subtasks)}}
+  - Only the following subtasks will be run for that job : {{.Values.manual.restore.subtasks}}
+  {{- end}}
+  {{- if (list nil true | has (((.Values.manual).restore).maintenance))}}
+  - The cluster will go in maintenance mode for that job.
+  {{- else }}
+  - The cluster will not go in maintenance mode for that job.
+  {{- end}}
+  {{- if (((.Values.manual.restore).archiveName))}}
+  - It will use archive {{.Values.manual.restore.archiveName}}.
+  {{- else}}
+  - It will use latest archive from drive.
+  {{- end}}
+  {{- if $suspend}}
+
+  To start that Job, run the following command :
+  # kubectl patch \
+        --namespace {{ .Release.Namespace}} \
+        jobs {{ include "data-manager.job-restore.name" . }} \
+        --patch='{"spec" : {"suspend" : false }}'
+  {{- end }}
+{{- end}}
+{{ if eq ((.Values.manual).templating) "backup"}}
+
+{{- $suspend := list nil true | has (((.Values.manual).backup).suspend)}}
+* A manual backup job has been deployed{{if not $suspend}} and will start right away{{end}}.
+  {{- if (((.Values.manual).backup).subtasks)}}
+  - Only the following subtasks will be run for that job : {{.Values.manual.backup.subtasks}}
+  {{- end}}
+  {{- if (list nil true | has (((.Values.manual).backup).maintenance))}}
+  - The cluster will go in maintenance mode for that job.
+  {{- else }}
+  - The cluster will not go in maintenance mode for that job.
+  {{- end}}
+  {{- if $suspend}}
+
+  To start that Job, run the following command :
+  # kubectl patch \
+        --namespace {{ .Release.Namespace}} \
+        jobs {{ include "data-manager.job-backup.name" . }} \
+        --patch='{"spec" : {"suspend" : false }}'
+  {{- end }}
+{{- end}}
