@@ -279,27 +279,27 @@ template:
             valueFrom:
               secretKeyRef:
                 key: host
-                name: keycloak-db-pguser-keycloak-db
+                name: keycloak-pguser-keycloak
           - name: KC_DB_URL_PORT
             valueFrom:
               secretKeyRef:
                 key: port
-                name: keycloak-db-pguser-keycloak-db
+                name: keycloak-pguser-keycloak
           - name: KC_DB_URL_DATABASE
             valueFrom:
               secretKeyRef:
                 key: dbname
-                name: keycloak-db-pguser-keycloak-db
+                name: keycloak-pguser-keycloak
           - name: KC_DB_USERNAME
             valueFrom:
               secretKeyRef:
                 key: user
-                name: keycloak-db-pguser-keycloak-db
+                name: keycloak-pguser-keycloak
           - name: KC_DB_PASSWORD
             valueFrom:
               secretKeyRef:
                 key: password
-                name: keycloak-db-pguser-keycloak-db
+                name: keycloak-pguser-keycloak
           - name: KEYCLOAK_ADMIN
             valueFrom:
               secretKeyRef:

@@ -1,1 +1,0 @@
-{{ include "lib-configuration.duplicate-secret" (dict "root" . "name" "keycloak-db-pguser-keycloak-db" "namespace" "infra")}}
