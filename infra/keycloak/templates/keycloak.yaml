@@ -19,15 +19,15 @@ spec:
     hostname: {{ $hostname }}
   db:
     usernameSecret:
-      name: keycloak-db-pguser-keycloak-db
+      name: keycloak-pguser-keycloak
       key: user
     passwordSecret:
-      name: keycloak-db-pguser-keycloak-db
+      name: keycloak-pguser-keycloak
       key: password
   additionalOptions:
     - name: db-url
       secret:
-        name: keycloak-db-pguser-keycloak-db
+        name: keycloak-pguser-keycloak
         key: jdbc-uri
     - name: proxy
       value: edge
