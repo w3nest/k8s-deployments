@@ -1,4 +1,4 @@
 apiVersion: v2
 name: keycloak-operator
 version: 2.0.0
-appVersion: 22.0.1
+appVersion: 22.0.3
