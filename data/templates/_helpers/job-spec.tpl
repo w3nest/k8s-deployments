@@ -63,6 +63,16 @@ template:
               secretKeyRef:
                 name: {{ include "data-manager.secret.name" $root }}
                 key: oidc_client_secret
+          - name: EXTERNAL_ACCOUNT_AUDIENCE
+            valueFrom:
+              configMapKeyRef:
+                name: {{ include "data-manager.config.name" $root }}
+                key: external_account_audience
+          - name: EXTERNAL_ACCOUNT_IMPERSONATION_URL
+            valueFrom:
+              configMapKeyRef:
+                name: {{ include "data-manager.config.name" $root }}
+                key: external_account_impersonation_url
           - name: GOOGLE_DRIVE_ID
           {{- if (and (eq $type_job "manualRestore") ( (($root.Values.manual).restore).googleDriveId )) }}
             value: {{ $root.Values.manual.restore.googleDriveId }}
@@ -204,7 +214,17 @@ template:
               secretKeyRef:
                 name: {{ include "data-manager.secret.name" $root }}
                 key: oidc_client_secret
-          {{- end }}
+          - name: EXTERNAL_ACCOUNT_AUDIENCE
+            valueFrom:
+              configMapKeyRef:
+                name: {{ include "data-manager.config.name" $root }}
+                key: external_account_audience
+          - name: EXTERNAL_ACCOUNT_IMPERSONATION_URL
+            valueFrom:
+              configMapKeyRef:
+                name: {{ include "data-manager.config.name" $root }}
+                key: external_account_impersonation_url
+           {{- end }}
         volumeMounts:
           - mountPath: /var/opt/data-manager
             name: work
