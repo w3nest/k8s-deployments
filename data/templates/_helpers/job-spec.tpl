@@ -1,10 +1,15 @@
-{{- define "data-manager.backup-job-spec" -}}
-{{- $type_job := required "data-manager.backup-job-spec template expects key '.typeJob' in scope" .typeJob -}}
-{{- $root := required "data-manager.backup-job-spec template expects key '.typeBackup' in scope" .root -}}
-{{- $suspend := dig "suspend" true . }}
-{{- $subtasks := $root.Values.jobs.subtasks | default "cassandra:keycloak:s3" }}
+{{- define "data-manager.job-spec" -}}
+{{- $type_job := required "data-manager.job-spec template expects key '.typeJob' in scope" .typeJob -}}
+{{- $root := required "data-manager.job-spec template expects key '.typeBackup' in scope" .root -}}
+{{- $suspend := required "data-manager.job-spec template expects key '.suspend' in scope" .suspend }}
+{{- $subtasks := .subtasks }}
+{{- $subtask_keycloak := $subtasks | default "keycloak" | contains "keycloak" }}
+{{- $subtask_s3 := $subtasks | default "s3" | contains "s3" }}
+{{- $subtask_cassandra := $subtasks | default "cassandra" | contains "cassandra" }}
+{{- $maintenance := list nil true | has .maintenance }}
+{{- $keycloakRealmKeysRotation := .keycloakRealmKeysRotation | default "rotate" }}
 {{- if not (has $type_job (list "manualBackup" "cronBackup" "manualRestore")) }}
-{{- fail "data-manager.backup-job-spec template expects key '.typeJob' to be either 'manualBackup', 'cronBackup' or 'manualRestore'" }}
+{{- fail "data-manager.job-spec template expects key '.typeJob' to be either 'manualBackup', 'cronBackup' or 'manualRestore'" }}
 {{- end }}
 suspend: {{ $suspend }}
 parallelism: 1
@@ -21,8 +26,10 @@ template:
                 requests:
                   storage: 30Gi
     restartPolicy: Never
+    {{- if $root.Values.imagePullSecret }}
     imagePullSecrets:
-    - name: gitlab-docker
+    - name: {{ $root.Values.imagePullSecret }}
+    {{- end }}
     securityContext:
       runAsUser: 1000
       runAsGroup: 1000
@@ -37,8 +44,10 @@ template:
             valueFrom:
               fieldRef:
                 fieldPath: metadata.labels['controller-uid']
+          {{- if $subtasks}}
           - name: JOB_SUBTASKS
             value: {{ $subtasks }}
+          {{- end }}
           - name: OIDC_ISSUER
             valueFrom:
               configMapKeyRef:
@@ -54,18 +63,28 @@ template:
               secretKeyRef:
                 name: {{ include "data-manager.secret.name" $root }}
                 key: oidc_client_secret
+          - name: EXTERNAL_ACCOUNT_AUDIENCE
+            valueFrom:
+              configMapKeyRef:
+                name: {{ include "data-manager.config.name" $root }}
+                key: external_account_audience
+          - name: EXTERNAL_ACCOUNT_IMPERSONATION_URL
+            valueFrom:
+              configMapKeyRef:
+                name: {{ include "data-manager.config.name" $root }}
+                key: external_account_impersonation_url
           - name: GOOGLE_DRIVE_ID
-          {{- if (and (eq $type_job "manualRestore") ( $root.Values.jobs.manualJobs.restore.googleDriveId )) }}
-            value: {{ $root.Values.jobs.manualJobs.restore.googleDriveId }}
+          {{- if (and (eq $type_job "manualRestore") ( (($root.Values.manual).restore).googleDriveId )) }}
+            value: {{ $root.Values.manual.restore.googleDriveId }}
           {{- else }}
             valueFrom:
               secretKeyRef:
                 name: {{ include "data-manager.secret.name" $root }}
                 key: google_drive_id
           {{- end }}
-          {{- if ( and (eq $type_job "manualRestore") ($root.Values.jobs.manualJobs.restore.archiveName) )}}
+          {{- if ( and (eq $type_job "manualRestore") ( (($root.Values.manual).restore).archiveName) )}}
           - name: RESTORE_ARCHIVE_NAME
-            value: {{ $root.Values.jobs.manualJobs.restore.archiveName }}
+            value: {{ $root.Values.manual.restore.archiveName }}
           {{- end }}
           - name: KEYCLOAK_SCRIPT
           {{- if (eq $type_job "manualRestore")}}
@@ -86,7 +105,7 @@ template:
             valueFrom:
                fieldRef:
                  fieldPath: metadata.labels['controller-uid']
-          {{- if contains "s3" $subtasks}}
+          {{- if $subtask_s3}}
           - name: S3_BUCKETS
             valueFrom:
               configMapKeyRef:
@@ -114,7 +133,7 @@ template:
                 name: minio-admin-secret
                 key: admin-secret-key
           {{- end }}
-          {{- if contains "cassandra" $subtasks}}
+          {{- if $subtask_cassandra}}
           - name: CQL_HOST
             valueFrom:
               configMapKeyRef:
@@ -131,7 +150,7 @@ template:
                 name: {{ include "data-manager.config.name" $root }}
                 key: cql_tables
           {{- end }}
-          {{- if contains "keycloak" $subtasks }}
+          {{- if $subtask_keycloak }}
           - name: KEYCLOAK_BASE_URL
             value: {{ printf "https://%s/auth" (include "data-manager.hosts.clusterDomain" $root ) | quote }}
           - name: KEYCLOAK_USERNAME
@@ -147,24 +166,26 @@ template:
                 name: keycloak-initial-admin
                 optional: false
           {{- end }}
+          {{- if $subtasks }}
           - name: JOB_SUBTASKS
             value: {{ $subtasks }}
-          {{- if ($root.Values.jobs.maintenance)}}
+          {{- end }}
+          {{- if $maintenance }}
           - name: MAINTENANCE_NAMESPACE
-            value: {{ $root.Values.jobs.maintenance.namespace }}
+            value: {{ $root.Values.maintenance.namespace }}
           - name: MAINTENANCE_INGRESS_NAME
-            value: {{ $root.Values.jobs.maintenance.ingress.name }}
+            value: {{ $root.Values.maintenance.ingress.name }}
           - name: MAINTENANCE_INGRESS_CLASS_NAME
-            value: {{ $root.Values.jobs.maintenance.ingress.ingressClassName }}
+            value: {{ $root.Values.maintenance.ingress.ingressClassName }}
           - name: MAINTENANCE_CONFIG_MAP_NAME
-            value: {{ $root.Values.jobs.maintenance.configMap.name }}
+            value: {{ $root.Values.maintenance.configMap.name }}
           - name: MAINTENANCE_CONFIG_MAP_KEY
-            value: {{ $root.Values.jobs.maintenance.configMap.key}}
+            value: {{ $root.Values.maintenance.configMap.key}}
           - name: MAINTENANCE_CONFIG_MAP_VALUE
             {{- if (ne $type_job "manualRestore") }}
-            value: {{ $root.Values.jobs.maintenance.configMap.valueBackup | quote }}
+            value: {{ $root.Values.maintenance.configMap.valueBackup | quote }}
             {{- else }}
-            value: {{ $root.Values.jobs.maintenance.configMap.valueRestore | quote }}
+            value: {{ $root.Values.maintenance.configMap.valueRestore | quote }}
             {{- end }}
           {{- else }}
           - name: MAINTENANCE_ENABLE
@@ -193,12 +214,22 @@ template:
               secretKeyRef:
                 name: {{ include "data-manager.secret.name" $root }}
                 key: oidc_client_secret
-          {{- end }}
+          - name: EXTERNAL_ACCOUNT_AUDIENCE
+            valueFrom:
+              configMapKeyRef:
+                name: {{ include "data-manager.config.name" $root }}
+                key: external_account_audience
+          - name: EXTERNAL_ACCOUNT_IMPERSONATION_URL
+            valueFrom:
+              configMapKeyRef:
+                name: {{ include "data-manager.config.name" $root }}
+                key: external_account_impersonation_url
+           {{- end }}
         volumeMounts:
           - mountPath: /var/opt/data-manager
             name: work
 
-      {{- if contains "s3" $subtasks}}
+      {{- if $subtask_s3 }}
       - name: minio
         image: quay.io/minio/minio:latest
         args:
@@ -218,13 +249,13 @@ template:
             name: work
       {{- end }}
 
-      {{- if contains "keycloak" $subtasks }}
+      {{- if $subtask_keycloak }}
       - name: keycloak
-        image: {{ printf "%s:%s" ($root.Values.jobs.keycloakImage.name | default "quay.io/keycloak/keycloak") $root.Values.jobs.keycloakImage.tag }}
+        image: {{ printf "%s:%s" ($root.Values.keycloakImage.name | default "quay.io/keycloak/keycloak") $root.Values.keycloakImage.tag }}
         env:
           - name: PATH_WORK_DIR
             value: "/data/kc"
-          {{- if $root.Values.jobs.keycloakImage.name }}
+          {{- if $root.Values.keycloakImage.name }}
           - name: KEYCLOAK_IMAGE_OPTIMIZED
             value: "1"
           {{- end }}
@@ -248,27 +279,27 @@ template:
             valueFrom:
               secretKeyRef:
                 key: host
-                name: keycloak-db-pguser-keycloak-db
+                name: keycloak-pguser-keycloak
           - name: KC_DB_URL_PORT
             valueFrom:
               secretKeyRef:
                 key: port
-                name: keycloak-db-pguser-keycloak-db
+                name: keycloak-pguser-keycloak
           - name: KC_DB_URL_DATABASE
             valueFrom:
               secretKeyRef:
                 key: dbname
-                name: keycloak-db-pguser-keycloak-db
+                name: keycloak-pguser-keycloak
           - name: KC_DB_USERNAME
             valueFrom:
               secretKeyRef:
                 key: user
-                name: keycloak-db-pguser-keycloak-db
+                name: keycloak-pguser-keycloak
           - name: KC_DB_PASSWORD
             valueFrom:
               secretKeyRef:
                 key: password
-                name: keycloak-db-pguser-keycloak-db
+                name: keycloak-pguser-keycloak
           - name: KEYCLOAK_ADMIN
             valueFrom:
               secretKeyRef:
@@ -289,6 +320,38 @@ template:
             value: "true"
           - name: KC_HOSTNAME_STRICT_HTTPS
             value: "false"
+          {{- if (eq $type_job "manualRestore") }}
+          {{- if (list "rotate" "reset" | has $keycloakRealmKeysRotation )}}
+          - name: KEYS_ROTATION
+            value: {{ $keycloakRealmKeysRotation }}
+          {{- end }}
+          - name: ADMIN_CLI_CLIENT_SECRET
+            valueFrom:
+              secretKeyRef:
+                key: keycloak_admin_client_secret
+                name: keycloak-admin-secret
+                optional: false
+          - name: INTEGRATION_TESTS_CLIENT_SECRET
+            valueFrom:
+              secretKeyRef:
+                key: integration_tests_client_secret
+                name: data-manager-secret
+                optional: false
+          - name: YOUWOL_PLATFORM_CLIENT_SECRET
+            valueFrom:
+              secretKeyRef:
+                key: openid_client_secret
+                name: openid-app-secret
+                optional: false
+          - name: WEBPM_CLIENT_SECRET
+            valueFrom:
+              secretKeyRef:
+                key: client_secret
+                name: webpm
+                optional: false
+          - name: YOUWOL_PLATFORM_CLIENT_REDIRECT_URIS
+            value: {{ printf "\"https://%s/*\"" (include "data-manager.hosts.clusterDomain" $root) | quote }}
+          {{- end }}
         command: ["/bin/bash"]
         args: ["/data/kc/kc_script.sh"]
         volumeMounts:

@@ -1,9 +1,9 @@
 apiVersion: v2
 name: data-manager
-version: 1.0.0
-appVersion: "1.1.0"
+version: 1.0.2
+appVersion: "1.1.2"
 
 dependencies:
   - name: lib-configuration
-    version: 0.0.1
+    version: 0.0.2
     repository: https://gitlab.com/api/v4/projects/15166395/packages/helm/stable/

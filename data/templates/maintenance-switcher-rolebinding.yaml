@@ -1,9 +1,9 @@
-{{- if .Values.jobs.maintenance }}
+{{- if .Values.maintenance }}
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
   name: backup-maintenance-switcher
-  namespace: {{ .Values.jobs.maintenance.namespace }}
+  namespace: {{ .Values.maintenance.namespace }}
 roleRef:
   kind: Role
   name: maintenance-switcher

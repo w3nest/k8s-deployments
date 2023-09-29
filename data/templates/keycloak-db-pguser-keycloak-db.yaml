@@ -1,2 +1,0 @@
-{{/* Manually copied for the moment: lib-configuration.duplicate-secret expects annotations. */}}
-{{/*{{ include "lib-configuration.duplicate-secret" (dict "root" . "name" "keycloak-db-pguser-keycloak-db" "namespace" "apps")}}*/}}

@@ -1,9 +1,12 @@
-{{- if eq .Values.jobs.manualJobs.templating "backup" }}
-{{ $argsJobSpec := dict "root" . "typeJob" "manualBackup" "suspend" .Values.jobs.manualJobs.backup.suspend }}
+{{- if eq ((.Values.manual).templating) "backup" }}
+{{- $suspend := list nil true | has ((.Values.manual).backup).suspend }}
+{{- $subtasks := ((.Values.manual).backup).subtasks | default nil }}
+{{- $maintenance := ((.Values.manual).backup).maintenance }}
+{{- $argsJobSpec := dict "root" . "typeJob" "manualBackup" "suspend" $suspend "subtasks" $subtasks "maintenance" $maintenance }}
 apiVersion: batch/v1
 kind: Job
 metadata:
   name: {{ include "data-manager.job-backup.name" . }}
 spec:
-  {{- include "data-manager.backup-job-spec" $argsJobSpec | indent 2 }}
+  {{- include "data-manager.job-spec" $argsJobSpec | indent 2 }}
 {{- end }}

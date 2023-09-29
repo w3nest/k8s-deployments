@@ -1,32 +1,38 @@
+imagePullSecret: gitlab-docker
 
-jobs:
-  keycloakImage:
-    tag: 19.0.3
-#    name: "registry.gitlab.com/youwol/platform/keycloak-custom"
+cron:
+  schedule: "53 0 * * mon" # Run everything monday at 00:53
+  # subtasks: "s3:cassandra:keycloak" # Empty by default
+  # suspend: false # false by default
 
-  # subtasks: "keycloak" # could be "s3:keycloak:minio"
+keycloakImage:
+  tag: 19.0.3
+#  name: "registry.gitlab.com/youwol/platform/keycloak-custom"
 
-  cron:
-    schedule: "53 0 * * mon" # Run everything monday at 00:53
-    suspend: false
+maintenance:
+  namespace: "infra"
+  ingress:
+    name: "static-assets-maintenance"
+    ingressClassName: "kong"
+  configMap:
+    name: "static-assets-maintenance-includes"
+    key: "details.txt"
+    valueBackup: "<span>Backup in progress …</span><br><span>Try again in a few minutes</span>"
+    valueRestore: "<span>Restoration in progress …</span><br><span>Try again in a few minutes</span>"
 
-  manualJobs:
-    # Set to "restore" or "backup" to template manual jobs − other values have no effect
-    templating: none
-    backup:
-      suspend: true # default
-    restore:
-      suspend: true # default
-#      googleDriveId: "" # default from secret
-#      archiveName: "archive.tgz"
-
-  maintenance:
-    namespace: "infra"
-    ingress:
-      name: "static-assets-maintenance"
-      ingressClassName: "kong"
-    configMap:
-      name: "static-assets-maintenance-includes"
-      key: "details.txt"
-      valueBackup: "<span>Backup in progress …</span><br><span>Try again in a few minutes</span>"
-      valueRestore: "<span>Restoration in progress …</span><br><span>Try again in a few minutes</span>"
+#manual:
+#  # Set to "restore" or "backup" to template manual jobs − other values have no effect
+#  templating: none
+#  backup:
+#     subtasks: "s3:cassandra:keycloak" # Empty by default
+#     suspend: true # true by default
+#     maintenance: true # true by default
+#  restore:
+#     subtasks: "s3:cassandra:keycloak" # Empty by default
+#     suspend: true # true by default
+#     maintenance: true # true by default
+#     googleDriveId: "" # default from secret
+#     archiveName: "archive.tgz"
+#     keycloakRealmKeysRotation: rotate # default is 'rotate',
+                                        # can be 'reset' to delete imported keys
+                                        # or any other value to keep imported keys as is
