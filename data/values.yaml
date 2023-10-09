@@ -6,8 +6,8 @@ cron:
   # suspend: false # false by default
 
 keycloakImage:
-  tag: 19.0.3
-#  name: "registry.gitlab.com/youwol/platform/keycloak-custom"
+  tag: 22.0.1
+  name: "registry.gitlab.com/youwol/platform/keycloak-custom"
 
 maintenance:
   namespace: "infra"

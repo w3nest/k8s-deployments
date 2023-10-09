@@ -1,3 +1,7 @@
 youwolKeycloakTheme:
   branchOrTag: v0.1.2
   url: https://github.com/youwol/youwol-keycloak-theme.git
+keycloakImage:
+  name: "registry.gitlab.com/youwol/platform/keycloak-custom"
+  # appVersionAsTag: true # This is the default
+  imagePullSecrets: gitlab-docker

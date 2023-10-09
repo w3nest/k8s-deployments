@@ -3,12 +3,14 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: custom-keycloak-ingress
+  name: {{ include "keycloak.ingress.name" . }}
   annotations:
     kubernetes.io/tls-acme: "true"
     cert-manager.io/cluster-issuer: letsencrypt-youwol
     konghq.com/https-redirect-status-code: "301"
     konghq.com/protocols: https
+  labels:
+    {{- include "keycloak.labels" . | nindent 4 }}
 spec:
   ingressClassName: kong
   rules:
