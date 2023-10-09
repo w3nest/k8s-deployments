@@ -7,6 +7,8 @@ metadata:
   labels:
     {{- include "keycloak.labels" . | nindent 4 }}
 spec:
+  ingress:
+    enabled: false
   instances: 2
   {{- if .Values.keycloakImage }}
   image: {{ include "keycloak.image" . }}

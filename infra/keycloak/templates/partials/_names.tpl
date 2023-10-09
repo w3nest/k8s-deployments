@@ -15,9 +15,9 @@
 {{- printf "%s" .Release.Name | trunc 63 | trimSuffix "-" }}
 {{- end }}
 
-{{- define "keycloak.custom-ingress.name" }}
+{{- define "keycloak.ingress.name" }}
 {{- $fullname := include "keycloak.fullname" . }}
-{{- printf "%s-custom-ingress" $fullname }}
+{{- printf "%s" $fullname }}
 {{- end }}
 
 {{- define "keycloak-postgres-db-init-sql.name" }}
