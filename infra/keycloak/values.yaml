@@ -1,5 +1,5 @@
 youwolKeycloakTheme:
-  branchOrTag:  v0.1.3
+  branchOrTag: v0.1.3
   url: https://github.com/youwol/youwol-keycloak-theme.git
 keycloakImage:
   name: "registry.gitlab.com/youwol/platform/keycloak-custom"
