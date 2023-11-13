@@ -3,7 +3,7 @@ imagePullSecret: gitlab-docker
 cron:
   schedule: "53 0 * * mon" # Run everything monday at 00:53
   # subtasks: "s3:cassandra:keycloak" # Empty by default
-  # suspend: false # false by default
+  suspend: true # false by default
 
 keycloakImage:
   tag: 22.0.3
@@ -20,18 +20,18 @@ maintenance:
     valueBackup: "<span>Backup in progress …</span><br><span>Try again in a few minutes</span>"
     valueRestore: "<span>Restoration in progress …</span><br><span>Try again in a few minutes</span>"
 
-#manual:
+manual:
 #  # Set to "restore" or "backup" to template manual jobs − other values have no effect
-#  templating: none
+  templating: restore
 #  backup:
 #     subtasks: "s3:cassandra:keycloak" # Empty by default
 #     suspend: true # true by default
 #     maintenance: true # true by default
-#  restore:
+  restore:
 #     subtasks: "s3:cassandra:keycloak" # Empty by default
 #     suspend: true # true by default
 #     maintenance: true # true by default
-#     googleDriveId: "" # default from secret
+     googleDriveId: "0AA9oGhLP3em-Uk9PVA" # default from secret
 #     archiveName: "archive.tgz"
 #     keycloakRealmKeysRotation: rotate # default is 'rotate',
                                         # can be 'reset' to delete imported keys
