@@ -1,0 +1,9 @@
+{{- if .Values.customLoggingConfig }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: logging-conf
+data:
+  logging.yaml: |-
+{{ .Files.Get "logging.yaml" | indent 4}}
+{{- end }}

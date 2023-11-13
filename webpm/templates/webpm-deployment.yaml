@@ -20,8 +20,20 @@ spec:
     spec:
       imagePullSecrets:
         - name: gitlab-docker
+      {{- if .Values.customLoggingConfig }}
+      volumes:
+        - name: logging-conf
+          configMap:
+            name: logging-conf
+      {{- end }}
       containers:
         - name: main
+          {{- if .Values.customLoggingConfig }}
+          volumeMounts:
+          - name: logging-conf
+            mountPath: /app/logging.yaml
+            subPath: logging.yaml
+          {{- end }}
           securityContext:
             readOnlyRootFilesystem: true
           env:
@@ -56,6 +68,12 @@ spec:
               valueFrom:
                 configMapKeyRef:
                   key: default_cdn_client_version
+                  name: webpm
+
+            - name: DEFAULT_WEBPM_CLIENT_VERSION
+              valueFrom:
+                configMapKeyRef:
+                  key: default_webpm_client_version
                   name: webpm
 
             - name: CLIENT_ID
