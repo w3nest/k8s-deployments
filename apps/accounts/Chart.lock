@@ -1,6 +1,6 @@
 dependencies:
 - name: lib-backend
   repository: https://gitlab.com/api/v4/projects/15166395/packages/helm/stable/
-  version: 0.0.7
-digest: sha256:a0ccb203af8a085052ab0a49d953a05acad9c09dc870e5d3b4f22613666413d6
-generated: "2023-08-07T15:43:32.250911027+02:00"
+  version: 0.1.0
+digest: sha256:cfa781de950bc08f3b19f6b9255936e2c8949e583fa1732c33c678d2ee545454
+generated: "2023-10-11T16:44:58.078081279+02:00"
