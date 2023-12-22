@@ -88,5 +88,4 @@ env:
 #
 # platformDomain: "platform.domain"
 
-# See TG-1705
-containerArgs: [tree-db]
+# containerArgs: [tree-db]
