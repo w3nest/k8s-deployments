@@ -1,0 +1,33 @@
+{{- if .Values.maintenance.permanentDomain }}
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: {{ include "static-assets.service-maintenance.name" . }}-permanent
+  annotations:
+    kubernetes.io/tls-acme: "true"
+    cert-manager.io/cluster-issuer: letsencrypt-youwol
+    konghq.com/https-redirect-status-code: "301"
+    konghq.com/protocols: https
+    konghq.com/preserve-host: "false"
+  labels:
+    {{- include "static-assets.labels" . | nindent 4 }}
+    app.kubernetes.io/component: maintenance
+spec:
+  ingressClassName: kong
+  rules:
+    - host: {{ .Values.maintenance.permanentDomain }}
+      http:
+        paths:
+          - backend:
+              service:
+                name: {{ include "static-assets.service-maintenance.name" . }}
+                port:
+                  name: http
+            pathType: Prefix
+            path: /
+  tls:
+    - hosts:
+        - {{ .Values.maintenance.permanentDomain }}
+      secretName: permanent-domain-platform-tls
+
+{{- end }}
