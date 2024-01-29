@@ -1,6 +1,6 @@
 repo:
 #  ref: main # if not set, use Chart appVersion
   url: https://github.com/youwol/cluster-static-assets.git
-# maintenance:
-#  permanentDomain: maintenance.platform.youwol.com
+maintenance:
+  permanentDomain: maintenance.platform.int.youwol.com
 #  enable: false
