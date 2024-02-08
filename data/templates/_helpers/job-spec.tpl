@@ -31,9 +31,9 @@ template:
     - name: {{ $root.Values.imagePullSecret }}
     {{- end }}
     securityContext:
-      runAsUser: 1000
-      runAsGroup: 1000
-      fsGroup: 1000
+      runAsUser: 10000
+      runAsGroup: 10000
+      fsGroup: 10000
     initContainers:
       - name: setup
         image: "registry.gitlab.com/youwol/platform/cluster-data-manager:{{ $root.Chart.AppVersion }}"
