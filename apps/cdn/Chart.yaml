@@ -8,7 +8,7 @@ version: 1.2.0
 
 # App version : increment when source code change.
 # Will be used for docker image tag, unless override by value imageTage
-appVersion: "0.1.7.post0"
+appVersion: "0.1.8"
 
 dependencies:
   - name: lib-backend
