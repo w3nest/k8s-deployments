@@ -5,6 +5,7 @@
 # Setup container environnement for these functionalities.
 #
 env:
+  - forwardedAllowIps # FORWARDED_ALLOW_IPS
 #  - openidBaseUrl    # OPENID_BASE_URL
   - openidClient     # OPENID_BASE_URL, OPENID_CLIENT_ID, OPENID_CLIENT_SECRET
   - redis            # REDIS_HOST, REDIS_USERNAME, REDIS_PASSWORD
