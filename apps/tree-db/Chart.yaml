@@ -4,7 +4,7 @@ description: Deployment of youwol platform treedb-backend
 type: application
 
 # Chart version : increment when, and only when, modifying ./chart/ directory content
-version: 1.2.0
+version: 1.2.1
 
 # App version : increment when source code change.
 # Will be used for docker image tag, unless override by value imageTage
