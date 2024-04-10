@@ -12,5 +12,5 @@ appVersion: "0.1.8"
 
 dependencies:
   - name: lib-backend
-    version: 0.1.3
+    version: 0.1.4
     repository: https://gitlab.com/api/v4/projects/15166395/packages/helm/stable/
