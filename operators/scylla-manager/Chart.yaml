@@ -4,9 +4,9 @@ description: Scylla manager
 
 type: application
 version: 0.1.0
-appVersion: v1.8.0
+appVersion: v1.12.1
 
 dependencies:
   - name: scylla-manager
-    version: v1.8.0
+    version: v1.12.1
     repository: https://scylla-operator-charts.storage.googleapis.com/stable
