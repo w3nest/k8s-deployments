@@ -34,3 +34,21 @@ spec:
           limits:
             cpu: 500m
             memory: 2Gi
+        placement :
+          podAntiAffinity:
+            requiredDuringSchedulingIgnoredDuringExecution:
+              - topologyKey: "kubernetes.io/hostname"
+                labelSelector:
+                  matchExpressions:
+                    - key: scylla/cluster
+                      operator: In
+                      values:
+                        - {{ .Release.Name }}
+                    - key: scylla/datacenter
+                      operator: In
+                      values:
+                        - dc
+                    - key: scylla/rack
+                      operator: In
+                      values:
+                        - rack
