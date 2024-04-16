@@ -45,8 +45,6 @@ spec:
                 configMapKeyRef:
                   key: root_redirection
                   name: webpm
-            - name: VERSION
-              value: {{ .Chart.AppVersion }}
             - name: CONFIG_ID
               valueFrom:
                 configMapKeyRef:
