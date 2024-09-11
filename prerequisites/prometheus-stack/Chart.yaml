@@ -1,11 +1,11 @@
 apiVersion: v2
 name: prometheus-stack
 version: 1.0.0
-appVersion: 39.11.0
+appVersion: 62.6.0
 
 dependencies:
   - name: kube-prometheus-stack
-    version: 39.11.0
+    version: 62.6.0
     repository: https://prometheus-community.github.io/helm-charts
 
   - name: lib-configuration
