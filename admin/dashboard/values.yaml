@@ -7,7 +7,7 @@ dashboard:
     ingress:
       enabled: true
       hosts:
-        - tooling.youwol.com
+        - tooling.int.youwol.com
       ingressClassName: nginx
       path: /dashboard
       issuer:
