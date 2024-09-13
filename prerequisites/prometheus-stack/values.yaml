@@ -13,10 +13,7 @@ kube-prometheus-stack:
       annotations:
         # modify to match your certificates issuer
         cert-manager.io/cluster-issuer: letsencrypt-youwol
-        konghq.com/https-redirect-status-code: "301"
-        konghq.com/protocols: https
-        kubernetes.io/tls-acme: "true"
-      ingressClassName: kong
+      ingressClassName: nginx
       hosts:
         - "tooling.youwol.com"
       path: "/grafana"
