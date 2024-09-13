@@ -3,15 +3,20 @@ kind: Ingress
 metadata:
   name: {{ include "static-assets.service-default-route.name" . }}
   annotations:
-    konghq.com/strip-path: "true"
-    konghq.com/preserve-host: "false"
+    nginx.ingress.kubernetes.io/upstream-vhost: "default-route"
   labels:
     {{- include "static-assets.labels" . | nindent 4 }}
     app.kubernetes.io/component: default-route
 spec:
-  ingressClassName: kong
-  defaultBackend:
-    service:
-      name: {{ include "static-assets.service-default-route.name" . }}
-      port:
-        name: http
+  ingressClassName: nginx
+  rules:
+    - host: {{ include "static-assets.platform-host" . }}
+      http:
+        paths:
+          - backend:
+              service:
+                name: {{ include "static-assets.service-default-route.name" . }}
+                port:
+                  name: http
+            pathType: Prefix
+            path: /
