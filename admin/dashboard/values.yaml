@@ -1,10 +1,3 @@
-ingress:
-  issuer: letsencrypt-youwol
-  className: kong
-  host: tooling.youwol.com
-  tlsSecretName: tooling-tls
-  servicePort: 80
-
 dashboard:
   metricsScraper:
     enabled: true
@@ -12,10 +5,13 @@ dashboard:
     enabled: true
   app:
     ingress:
-      enabled: false
-  kong:
-    proxy:
-      http:
-        enabled: true
+      enabled: true
+      hosts:
+        - tooling.youwol.com
+      ingressClassName: nginx
+      path: /dashboard
+      issuer:
+        name: letsencrypt-youwol
+        scope: cluster
       tls:
-        enabled: false
+        secretName: tooling-tls
