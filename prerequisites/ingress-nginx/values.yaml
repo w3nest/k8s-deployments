@@ -1,0 +1,7 @@
+ingress-nginx:
+  controller:
+    metrics:
+      enabled: true
+      serviceMonitor:
+        enabled: true
+        jobLabel: ingress-nginx
