@@ -15,3 +15,7 @@ dashboard:
         scope: cluster
       tls:
         secretName: tooling-tls
+  kong:
+    proxy:
+      http:
+        enabled: true
