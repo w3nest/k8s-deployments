@@ -4,16 +4,16 @@ metadata:
   name: webpm
   annotations:
     cert-manager.io/cluster-issuer: letsencrypt-youwol
-    konghq.com/https-redirect-status-code: "301"
-    konghq.com/protocols: https
-    konghq.com/strip-path: "true"
-    kubernetes.io/tls-acme: "true"
   labels:
-    app: webpm
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+    app.kubernetes.io/name: {{ .Chart.Name }}
+    app.kubernetes.io/version: {{ .Chart.AppVersion }}
+    helm.sh/chart: {{ printf "%s-%s" .Chart.Name .Chart.Version | replace "+" "_" | trunc 63 | trimSuffix "-" }}
 spec:
-  ingressClassName: kong
+  ingressClassName: nginx
   rules:
-    - host: webpm.org
+    - host: {{ .Values.host }}
       http:
         paths:
           - path: /
@@ -25,5 +25,5 @@ spec:
                   number: 80
   tls:
   - hosts:
-    - webpm.org
+    - {{ .Values.host }}
     secretName: webpm-tls
