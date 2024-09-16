@@ -1,34 +1,21 @@
+ingress:
+  issuer: letsencrypt-youwol
+  className: kong
+  host: tooling.youwol.com
+  tlsSecretName: tooling-tls
+  servicePort: 80
+
 dashboard:
   metricsScraper:
     enabled: true
   serviceMonitor:
     enabled: true
-
-  ingress:
-    enabled: true
-    className: kong
-    hosts:
-      - tooling.youwol.com
-    annotations:
-      cert-manager.io/cluster-issuer: letsencrypt-youwol
-      konghq.com/https-redirect-status-code: '301'
-      konghq.com/protocols: https
-      konghq.com/regex-priority: '0'
-      konghq.com/strip-path: 'true'
-      kubernetes.io/tls-acme: 'true'
-    tls:
-      - hosts:
-          - tooling.youwol.com
-        secretName: tooling-tls
-    customPaths:
-      - path: /dashboard
-        pathType: Prefix
-        backend:
-          service:
-            name: dashboard
-            port:
-              number: 443
-
-  service:
-    annotations:
-      konghq.com/protocol: https
+  app:
+    ingress:
+      enabled: false
+  kong:
+    proxy:
+      http:
+        enabled: true
+      tls:
+        enabled: false
