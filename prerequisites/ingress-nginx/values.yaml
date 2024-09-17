@@ -9,7 +9,7 @@ ingress-nginx:
       real-ip-header: "proxy_protocol"
       proxy-body-size: "10m"
       # values token from `kubectl get svc ingress-nginx-controller -n ingress-nginx -o jsonpath="{.metadata.annotations.lb\.k8s\.ovh\.net/egress-ips}"`
-      proxy-real-ip-cidr: "10.203.18.153/32,10.203.19.216/32,10.203.18.130/32,10.203.19.15/32"
+      proxy-real-ip-cidr: "10.199.194.165/32,10.199.193.53/32,10.199.194.154/32,10.199.194.35/32"
     metrics:
       enabled: true
       serviceMonitor:
