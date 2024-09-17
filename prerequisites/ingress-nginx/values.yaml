@@ -1,5 +1,14 @@
 ingress-nginx:
   controller:
+    service:
+      externalTrafficPolicy: "Local"
+      annotations:
+        service.beta.kubernetes.io/ovh-loadbalancer-proxy-protocol: "v2"
+    config:
+      use-proxy-protocol: "true"
+      real-ip-header: "proxy_protocol"
+      # values token from `kubectl get svc ingress-nginx-controller -n ingress-nginx -o jsonpath="{.metadata.annotations.lb\.k8s\.ovh\.net/egress-ips}"`
+      proxy-real-ip-cidr: "10.203.18.153/32,10.203.19.216/32,10.203.18.130/32,10.203.19.15/32"
     metrics:
       enabled: true
       serviceMonitor:
