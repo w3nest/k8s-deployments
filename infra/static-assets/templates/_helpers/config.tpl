@@ -18,7 +18,7 @@
 {{- $maintenance := .Values.maintenance | default dict }}
 {{- $disabledIngressClass := $maintenance.disableIngressClass | default "" }}
 {{- if ($maintenance.enable | default false) }}
-ingressClassName: "kong"
+ingressClassName: "nginx"
 {{- else }}
 {{- if $maintenance.disableIngressClass }}
 ingressClassName: {{ $maintenance.disableIngressClass }}
