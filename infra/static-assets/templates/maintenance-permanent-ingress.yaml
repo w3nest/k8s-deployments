@@ -4,16 +4,12 @@ kind: Ingress
 metadata:
   name: {{ include "static-assets.service-maintenance.name" . }}-permanent
   annotations:
-    kubernetes.io/tls-acme: "true"
     cert-manager.io/cluster-issuer: letsencrypt-youwol
-    konghq.com/https-redirect-status-code: "301"
-    konghq.com/protocols: https
-    konghq.com/preserve-host: "false"
   labels:
     {{- include "static-assets.labels" . | nindent 4 }}
     app.kubernetes.io/component: maintenance
 spec:
-  ingressClassName: kong
+  ingressClassName: nginx
   rules:
     - host: {{ .Values.maintenance.permanentDomain }}
       http:

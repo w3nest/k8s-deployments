@@ -3,9 +3,7 @@ kind: Ingress
 metadata:
   name: {{ include "static-assets.service-maintenance.name" . }}
   annotations:
-    konghq.com/strip-path: "false"
-    konghq.com/preserve-host: "false"
-    konghq.com/regex-priority: "1000"
+    nginx.ingress.kubernetes.io/upstream-vhost: "maintenance"
   labels:
     {{- include "static-assets.labels" . | nindent 4 }}
     app.kubernetes.io/component: maintenance
@@ -31,7 +29,27 @@ spec:
                 port:
                   name: http
             pathType: Prefix
-            path: /api/(.*)
+            path: /api/accounts/(.*)
+    - host: {{ include "static-assets.platform-host" . }}
+      http:
+        paths:
+          - backend:
+              service:
+                name: {{ include "static-assets.service-maintenance.name" . }}
+                port:
+                  name: http
+            pathType: Prefix
+            path: /api/assets-gateway/(.*)
+    - host: {{ include "static-assets.platform-host" . }}
+      http:
+        paths:
+          - backend:
+              service:
+                name: {{ include "static-assets.service-maintenance.name" . }}
+                port:
+                  name: http
+            pathType: Prefix
+            path: /api/cdn-sessions-storage/(.*)
     - host: {{ include "static-assets.platform-host" . }}
       http:
         paths:
