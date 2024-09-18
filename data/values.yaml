@@ -13,7 +13,7 @@ maintenance:
   namespace: "infra"
   ingress:
     name: "static-assets-maintenance"
-    ingressClassName: "kong"
+    ingressClassName: "nginx"
   configMap:
     name: "static-assets-maintenance-includes"
     key: "details.txt"

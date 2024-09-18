@@ -1,0 +1,841 @@
+2024-01-29 07:45:30.000652  NOTIFY (restore)[Starting]
+2024-01-29 07:45:30.002479   DEBUG (restore>McCommands)[InitializingComponent]
+2024-01-29 07:45:30.002616   DEBUG (restore>McCommands)[InitializingComponent] : using binary /opt/minio-client/bin/mc
+2024-01-29 07:45:30.002696   DEBUG (restore>McCommands)[InitializingComponent] : using config /opt/data-manager/.mc
+2024-01-29 07:45:30.002758   DEBUG (restore>McCommands)[ComponentInitialized]
+2024-01-29 07:45:30.002826  NOTIFY (restore>RestoreS3)[ComponentInitialized]
+2024-01-29 07:45:30.002971   DEBUG (restore>CqlshCommands)[InitializingComponent]
+2024-01-29 07:45:30.003054   DEBUG (restore>CqlshCommands)[InitializingComponent] : using instance scylla-db-client.infra.svc.cluster.local
+2024-01-29 07:45:30.003137  NOTIFY (restore>RestoreCassandra)[ComponentInitialized]
+2024-01-29 07:45:30.003215   DEBUG (restore>KeycloakAdmin)[ComponentInitialized]
+2024-01-29 07:45:30.003318   DEBUG (restore>KeycloakAdmin>OidcClient)[Component Initialized]
+2024-01-29 07:45:30.003389   DEBUG (restore>KeycloakAdmin>TokensManager)[ComponentInitialized]
+2024-01-29 07:45:30.003471  NOTIFY (restore>Keycloak)[ComponentInitialized]
+2024-01-29 07:45:30.003587   DEBUG (restore>ProbeMinio)[ComponentInitialized]
+2024-01-29 07:45:30.003814   DEBUG (restore>ProbeKeycloak)[ComponentInitialized]
+2024-01-29 07:45:30.003965   DEBUG (restore>kubernetes_api)[InitializingComponent]
+2024-01-29 07:45:30.004034  NOTIFY (restore>kubernetes_api)[InitializingComponent] : using Pod service account
+2024-01-29 07:45:30.004577  NOTIFY (restore>kubernetes_api)[InitializingComponent] : Done
+2024-01-29 07:45:30.004688  NOTIFY (restore>ClusterMaintenance)[ComponentInitialized]
+2024-01-29 07:45:30.004775   DEBUG (restore>ProbeMinio>probe)[in function]
+2024-01-29 07:45:30.004847   DEBUG (restore>ProbeMinio>_probe)[in function]
+2024-01-29 07:45:30.007838  NOTIFY (restore>ProbeMinio>_probe)[in function] : Failed to open URL http://localhost:9000/minio/health/live : <urlopen error [Errno 111] Connection refused>
+2024-01-29 07:45:30.007975  NOTIFY (restore>ProbeMinio>probe)[in function] : result: False
+2024-01-29 07:45:35.008213   DEBUG (restore>ProbeMinio>probe)[in function]
+2024-01-29 07:45:35.008491   DEBUG (restore>ProbeMinio>_probe)[in function]
+2024-01-29 07:45:35.011899  NOTIFY (restore>ProbeMinio>_probe)[in function] : GET http://localhost:9000/minio/health/live response with status 200
+2024-01-29 07:45:35.012155  NOTIFY (restore>ProbeMinio>probe)[in function] : result: True
+2024-01-29 07:45:35.012270   DEBUG (restore>ProbeKeycloak>probe)[in function]
+2024-01-29 07:45:35.012339   DEBUG (restore>ProbeKeycloak>_probe)[in function]
+2024-01-29 07:45:35.012572  NOTIFY (restore>ProbeKeycloak>_probe)[in function] : status file /var/opt/data-manager/kc/kc_status content is IMPORTING
+2024-01-29 07:45:35.012673  NOTIFY (restore>ProbeKeycloak>probe)[in function] : result: True
+2024-01-29 07:45:35.012751  NOTIFY (restore>ClusterMaintenance)[MaintenanceModeOn]
+2024-01-29 07:45:35.012828   DEBUG (restore>kubernetes_api>set_config_map_value[static-assets-maintenance-includes.infra#details.txt])[in function]
+2024-01-29 07:45:35.066243   DEBUG (restore>kubernetes_api>set_config_map_value[static-assets-maintenance-includes.infra#details.txt])[in function] : Result: <span>No further information at the moment</span>
+2024-01-29 07:45:35.066746   DEBUG (restore>kubernetes_api>get_ingress_class_name[static-assets-maintenance.infra])[in function]
+2024-01-29 07:45:35.195912   DEBUG (restore>kubernetes_api>get_ingress_class_name[static-assets-maintenance.infra])[in function] : Result: None
+2024-01-29 07:45:35.196447   DEBUG (restore>kubernetes_api>set_config_map_value[static-assets-maintenance-includes.infra#details.txt])[in function]
+2024-01-29 07:45:35.196592   DEBUG (restore>kubernetes_api>set_config_map_value[static-assets-maintenance-includes.infra#details.txt])[in function] : value=<span>Restoration in progress …</span><br><span>Try again in a few minutes</span>
+2024-01-29 07:45:35.240855   DEBUG (restore>kubernetes_api>set_config_map_value[static-assets-maintenance-includes.infra#details.txt])[in function] : Done
+2024-01-29 07:45:35.241293   DEBUG (restore>kubernetes_api>set_ingress_class_name[static-assets-maintenance.infra](kong))[in function]
+2024-01-29 07:45:35.241378   DEBUG (restore>kubernetes_api>set_ingress_class_name[static-assets-maintenance.infra](kong))[in function] : value=kong
+2024-01-29 07:45:35.283907   DEBUG (restore>kubernetes_api>set_ingress_class_name[static-assets-maintenance.infra](kong))[in function] : Done
+2024-01-29 07:45:40.288733   DEBUG (restore>RestoreS3)[ComponentInitialized] : buckets=['assets', 'cdn', 'cdn-sessions-storage', 'data', 'flux', 'stories']
+2024-01-29 07:45:40.289483  NOTIFY (restore>RestoreS3>restore_minio_assets)[Starting]
+2024-01-29 07:45:40.289603   DEBUG (restore>RestoreS3>restore_minio_assets>McCommands)[Starting]
+2024-01-29 07:45:40.289713   DEBUG (restore>RestoreS3>restore_minio_assets>McCommands>_mc_alias_local)[in function]
+2024-01-29 07:45:40.289783   DEBUG (restore>RestoreS3>restore_minio_assets>McCommands>_mc_alias_local>_run_command)[in function]
+2024-01-29 07:45:40.289846   DEBUG (restore>RestoreS3>restore_minio_assets>McCommands>_mc_alias_local>_run_command)[in function] : args=('alias', 'set', 'local', 'http://localhost:9000', 'root', 'vzr3dqwtrHBDEYFiXXGOeF3gfeudrObB')
+2024-01-29 07:45:40.923815   DEBUG (restore>RestoreS3>restore_minio_assets>McCommands>_mc_alias_local>_run_command)[exit function]
+2024-01-29 07:45:40.924049   DEBUG (restore>RestoreS3>restore_minio_assets>McCommands>_mc_alias_local)[exit function]
+2024-01-29 07:45:40.924141   DEBUG (restore>RestoreS3>restore_minio_assets>McCommands>_mc_alias_cluster)[in function]
+2024-01-29 07:45:40.924201   DEBUG (restore>RestoreS3>restore_minio_assets>McCommands>_mc_alias_cluster>_run_command)[in function]
+2024-01-29 07:45:40.924271   DEBUG (restore>RestoreS3>restore_minio_assets>McCommands>_mc_alias_cluster>_run_command)[in function] : args=('alias', 'set', 'cluster', 'http://minio.infra.svc.cluster.local:9000', 'admin', 'tWDxl1aq7HXwXem35GpCXuyXcxgdstMM')
+2024-01-29 07:45:41.144706   DEBUG (restore>RestoreS3>restore_minio_assets>McCommands>_mc_alias_cluster>_run_command)[exit function]
+2024-01-29 07:45:41.144953   DEBUG (restore>RestoreS3>restore_minio_assets>McCommands>_mc_alias_cluster)[exit function]
+2024-01-29 07:45:41.145022   DEBUG (restore>RestoreS3>restore_minio_assets>McCommands>restore)[in function]
+2024-01-29 07:45:41.145078   DEBUG (restore>RestoreS3>restore_minio_assets>McCommands>restore>_run_command)[in function]
+2024-01-29 07:45:41.145143   DEBUG (restore>RestoreS3>restore_minio_assets>McCommands>restore>_run_command)[in function] : args=('rb', '--force', 'cluster/assets')
+2024-01-29 07:45:50.322879   DEBUG (restore>RestoreS3>restore_minio_assets>McCommands>restore>_run_command)[exit function]
+2024-01-29 07:45:50.323213   DEBUG (restore>RestoreS3>restore_minio_assets>McCommands>restore)[CreateClusterBucket]
+2024-01-29 07:45:50.323384   DEBUG (restore>RestoreS3>restore_minio_assets>McCommands>restore>_run_command)[in function]
+2024-01-29 07:45:50.323538   DEBUG (restore>RestoreS3>restore_minio_assets>McCommands>restore>_run_command)[in function] : args=('mb', 'cluster/assets')
+2024-01-29 07:45:50.750839   DEBUG (restore>RestoreS3>restore_minio_assets>McCommands>restore>_run_command)[exit function]
+2024-01-29 07:45:50.751136   DEBUG (restore>RestoreS3>restore_minio_assets>McCommands>restore)[Transfert]
+2024-01-29 07:45:50.751327   DEBUG (restore>RestoreS3>restore_minio_assets>McCommands>restore>MirrorBucket)[in function]
+2024-01-29 07:45:50.751498   DEBUG (restore>RestoreS3>restore_minio_assets>McCommands>restore>MirrorBucket)[DiskUsageSourceBucket]
+2024-01-29 07:45:50.751639   DEBUG (restore>RestoreS3>restore_minio_assets>McCommands>restore>MirrorBucket>_run_command)[in function]
+2024-01-29 07:45:50.751828   DEBUG (restore>RestoreS3>restore_minio_assets>McCommands>restore>MirrorBucket>_run_command)[in function] : args=('du', '--versions', 'local/assets')
+2024-01-29 07:45:52.719918   DEBUG (restore>RestoreS3>restore_minio_assets>McCommands>restore>MirrorBucket)[DiskUsageSourceBucket] : json={'prefix': 'assets', 'size': 7316292525, 'objects': 484, 'status': 'success', 'isVersions': True}
+2024-01-29 07:45:52.727947   DEBUG (restore>RestoreS3>restore_minio_assets>McCommands>restore>MirrorBucket>_run_command)[exit function]
+2024-01-29 07:45:52.728118  NOTIFY (restore>RestoreS3>restore_minio_assets>McCommands>restore>MirrorBucket)[DiskUsageSourceBucket] : source bucket : 484 objects / 7316292525 bytes
+2024-01-29 07:45:52.728193   DEBUG (restore>RestoreS3>restore_minio_assets>McCommands>restore>MirrorBucket)[Transfert]
+2024-01-29 07:45:52.728267   DEBUG (restore>RestoreS3>restore_minio_assets>McCommands>restore>MirrorBucket>_run_command)[in function]
+2024-01-29 07:45:52.728327   DEBUG (restore>RestoreS3>restore_minio_assets>McCommands>restore>MirrorBucket>_run_command)[in function] : args=('mirror', '--overwrite', '--preserve', '--remove', 'local/assets', 'cluster/assets')
+2024-01-29 07:45:57.775134   DEBUG (restore>RestoreS3>restore_minio_assets>McCommands>restore>MirrorBucket)[Transfert] : transferred 20 objects on 484
+2024-01-29 07:46:03.160789   DEBUG (restore>RestoreS3>restore_minio_assets>McCommands>restore>MirrorBucket)[Transfert] : transferred 34 objects on 484
+2024-01-29 07:46:08.549171   DEBUG (restore>RestoreS3>restore_minio_assets>McCommands>restore>MirrorBucket)[Transfert] : transferred 43 objects on 484
+2024-01-29 07:46:14.204208   DEBUG (restore>RestoreS3>restore_minio_assets>McCommands>restore>MirrorBucket)[Transfert] : transferred 66 objects on 484
+2024-01-29 07:46:19.332179   DEBUG (restore>RestoreS3>restore_minio_assets>McCommands>restore>MirrorBucket)[Transfert] : transferred 80 objects on 484
+2024-01-29 07:46:29.340061   DEBUG (restore>RestoreS3>restore_minio_assets>McCommands>restore>MirrorBucket)[Transfert] : transferred 85 objects on 484
+2024-01-29 07:46:40.443017   DEBUG (restore>RestoreS3>restore_minio_assets>McCommands>restore>MirrorBucket)[Transfert] : transferred 89 objects on 484
+2024-01-29 07:46:46.265169   DEBUG (restore>RestoreS3>restore_minio_assets>McCommands>restore>MirrorBucket)[Transfert] : transferred 95 objects on 484
+2024-01-29 07:46:52.096922   DEBUG (restore>RestoreS3>restore_minio_assets>McCommands>restore>MirrorBucket)[Transfert] : transferred 106 objects on 484
+2024-01-29 07:46:57.505375   DEBUG (restore>RestoreS3>restore_minio_assets>McCommands>restore>MirrorBucket)[Transfert] : transferred 111 objects on 484
+2024-01-29 07:47:03.214939   DEBUG (restore>RestoreS3>restore_minio_assets>McCommands>restore>MirrorBucket)[Transfert] : transferred 117 objects on 484
+2024-01-29 07:47:08.690500   DEBUG (restore>RestoreS3>restore_minio_assets>McCommands>restore>MirrorBucket)[Transfert] : transferred 127 objects on 484
+2024-01-29 07:47:13.699613   DEBUG (restore>RestoreS3>restore_minio_assets>McCommands>restore>MirrorBucket)[Transfert] : transferred 145 objects on 484
+2024-01-29 07:47:18.847233   DEBUG (restore>RestoreS3>restore_minio_assets>McCommands>restore>MirrorBucket)[Transfert] : transferred 162 objects on 484
+2024-01-29 07:47:23.931856   DEBUG (restore>RestoreS3>restore_minio_assets>McCommands>restore>MirrorBucket)[Transfert] : transferred 177 objects on 484
+2024-01-29 07:47:29.162751   DEBUG (restore>RestoreS3>restore_minio_assets>McCommands>restore>MirrorBucket)[Transfert] : transferred 195 objects on 484
+2024-01-29 07:47:34.728453   DEBUG (restore>RestoreS3>restore_minio_assets>McCommands>restore>MirrorBucket)[Transfert] : transferred 204 objects on 484
+2024-01-29 07:47:40.145504   DEBUG (restore>RestoreS3>restore_minio_assets>McCommands>restore>MirrorBucket)[Transfert] : transferred 222 objects on 484
+2024-01-29 07:47:45.317304   DEBUG (restore>RestoreS3>restore_minio_assets>McCommands>restore>MirrorBucket)[Transfert] : transferred 232 objects on 484
+2024-01-29 07:47:50.706831   DEBUG (restore>RestoreS3>restore_minio_assets>McCommands>restore>MirrorBucket)[Transfert] : transferred 254 objects on 484
+2024-01-29 07:47:56.144766   DEBUG (restore>RestoreS3>restore_minio_assets>McCommands>restore>MirrorBucket)[Transfert] : transferred 271 objects on 484
+2024-01-29 07:48:02.519790   DEBUG (restore>RestoreS3>restore_minio_assets>McCommands>restore>MirrorBucket)[Transfert] : transferred 289 objects on 484
+2024-01-29 07:48:08.121461   DEBUG (restore>RestoreS3>restore_minio_assets>McCommands>restore>MirrorBucket)[Transfert] : transferred 304 objects on 484
+2024-01-29 07:48:13.362261   DEBUG (restore>RestoreS3>restore_minio_assets>McCommands>restore>MirrorBucket)[Transfert] : transferred 324 objects on 484
+2024-01-29 07:48:18.409775   DEBUG (restore>RestoreS3>restore_minio_assets>McCommands>restore>MirrorBucket)[Transfert] : transferred 343 objects on 484
+2024-01-29 07:48:23.512387   DEBUG (restore>RestoreS3>restore_minio_assets>McCommands>restore>MirrorBucket)[Transfert] : transferred 357 objects on 484
+2024-01-29 07:48:28.869722   DEBUG (restore>RestoreS3>restore_minio_assets>McCommands>restore>MirrorBucket)[Transfert] : transferred 368 objects on 484
+2024-01-29 07:48:34.339809   DEBUG (restore>RestoreS3>restore_minio_assets>McCommands>restore>MirrorBucket)[Transfert] : transferred 391 objects on 484
+2024-01-29 07:48:40.361715   DEBUG (restore>RestoreS3>restore_minio_assets>McCommands>restore>MirrorBucket)[Transfert] : transferred 405 objects on 484
+2024-01-29 07:48:45.932461   DEBUG (restore>RestoreS3>restore_minio_assets>McCommands>restore>MirrorBucket)[Transfert] : transferred 429 objects on 484
+2024-01-29 07:48:51.102698   DEBUG (restore>RestoreS3>restore_minio_assets>McCommands>restore>MirrorBucket)[Transfert] : transferred 456 objects on 484
+2024-01-29 07:48:56.285805   DEBUG (restore>RestoreS3>restore_minio_assets>McCommands>restore>MirrorBucket)[Transfert] : transferred 484 objects on 484
+2024-01-29 07:50:11.100956   DEBUG (restore>RestoreS3>restore_minio_assets>McCommands>restore>MirrorBucket>_run_command)[exit function]
+2024-01-29 07:50:11.101630  NOTIFY (restore>RestoreS3>restore_minio_assets>McCommands>restore>MirrorBucket)[Transfert] : Done
+2024-01-29 07:50:11.101738   DEBUG (restore>RestoreS3>restore_minio_assets>McCommands>restore>MirrorBucket)[VerifyTargetBucket]
+2024-01-29 07:50:11.101877   DEBUG (restore>RestoreS3>restore_minio_assets>McCommands>restore>MirrorBucket>_run_command)[in function]
+2024-01-29 07:50:11.101979   DEBUG (restore>RestoreS3>restore_minio_assets>McCommands>restore>MirrorBucket>_run_command)[in function] : args=('du', '--versions', 'cluster/assets')
+2024-01-29 07:50:11.391437   DEBUG (restore>RestoreS3>restore_minio_assets>McCommands>restore>MirrorBucket)[VerifyTargetBucket] : json={'prefix': 'assets', 'size': 7316292525, 'objects': 484, 'status': 'success', 'isVersions': True}
+2024-01-29 07:50:11.402260   DEBUG (restore>RestoreS3>restore_minio_assets>McCommands>restore>MirrorBucket>_run_command)[exit function]
+2024-01-29 07:50:11.403040   DEBUG (restore>RestoreS3>restore_minio_assets>McCommands>restore>MirrorBucket)[exit function]
+2024-01-29 07:50:11.403144   DEBUG (restore>RestoreS3>restore_minio_assets>McCommands>restore)[exit function]
+2024-01-29 07:50:11.403225  NOTIFY (restore>RestoreS3>restore_minio_assets)[Done]
+2024-01-29 07:50:11.403343  NOTIFY (restore>RestoreS3>restore_minio_cdn)[Starting]
+2024-01-29 07:50:11.403416   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands)[Starting]
+2024-01-29 07:50:11.403497   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore)[in function]
+2024-01-29 07:50:11.403582   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>_run_command)[in function]
+2024-01-29 07:50:11.403643   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>_run_command)[in function] : args=('rb', '--force', 'cluster/cdn')
+2024-01-29 08:03:22.695946   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>_run_command)[exit function]
+2024-01-29 08:03:22.699778   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore)[CreateClusterBucket]
+2024-01-29 08:03:22.699966   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>_run_command)[in function]
+2024-01-29 08:03:22.700076   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>_run_command)[in function] : args=('mb', 'cluster/cdn')
+2024-01-29 08:03:23.042639   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>_run_command)[exit function]
+2024-01-29 08:03:23.042842   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore)[Transfert]
+2024-01-29 08:03:23.043016   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[in function]
+2024-01-29 08:03:23.043092   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[DiskUsageSourceBucket]
+2024-01-29 08:03:23.043188   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket>_run_command)[in function]
+2024-01-29 08:03:23.043260   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket>_run_command)[in function] : args=('du', '--versions', 'local/cdn')
+2024-01-29 08:06:25.017949   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[DiskUsageSourceBucket] : json={'prefix': 'cdn', 'size': 3000924910, 'objects': 125569, 'status': 'success', 'isVersions': True}
+2024-01-29 08:06:25.022621   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket>_run_command)[exit function]
+2024-01-29 08:06:25.022828  NOTIFY (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[DiskUsageSourceBucket] : source bucket : 125569 objects / 3000924910 bytes
+2024-01-29 08:06:25.022953   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert]
+2024-01-29 08:06:25.023057   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket>_run_command)[in function]
+2024-01-29 08:06:25.023128   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket>_run_command)[in function] : args=('mirror', '--overwrite', '--preserve', '--remove', 'local/cdn', 'cluster/cdn')
+2024-01-29 08:06:30.037242   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 58 objects on 125569
+2024-01-29 08:06:35.069171   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 190 objects on 125569
+2024-01-29 08:06:40.093361   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 380 objects on 125569
+2024-01-29 08:06:45.097488   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 602 objects on 125569
+2024-01-29 08:06:50.180186   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 850 objects on 125569
+2024-01-29 08:06:55.188199   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 1100 objects on 125569
+2024-01-29 08:07:00.196702   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 1290 objects on 125569
+2024-01-29 08:07:05.385430   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 1544 objects on 125569
+2024-01-29 08:07:10.563546   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 1781 objects on 125569
+2024-01-29 08:07:15.570935   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 2112 objects on 125569
+2024-01-29 08:07:20.572654   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 2467 objects on 125569
+2024-01-29 08:07:25.579874   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 2781 objects on 125569
+2024-01-29 08:07:30.593855   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 3046 objects on 125569
+2024-01-29 08:07:35.604817   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 3365 objects on 125569
+2024-01-29 08:07:40.612666   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 3668 objects on 125569
+2024-01-29 08:07:45.629504   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 4003 objects on 125569
+2024-01-29 08:07:50.841969   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 4307 objects on 125569
+2024-01-29 08:07:55.847780   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 4612 objects on 125569
+2024-01-29 08:08:00.849478   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 4936 objects on 125569
+2024-01-29 08:08:05.864329   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 5255 objects on 125569
+2024-01-29 08:08:10.875962   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 5585 objects on 125569
+2024-01-29 08:08:15.883284   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 5905 objects on 125569
+2024-01-29 08:08:20.889395   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 6201 objects on 125569
+2024-01-29 08:08:25.896027   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 6491 objects on 125569
+2024-01-29 08:08:30.901847   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 6792 objects on 125569
+2024-01-29 08:08:35.913438   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 7030 objects on 125569
+2024-01-29 08:08:40.938640   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 7289 objects on 125569
+2024-01-29 08:08:45.952244   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 7571 objects on 125569
+2024-01-29 08:08:50.957221   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 7784 objects on 125569
+2024-01-29 08:08:55.973411   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 8069 objects on 125569
+2024-01-29 08:09:00.980168   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 8331 objects on 125569
+2024-01-29 08:09:06.006165   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 8616 objects on 125569
+2024-01-29 08:09:11.018519   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 8908 objects on 125569
+2024-01-29 08:09:16.019237   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 9162 objects on 125569
+2024-01-29 08:09:21.026698   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 9452 objects on 125569
+2024-01-29 08:09:26.072726   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 9731 objects on 125569
+2024-01-29 08:09:31.097987   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 9998 objects on 125569
+2024-01-29 08:09:36.099242   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 10242 objects on 125569
+2024-01-29 08:09:41.104625   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 10467 objects on 125569
+2024-01-29 08:09:46.116227   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 10759 objects on 125569
+2024-01-29 08:09:51.128246   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 11045 objects on 125569
+2024-01-29 08:09:56.142426   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 11318 objects on 125569
+2024-01-29 08:10:01.231971   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 11573 objects on 125569
+2024-01-29 08:10:06.264796   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 11804 objects on 125569
+2024-01-29 08:10:11.277632   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 12062 objects on 125569
+2024-01-29 08:10:16.292315   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 12353 objects on 125569
+2024-01-29 08:10:21.296299   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 12607 objects on 125569
+2024-01-29 08:10:26.318706   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 12889 objects on 125569
+2024-01-29 08:10:31.324520   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 13141 objects on 125569
+2024-01-29 08:10:36.345982   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 13338 objects on 125569
+2024-01-29 08:10:41.358834   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 13553 objects on 125569
+2024-01-29 08:10:46.371934   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 13774 objects on 125569
+2024-01-29 08:10:51.372882   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 14042 objects on 125569
+2024-01-29 08:10:56.393447   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 14321 objects on 125569
+2024-01-29 08:11:01.395984   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 14603 objects on 125569
+2024-01-29 08:11:06.401202   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 14830 objects on 125569
+2024-01-29 08:11:11.413072   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 15114 objects on 125569
+2024-01-29 08:11:16.819111   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 15383 objects on 125569
+2024-01-29 08:11:22.459887   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 15619 objects on 125569
+2024-01-29 08:11:27.469772   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 15896 objects on 125569
+2024-01-29 08:11:32.472745   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 16131 objects on 125569
+2024-01-29 08:11:37.479356   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 16395 objects on 125569
+2024-01-29 08:11:42.484764   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 16650 objects on 125569
+2024-01-29 08:11:47.488949   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 16929 objects on 125569
+2024-01-29 08:11:52.498815   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 17135 objects on 125569
+2024-01-29 08:11:57.508633   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 17364 objects on 125569
+2024-01-29 08:12:02.524117   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 17598 objects on 125569
+2024-01-29 08:12:07.538007   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 17859 objects on 125569
+2024-01-29 08:12:12.543725   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 18133 objects on 125569
+2024-01-29 08:12:17.558435   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 18414 objects on 125569
+2024-01-29 08:12:22.569416   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 18633 objects on 125569
+2024-01-29 08:12:27.581410   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 18897 objects on 125569
+2024-01-29 08:12:32.593852   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 19159 objects on 125569
+2024-01-29 08:12:37.617187   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 19390 objects on 125569
+2024-01-29 08:12:42.621324   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 19594 objects on 125569
+2024-01-29 08:12:47.627562   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 19772 objects on 125569
+2024-01-29 08:12:52.640263   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 19924 objects on 125569
+2024-01-29 08:12:57.644171   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 20070 objects on 125569
+2024-01-29 08:13:02.695223   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 20182 objects on 125569
+2024-01-29 08:13:07.695254   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 20414 objects on 125569
+2024-01-29 08:13:12.700479   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 20684 objects on 125569
+2024-01-29 08:13:17.709959   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 20926 objects on 125569
+2024-01-29 08:13:22.715002   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 21169 objects on 125569
+2024-01-29 08:13:27.720185   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 21419 objects on 125569
+2024-01-29 08:13:32.730617   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 21670 objects on 125569
+2024-01-29 08:13:37.765668   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 21915 objects on 125569
+2024-01-29 08:13:42.788472   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 22172 objects on 125569
+2024-01-29 08:13:47.798010   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 22425 objects on 125569
+2024-01-29 08:13:52.804651   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 22683 objects on 125569
+2024-01-29 08:13:57.815007   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 22950 objects on 125569
+2024-01-29 08:14:02.816670   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 23189 objects on 125569
+2024-01-29 08:14:07.823959   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 23469 objects on 125569
+2024-01-29 08:14:12.832355   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 23734 objects on 125569
+2024-01-29 08:14:17.834268   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 24005 objects on 125569
+2024-01-29 08:14:22.856135   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 24245 objects on 125569
+2024-01-29 08:14:27.862823   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 24467 objects on 125569
+2024-01-29 08:14:33.142321   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 24706 objects on 125569
+2024-01-29 08:14:38.153892   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 24922 objects on 125569
+2024-01-29 08:14:43.156142   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 25178 objects on 125569
+2024-01-29 08:14:48.156658   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 25440 objects on 125569
+2024-01-29 08:14:53.175776   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 25690 objects on 125569
+2024-01-29 08:14:58.201466   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 25986 objects on 125569
+2024-01-29 08:15:03.206636   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 26241 objects on 125569
+2024-01-29 08:15:08.207459   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 26461 objects on 125569
+2024-01-29 08:15:13.215632   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 26705 objects on 125569
+2024-01-29 08:15:18.218552   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 26922 objects on 125569
+2024-01-29 08:15:23.239574   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 27101 objects on 125569
+2024-01-29 08:15:28.241873   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 27308 objects on 125569
+2024-01-29 08:15:33.266661   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 27537 objects on 125569
+2024-01-29 08:15:38.275209   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 27720 objects on 125569
+2024-01-29 08:15:43.289374   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 27980 objects on 125569
+2024-01-29 08:15:48.309907   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 28228 objects on 125569
+2024-01-29 08:15:53.676215   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 28453 objects on 125569
+2024-01-29 08:15:58.726364   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 28745 objects on 125569
+2024-01-29 08:16:03.735983   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 28999 objects on 125569
+2024-01-29 08:16:08.747818   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 29243 objects on 125569
+2024-01-29 08:16:13.749257   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 29475 objects on 125569
+2024-01-29 08:16:18.754710   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 29726 objects on 125569
+2024-01-29 08:16:24.116725   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 29963 objects on 125569
+2024-01-29 08:16:29.129710   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 30168 objects on 125569
+2024-01-29 08:16:34.144088   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 30408 objects on 125569
+2024-01-29 08:16:39.152502   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 30615 objects on 125569
+2024-01-29 08:16:44.168819   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 30876 objects on 125569
+2024-01-29 08:16:49.245356   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 31141 objects on 125569
+2024-01-29 08:16:54.256814   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 31351 objects on 125569
+2024-01-29 08:16:59.272931   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 31621 objects on 125569
+2024-01-29 08:17:04.281704   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 31882 objects on 125569
+2024-01-29 08:17:09.300004   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 32126 objects on 125569
+2024-01-29 08:17:14.319502   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 32367 objects on 125569
+2024-01-29 08:17:19.385047   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 32595 objects on 125569
+2024-01-29 08:17:24.387974   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 32800 objects on 125569
+2024-01-29 08:17:29.388805   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 33044 objects on 125569
+2024-01-29 08:17:34.397847   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 33267 objects on 125569
+2024-01-29 08:17:39.509513   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 33432 objects on 125569
+2024-01-29 08:17:44.520603   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 33687 objects on 125569
+2024-01-29 08:17:49.530456   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 33958 objects on 125569
+2024-01-29 08:17:54.729609   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 34193 objects on 125569
+2024-01-29 08:17:59.740657   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 34404 objects on 125569
+2024-01-29 08:18:04.753218   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 34661 objects on 125569
+2024-01-29 08:18:09.758597   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 34933 objects on 125569
+2024-01-29 08:18:14.775515   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 35176 objects on 125569
+2024-01-29 08:18:19.811265   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 35404 objects on 125569
+2024-01-29 08:18:24.832468   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 35607 objects on 125569
+2024-01-29 08:18:29.848467   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 35862 objects on 125569
+2024-01-29 08:18:35.010165   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 36083 objects on 125569
+2024-01-29 08:18:40.011225   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 36289 objects on 125569
+2024-01-29 08:18:45.016395   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 36475 objects on 125569
+2024-01-29 08:18:50.020741   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 36709 objects on 125569
+2024-01-29 08:18:55.034468   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 36913 objects on 125569
+2024-01-29 08:19:00.035480   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 37141 objects on 125569
+2024-01-29 08:19:05.058999   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 37374 objects on 125569
+2024-01-29 08:19:10.072327   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 37635 objects on 125569
+2024-01-29 08:19:15.086004   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 37846 objects on 125569
+2024-01-29 08:19:20.094973   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 38081 objects on 125569
+2024-01-29 08:19:25.096400   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 38298 objects on 125569
+2024-01-29 08:19:30.116494   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 38555 objects on 125569
+2024-01-29 08:19:35.119185   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 38781 objects on 125569
+2024-01-29 08:19:40.119487   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 39032 objects on 125569
+2024-01-29 08:19:45.128733   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 39212 objects on 125569
+2024-01-29 08:19:50.130148   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 39429 objects on 125569
+2024-01-29 08:19:55.140614   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 39709 objects on 125569
+2024-01-29 08:20:00.151899   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 39974 objects on 125569
+2024-01-29 08:20:05.152459   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 40224 objects on 125569
+2024-01-29 08:20:10.170157   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 40437 objects on 125569
+2024-01-29 08:20:15.175111   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 40685 objects on 125569
+2024-01-29 08:20:20.179616   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 40931 objects on 125569
+2024-01-29 08:20:25.191060   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 41182 objects on 125569
+2024-01-29 08:20:30.209094   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 41423 objects on 125569
+2024-01-29 08:20:35.217968   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 41678 objects on 125569
+2024-01-29 08:20:40.218899   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 41935 objects on 125569
+2024-01-29 08:20:45.346105   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 42209 objects on 125569
+2024-01-29 08:20:50.355857   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 42455 objects on 125569
+2024-01-29 08:20:55.357040   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 42684 objects on 125569
+2024-01-29 08:21:00.374201   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 42940 objects on 125569
+2024-01-29 08:21:05.642098   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 43169 objects on 125569
+2024-01-29 08:21:10.648294   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 43435 objects on 125569
+2024-01-29 08:21:15.653221   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 43677 objects on 125569
+2024-01-29 08:21:20.660252   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 43918 objects on 125569
+2024-01-29 08:21:25.682392   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 44147 objects on 125569
+2024-01-29 08:21:30.700356   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 44345 objects on 125569
+2024-01-29 08:21:35.719294   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 44578 objects on 125569
+2024-01-29 08:21:40.728784   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 44839 objects on 125569
+2024-01-29 08:21:45.740604   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 45080 objects on 125569
+2024-01-29 08:21:50.770373   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 45296 objects on 125569
+2024-01-29 08:21:55.778083   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 45526 objects on 125569
+2024-01-29 08:22:00.787233   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 45783 objects on 125569
+2024-01-29 08:22:05.797540   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 46027 objects on 125569
+2024-01-29 08:22:10.802289   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 46281 objects on 125569
+2024-01-29 08:22:15.818287   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 46541 objects on 125569
+2024-01-29 08:22:20.819160   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 46773 objects on 125569
+2024-01-29 08:22:25.824187   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 47026 objects on 125569
+2024-01-29 08:22:30.831774   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 47271 objects on 125569
+2024-01-29 08:22:35.832978   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 47522 objects on 125569
+2024-01-29 08:22:40.849696   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 47781 objects on 125569
+2024-01-29 08:22:45.867976   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 47964 objects on 125569
+2024-01-29 08:22:50.872737   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 48193 objects on 125569
+2024-01-29 08:22:55.880016   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 48436 objects on 125569
+2024-01-29 08:23:00.892592   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 48683 objects on 125569
+2024-01-29 08:23:05.912497   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 48913 objects on 125569
+2024-01-29 08:23:10.929621   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 49160 objects on 125569
+2024-01-29 08:23:15.935940   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 49380 objects on 125569
+2024-01-29 08:23:20.949915   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 49625 objects on 125569
+2024-01-29 08:23:25.959463   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 49870 objects on 125569
+2024-01-29 08:23:30.977410   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 50085 objects on 125569
+2024-01-29 08:23:35.980674   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 50332 objects on 125569
+2024-01-29 08:23:40.996864   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 50596 objects on 125569
+2024-01-29 08:23:46.000560   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 50856 objects on 125569
+2024-01-29 08:23:51.016264   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 51086 objects on 125569
+2024-01-29 08:23:56.023155   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 51337 objects on 125569
+2024-01-29 08:24:01.024609   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 51595 objects on 125569
+2024-01-29 08:24:06.031886   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 51781 objects on 125569
+2024-01-29 08:24:11.039886   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 52018 objects on 125569
+2024-01-29 08:24:16.045547   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 52256 objects on 125569
+2024-01-29 08:24:21.076662   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 52503 objects on 125569
+2024-01-29 08:24:26.088050   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 52765 objects on 125569
+2024-01-29 08:24:31.102069   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 53012 objects on 125569
+2024-01-29 08:24:36.117010   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 53265 objects on 125569
+2024-01-29 08:24:41.117810   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 53484 objects on 125569
+2024-01-29 08:24:46.128634   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 53731 objects on 125569
+2024-01-29 08:24:51.137539   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 53988 objects on 125569
+2024-01-29 08:24:56.144921   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 54211 objects on 125569
+2024-01-29 08:25:01.426284   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 54454 objects on 125569
+2024-01-29 08:25:06.440075   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 54683 objects on 125569
+2024-01-29 08:25:11.444257   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 54928 objects on 125569
+2024-01-29 08:25:16.459352   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 55103 objects on 125569
+2024-01-29 08:25:21.479069   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 55377 objects on 125569
+2024-01-29 08:25:26.492218   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 55641 objects on 125569
+2024-01-29 08:25:31.512786   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 55892 objects on 125569
+2024-01-29 08:25:36.628109   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 56125 objects on 125569
+2024-01-29 08:25:41.867174   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 56378 objects on 125569
+2024-01-29 08:25:46.871291   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 56621 objects on 125569
+2024-01-29 08:25:51.871645   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 56802 objects on 125569
+2024-01-29 08:25:56.898755   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 57023 objects on 125569
+2024-01-29 08:26:01.900150   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 57240 objects on 125569
+2024-01-29 08:26:06.914658   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 57474 objects on 125569
+2024-01-29 08:26:11.940308   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 57726 objects on 125569
+2024-01-29 08:26:17.096906   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 57987 objects on 125569
+2024-01-29 08:26:22.108111   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 58251 objects on 125569
+2024-01-29 08:26:27.111909   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 58518 objects on 125569
+2024-01-29 08:26:32.116555   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 58760 objects on 125569
+2024-01-29 08:26:37.126112   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 59004 objects on 125569
+2024-01-29 08:26:42.138334   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 59165 objects on 125569
+2024-01-29 08:26:47.159004   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 59401 objects on 125569
+2024-01-29 08:26:52.180661   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 59661 objects on 125569
+2024-01-29 08:26:57.182996   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 59932 objects on 125569
+2024-01-29 08:27:02.188332   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 60189 objects on 125569
+2024-01-29 08:27:07.203981   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 60470 objects on 125569
+2024-01-29 08:27:12.257432   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 60726 objects on 125569
+2024-01-29 08:27:17.276579   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 60938 objects on 125569
+2024-01-29 08:27:22.319529   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 61139 objects on 125569
+2024-01-29 08:27:27.332616   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 61367 objects on 125569
+2024-01-29 08:27:32.340548   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 61623 objects on 125569
+2024-01-29 08:27:37.356470   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 61847 objects on 125569
+2024-01-29 08:27:42.368290   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 62078 objects on 125569
+2024-01-29 08:27:47.377514   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 62334 objects on 125569
+2024-01-29 08:27:52.396396   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 62599 objects on 125569
+2024-01-29 08:27:57.407258   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 62886 objects on 125569
+2024-01-29 08:28:02.553671   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 63088 objects on 125569
+2024-01-29 08:28:07.555005   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 63309 objects on 125569
+2024-01-29 08:28:12.559448   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 63565 objects on 125569
+2024-01-29 08:28:17.563561   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 63842 objects on 125569
+2024-01-29 08:28:22.570448   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 64100 objects on 125569
+2024-01-29 08:28:27.581567   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 64363 objects on 125569
+2024-01-29 08:28:33.379837   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 64627 objects on 125569
+2024-01-29 08:28:38.396333   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 64898 objects on 125569
+2024-01-29 08:28:43.416157   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 65144 objects on 125569
+2024-01-29 08:28:48.426356   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 65411 objects on 125569
+2024-01-29 08:28:53.435164   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 65640 objects on 125569
+2024-01-29 08:28:58.447907   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 65911 objects on 125569
+2024-01-29 08:29:03.455895   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 66155 objects on 125569
+2024-01-29 08:29:08.472355   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 66424 objects on 125569
+2024-01-29 08:29:13.494071   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 66698 objects on 125569
+2024-01-29 08:29:18.502115   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 66951 objects on 125569
+2024-01-29 08:29:23.697726   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 67199 objects on 125569
+2024-01-29 08:29:28.730374   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 67406 objects on 125569
+2024-01-29 08:29:33.732894   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 67658 objects on 125569
+2024-01-29 08:29:38.735991   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 67844 objects on 125569
+2024-01-29 08:29:43.741367   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 68098 objects on 125569
+2024-01-29 08:29:48.747322   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 68355 objects on 125569
+2024-01-29 08:29:53.762206   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 68624 objects on 125569
+2024-01-29 08:29:58.764789   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 68871 objects on 125569
+2024-01-29 08:30:03.810328   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 69107 objects on 125569
+2024-01-29 08:30:08.816274   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 69282 objects on 125569
+2024-01-29 08:30:13.849238   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 69522 objects on 125569
+2024-01-29 08:30:18.871674   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 69800 objects on 125569
+2024-01-29 08:30:23.880004   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 70031 objects on 125569
+2024-01-29 08:30:28.892400   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 70259 objects on 125569
+2024-01-29 08:30:33.913836   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 70456 objects on 125569
+2024-01-29 08:30:38.932237   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 70686 objects on 125569
+2024-01-29 08:30:43.935251   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 70941 objects on 125569
+2024-01-29 08:30:48.940411   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 71169 objects on 125569
+2024-01-29 08:30:53.941560   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 71425 objects on 125569
+2024-01-29 08:30:58.946208   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 71662 objects on 125569
+2024-01-29 08:31:04.033769   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 71858 objects on 125569
+2024-01-29 08:31:09.040160   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 72102 objects on 125569
+2024-01-29 08:31:14.060115   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 72307 objects on 125569
+2024-01-29 08:31:19.064195   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 72517 objects on 125569
+2024-01-29 08:31:24.087088   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 72764 objects on 125569
+2024-01-29 08:31:29.290302   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 72987 objects on 125569
+2024-01-29 08:31:34.313653   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 73189 objects on 125569
+2024-01-29 08:31:39.328638   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 73415 objects on 125569
+2024-01-29 08:31:44.332430   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 73603 objects on 125569
+2024-01-29 08:31:49.341407   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 73872 objects on 125569
+2024-01-29 08:31:54.379943   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 74091 objects on 125569
+2024-01-29 08:31:59.381418   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 74317 objects on 125569
+2024-01-29 08:32:04.686719   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 74513 objects on 125569
+2024-01-29 08:32:09.698102   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 74704 objects on 125569
+2024-01-29 08:32:14.712865   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 74937 objects on 125569
+2024-01-29 08:32:19.737942   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 75170 objects on 125569
+2024-01-29 08:32:24.758487   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 75454 objects on 125569
+2024-01-29 08:32:29.768225   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 75725 objects on 125569
+2024-01-29 08:32:34.779288   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 76004 objects on 125569
+2024-01-29 08:32:39.788867   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 76277 objects on 125569
+2024-01-29 08:32:44.800555   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 76525 objects on 125569
+2024-01-29 08:32:49.808739   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 76789 objects on 125569
+2024-01-29 08:32:54.808988   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 77054 objects on 125569
+2024-01-29 08:32:59.838160   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 77284 objects on 125569
+2024-01-29 08:33:04.851798   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 77524 objects on 125569
+2024-01-29 08:33:09.867891   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 77759 objects on 125569
+2024-01-29 08:33:14.898403   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 77998 objects on 125569
+2024-01-29 08:33:19.908604   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 78212 objects on 125569
+2024-01-29 08:33:24.930298   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 78447 objects on 125569
+2024-01-29 08:33:29.938976   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 78695 objects on 125569
+2024-01-29 08:33:34.951521   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 78939 objects on 125569
+2024-01-29 08:33:39.998619   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 79186 objects on 125569
+2024-01-29 08:33:45.001952   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 79439 objects on 125569
+2024-01-29 08:33:50.018977   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 79681 objects on 125569
+2024-01-29 08:33:55.021599   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 79937 objects on 125569
+2024-01-29 08:34:00.033497   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 80184 objects on 125569
+2024-01-29 08:34:05.043527   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 80419 objects on 125569
+2024-01-29 08:34:10.059456   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 80685 objects on 125569
+2024-01-29 08:34:15.067654   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 80880 objects on 125569
+2024-01-29 08:34:20.072822   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 81137 objects on 125569
+2024-01-29 08:34:25.362702   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 81383 objects on 125569
+2024-01-29 08:34:30.374711   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 81565 objects on 125569
+2024-01-29 08:34:35.379757   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 81779 objects on 125569
+2024-01-29 08:34:40.393967   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 82039 objects on 125569
+2024-01-29 08:34:45.409718   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 82286 objects on 125569
+2024-01-29 08:34:50.420643   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 82559 objects on 125569
+2024-01-29 08:34:55.435846   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 82811 objects on 125569
+2024-01-29 08:35:00.458630   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 83042 objects on 125569
+2024-01-29 08:35:05.468978   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 83236 objects on 125569
+2024-01-29 08:35:10.486349   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 83486 objects on 125569
+2024-01-29 08:35:15.499519   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 83746 objects on 125569
+2024-01-29 08:35:20.510059   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 83954 objects on 125569
+2024-01-29 08:35:25.518890   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 84197 objects on 125569
+2024-01-29 08:35:30.582912   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 84434 objects on 125569
+2024-01-29 08:35:35.592222   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 84655 objects on 125569
+2024-01-29 08:35:40.621781   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 84926 objects on 125569
+2024-01-29 08:35:45.845510   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 85166 objects on 125569
+2024-01-29 08:35:50.860518   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 85427 objects on 125569
+2024-01-29 08:35:55.947736   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 85678 objects on 125569
+2024-01-29 08:36:00.955849   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 85940 objects on 125569
+2024-01-29 08:36:05.968293   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 86160 objects on 125569
+2024-01-29 08:36:10.972299   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 86427 objects on 125569
+2024-01-29 08:36:15.977626   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 86676 objects on 125569
+2024-01-29 08:36:20.983084   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 86942 objects on 125569
+2024-01-29 08:36:25.989095   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 87205 objects on 125569
+2024-01-29 08:36:30.996457   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 87471 objects on 125569
+2024-01-29 08:36:36.016346   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 87709 objects on 125569
+2024-01-29 08:36:41.030252   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 87919 objects on 125569
+2024-01-29 08:36:46.039362   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 88136 objects on 125569
+2024-01-29 08:36:51.098913   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 88390 objects on 125569
+2024-01-29 08:36:56.104066   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 88638 objects on 125569
+2024-01-29 08:37:01.107806   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 88915 objects on 125569
+2024-01-29 08:37:06.122216   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 89139 objects on 125569
+2024-01-29 08:37:11.144876   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 89390 objects on 125569
+2024-01-29 08:37:16.148914   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 89670 objects on 125569
+2024-01-29 08:37:21.167840   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 89926 objects on 125569
+2024-01-29 08:37:26.187805   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 90190 objects on 125569
+2024-01-29 08:37:31.189224   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 90456 objects on 125569
+2024-01-29 08:37:36.202284   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 90712 objects on 125569
+2024-01-29 08:37:41.208237   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 90990 objects on 125569
+2024-01-29 08:37:46.219269   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 91243 objects on 125569
+2024-01-29 08:37:51.228746   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 91524 objects on 125569
+2024-01-29 08:37:56.232910   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 91768 objects on 125569
+2024-01-29 08:38:01.267963   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 92050 objects on 125569
+2024-01-29 08:38:06.275560   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 92321 objects on 125569
+2024-01-29 08:38:11.289201   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 92582 objects on 125569
+2024-01-29 08:38:16.296325   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 92835 objects on 125569
+2024-01-29 08:38:21.320737   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 93104 objects on 125569
+2024-01-29 08:38:26.321264   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 93342 objects on 125569
+2024-01-29 08:38:31.324726   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 93603 objects on 125569
+2024-01-29 08:38:36.332442   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 93877 objects on 125569
+2024-01-29 08:38:41.336844   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 94135 objects on 125569
+2024-01-29 08:38:46.344021   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 94386 objects on 125569
+2024-01-29 08:38:51.356195   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 94638 objects on 125569
+2024-01-29 08:38:56.359041   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 94884 objects on 125569
+2024-01-29 08:39:01.370836   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 95134 objects on 125569
+2024-01-29 08:39:06.375176   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 95398 objects on 125569
+2024-01-29 08:39:11.382034   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 95667 objects on 125569
+2024-01-29 08:39:16.420128   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 95935 objects on 125569
+2024-01-29 08:39:21.433104   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 96204 objects on 125569
+2024-01-29 08:39:26.434994   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 96482 objects on 125569
+2024-01-29 08:39:31.448950   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 96727 objects on 125569
+2024-01-29 08:39:36.456818   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 96954 objects on 125569
+2024-01-29 08:39:41.484945   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 97198 objects on 125569
+2024-01-29 08:39:46.494996   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 97462 objects on 125569
+2024-01-29 08:39:51.508807   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 97675 objects on 125569
+2024-01-29 08:39:56.510805   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 97867 objects on 125569
+2024-01-29 08:40:01.518374   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 98082 objects on 125569
+2024-01-29 08:40:06.533797   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 98333 objects on 125569
+2024-01-29 08:40:11.534550   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 98587 objects on 125569
+2024-01-29 08:40:16.544602   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 98858 objects on 125569
+2024-01-29 08:40:21.559547   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 99123 objects on 125569
+2024-01-29 08:40:26.571061   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 99378 objects on 125569
+2024-01-29 08:40:31.574191   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 99616 objects on 125569
+2024-01-29 08:40:36.584159   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 99871 objects on 125569
+2024-01-29 08:40:41.587337   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 100115 objects on 125569
+2024-01-29 08:40:46.600735   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 100347 objects on 125569
+2024-01-29 08:40:51.614444   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 100594 objects on 125569
+2024-01-29 08:40:56.614958   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 100859 objects on 125569
+2024-01-29 08:41:01.630772   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 101091 objects on 125569
+2024-01-29 08:41:06.635512   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 101358 objects on 125569
+2024-01-29 08:41:11.640228   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 101609 objects on 125569
+2024-01-29 08:41:16.656150   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 101855 objects on 125569
+2024-01-29 08:41:21.656438   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 102101 objects on 125569
+2024-01-29 08:41:26.664829   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 102369 objects on 125569
+2024-01-29 08:41:31.664942   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 102611 objects on 125569
+2024-01-29 08:41:36.669174   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 102842 objects on 125569
+2024-01-29 08:41:41.674808   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 103094 objects on 125569
+2024-01-29 08:41:46.691582   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 103351 objects on 125569
+2024-01-29 08:41:51.696324   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 103604 objects on 125569
+2024-01-29 08:41:56.704772   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 103865 objects on 125569
+2024-01-29 08:42:01.709861   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 104101 objects on 125569
+2024-01-29 08:42:06.711488   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 104338 objects on 125569
+2024-01-29 08:42:11.720849   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 104519 objects on 125569
+2024-01-29 08:42:16.735779   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 104797 objects on 125569
+2024-01-29 08:42:21.745625   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 105037 objects on 125569
+2024-01-29 08:42:26.755387   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 105304 objects on 125569
+2024-01-29 08:42:31.800866   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 105582 objects on 125569
+2024-01-29 08:42:36.827634   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 105845 objects on 125569
+2024-01-29 08:42:41.830782   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 106056 objects on 125569
+2024-01-29 08:42:46.849538   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 106260 objects on 125569
+2024-01-29 08:42:51.870268   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 106428 objects on 125569
+2024-01-29 08:42:56.879809   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 106603 objects on 125569
+2024-01-29 08:43:01.895425   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 106876 objects on 125569
+2024-01-29 08:43:06.895952   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 106999 objects on 125569
+2024-01-29 08:43:11.900977   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 107262 objects on 125569
+2024-01-29 08:43:16.911544   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 107495 objects on 125569
+2024-01-29 08:43:21.920704   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 107702 objects on 125569
+2024-01-29 08:43:27.018022   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 107896 objects on 125569
+2024-01-29 08:43:32.046539   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 108120 objects on 125569
+2024-01-29 08:43:37.053674   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 108333 objects on 125569
+2024-01-29 08:43:42.054960   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 108553 objects on 125569
+2024-01-29 08:43:47.063911   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 108766 objects on 125569
+2024-01-29 08:43:52.070355   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 108994 objects on 125569
+2024-01-29 08:43:57.088431   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 109224 objects on 125569
+2024-01-29 08:44:02.099908   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 109458 objects on 125569
+2024-01-29 08:44:07.100009   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 109700 objects on 125569
+2024-01-29 08:44:12.148594   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 109932 objects on 125569
+2024-01-29 08:44:17.174606   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 110127 objects on 125569
+2024-01-29 08:44:22.209093   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 110357 objects on 125569
+2024-01-29 08:44:27.212628   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 110612 objects on 125569
+2024-01-29 08:44:32.215740   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 110838 objects on 125569
+2024-01-29 08:44:37.226955   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 111088 objects on 125569
+2024-01-29 08:44:42.232467   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 111313 objects on 125569
+2024-01-29 08:44:47.238017   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 111485 objects on 125569
+2024-01-29 08:44:52.255791   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 111740 objects on 125569
+2024-01-29 08:44:57.551551   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 111973 objects on 125569
+2024-01-29 08:45:02.560642   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 112165 objects on 125569
+2024-01-29 08:45:07.563887   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 112424 objects on 125569
+2024-01-29 08:45:12.600274   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 112708 objects on 125569
+2024-01-29 08:45:17.603163   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 112973 objects on 125569
+2024-01-29 08:45:22.613355   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 113237 objects on 125569
+2024-01-29 08:45:27.615503   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 113495 objects on 125569
+2024-01-29 08:45:32.616663   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 113733 objects on 125569
+2024-01-29 08:45:37.619243   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 113979 objects on 125569
+2024-01-29 08:45:42.633736   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 114194 objects on 125569
+2024-01-29 08:45:47.648559   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 114434 objects on 125569
+2024-01-29 08:45:52.663128   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 114664 objects on 125569
+2024-01-29 08:45:57.668519   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 114948 objects on 125569
+2024-01-29 08:46:02.675321   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 115178 objects on 125569
+2024-01-29 08:46:07.685503   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 115433 objects on 125569
+2024-01-29 08:46:12.706032   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 115719 objects on 125569
+2024-01-29 08:46:17.709896   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 116032 objects on 125569
+2024-01-29 08:46:22.722524   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 116335 objects on 125569
+2024-01-29 08:46:27.724306   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 116609 objects on 125569
+2024-01-29 08:46:32.730673   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 116883 objects on 125569
+2024-01-29 08:46:37.738052   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 117114 objects on 125569
+2024-01-29 08:46:42.742392   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 117449 objects on 125569
+2024-01-29 08:46:47.773908   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 117743 objects on 125569
+2024-01-29 08:46:52.775566   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 117988 objects on 125569
+2024-01-29 08:46:57.810446   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 118291 objects on 125569
+2024-01-29 08:47:02.812529   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 118589 objects on 125569
+2024-01-29 08:47:07.817297   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 118890 objects on 125569
+2024-01-29 08:47:12.827627   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 119182 objects on 125569
+2024-01-29 08:47:17.858125   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 119506 objects on 125569
+2024-01-29 08:47:22.867277   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 119787 objects on 125569
+2024-01-29 08:47:27.867867   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 120062 objects on 125569
+2024-01-29 08:47:32.868817   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 120387 objects on 125569
+2024-01-29 08:47:37.870063   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 120778 objects on 125569
+2024-01-29 08:47:42.872222   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 121052 objects on 125569
+2024-01-29 08:47:47.915665   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 121424 objects on 125569
+2024-01-29 08:47:52.927941   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 121710 objects on 125569
+2024-01-29 08:47:57.932972   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 121986 objects on 125569
+2024-01-29 08:48:02.941340   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 122303 objects on 125569
+2024-01-29 08:48:07.954510   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 122700 objects on 125569
+2024-01-29 08:48:12.956448   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 123037 objects on 125569
+2024-01-29 08:48:17.956444   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 123291 objects on 125569
+2024-01-29 08:48:22.962618   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 123614 objects on 125569
+2024-01-29 08:48:27.962982   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 123941 objects on 125569
+2024-01-29 08:48:32.964925   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 124273 objects on 125569
+2024-01-29 08:48:37.968032   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 124653 objects on 125569
+2024-01-29 08:48:43.064708   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 124957 objects on 125569
+2024-01-29 08:48:48.069884   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : transferred 125370 objects on 125569
+2024-01-29 08:48:50.848854   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket>_run_command)[exit function]
+2024-01-29 08:48:50.849149  NOTIFY (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[Transfert] : Done
+2024-01-29 08:48:50.849295   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[VerifyTargetBucket]
+2024-01-29 08:48:50.849422   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket>_run_command)[in function]
+2024-01-29 08:48:50.849497   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket>_run_command)[in function] : args=('du', '--versions', 'cluster/cdn')
+2024-01-29 08:55:30.507836   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[VerifyTargetBucket] : json={'prefix': 'cdn', 'size': 3000924910, 'objects': 125569, 'status': 'success', 'isVersions': True}
+2024-01-29 08:55:30.514418   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket>_run_command)[exit function]
+2024-01-29 08:55:30.514706   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore>MirrorBucket)[exit function]
+2024-01-29 08:55:30.514890   DEBUG (restore>RestoreS3>restore_minio_cdn>McCommands>restore)[exit function]
+2024-01-29 08:55:30.514990  NOTIFY (restore>RestoreS3>restore_minio_cdn)[Done]
+2024-01-29 08:55:30.515103  NOTIFY (restore>RestoreS3>restore_minio_cdn-sessions-storage)[Starting]
+2024-01-29 08:55:30.515200   DEBUG (restore>RestoreS3>restore_minio_cdn-sessions-storage>McCommands)[Starting]
+2024-01-29 08:55:30.515265   DEBUG (restore>RestoreS3>restore_minio_cdn-sessions-storage>McCommands>restore)[in function]
+2024-01-29 08:55:30.515353   DEBUG (restore>RestoreS3>restore_minio_cdn-sessions-storage>McCommands>restore>_run_command)[in function]
+2024-01-29 08:55:30.515412   DEBUG (restore>RestoreS3>restore_minio_cdn-sessions-storage>McCommands>restore>_run_command)[in function] : args=('rb', '--force', 'cluster/cdn-sessions-storage')
+2024-01-29 08:55:34.345718   DEBUG (restore>RestoreS3>restore_minio_cdn-sessions-storage>McCommands>restore>_run_command)[exit function]
+2024-01-29 08:55:34.345923   DEBUG (restore>RestoreS3>restore_minio_cdn-sessions-storage>McCommands>restore)[CreateClusterBucket]
+2024-01-29 08:55:34.346008   DEBUG (restore>RestoreS3>restore_minio_cdn-sessions-storage>McCommands>restore>_run_command)[in function]
+2024-01-29 08:55:34.346087   DEBUG (restore>RestoreS3>restore_minio_cdn-sessions-storage>McCommands>restore>_run_command)[in function] : args=('mb', 'cluster/cdn-sessions-storage')
+2024-01-29 08:55:34.918823   DEBUG (restore>RestoreS3>restore_minio_cdn-sessions-storage>McCommands>restore>_run_command)[exit function]
+2024-01-29 08:55:34.919173   DEBUG (restore>RestoreS3>restore_minio_cdn-sessions-storage>McCommands>restore)[Transfert]
+2024-01-29 08:55:34.919374   DEBUG (restore>RestoreS3>restore_minio_cdn-sessions-storage>McCommands>restore>MirrorBucket)[in function]
+2024-01-29 08:55:34.919552   DEBUG (restore>RestoreS3>restore_minio_cdn-sessions-storage>McCommands>restore>MirrorBucket)[DiskUsageSourceBucket]
+2024-01-29 08:55:34.920072   DEBUG (restore>RestoreS3>restore_minio_cdn-sessions-storage>McCommands>restore>MirrorBucket>_run_command)[in function]
+2024-01-29 08:55:34.920294   DEBUG (restore>RestoreS3>restore_minio_cdn-sessions-storage>McCommands>restore>MirrorBucket>_run_command)[in function] : args=('du', '--versions', 'local/cdn-sessions-storage')
+2024-01-29 08:55:35.102839   DEBUG (restore>RestoreS3>restore_minio_cdn-sessions-storage>McCommands>restore>MirrorBucket)[DiskUsageSourceBucket] : json={'prefix': 'cdn-sessions-storage', 'size': 428836, 'objects': 267, 'status': 'success', 'isVersions': True}
+2024-01-29 08:55:35.105087   DEBUG (restore>RestoreS3>restore_minio_cdn-sessions-storage>McCommands>restore>MirrorBucket>_run_command)[exit function]
+2024-01-29 08:55:35.105226  NOTIFY (restore>RestoreS3>restore_minio_cdn-sessions-storage>McCommands>restore>MirrorBucket)[DiskUsageSourceBucket] : source bucket : 267 objects / 428836 bytes
+2024-01-29 08:55:35.105318   DEBUG (restore>RestoreS3>restore_minio_cdn-sessions-storage>McCommands>restore>MirrorBucket)[Transfert]
+2024-01-29 08:55:35.105402   DEBUG (restore>RestoreS3>restore_minio_cdn-sessions-storage>McCommands>restore>MirrorBucket>_run_command)[in function]
+2024-01-29 08:55:35.105466   DEBUG (restore>RestoreS3>restore_minio_cdn-sessions-storage>McCommands>restore>MirrorBucket>_run_command)[in function] : args=('mirror', '--overwrite', '--preserve', '--remove', 'local/cdn-sessions-storage', 'cluster/cdn-sessions-storage')
+2024-01-29 08:55:40.128190   DEBUG (restore>RestoreS3>restore_minio_cdn-sessions-storage>McCommands>restore>MirrorBucket)[Transfert] : transferred 131 objects on 267
+2024-01-29 08:55:41.895815   DEBUG (restore>RestoreS3>restore_minio_cdn-sessions-storage>McCommands>restore>MirrorBucket>_run_command)[exit function]
+2024-01-29 08:55:41.896087  NOTIFY (restore>RestoreS3>restore_minio_cdn-sessions-storage>McCommands>restore>MirrorBucket)[Transfert] : Done
+2024-01-29 08:55:41.896196   DEBUG (restore>RestoreS3>restore_minio_cdn-sessions-storage>McCommands>restore>MirrorBucket)[VerifyTargetBucket]
+2024-01-29 08:55:41.896396   DEBUG (restore>RestoreS3>restore_minio_cdn-sessions-storage>McCommands>restore>MirrorBucket>_run_command)[in function]
+2024-01-29 08:55:41.896525   DEBUG (restore>RestoreS3>restore_minio_cdn-sessions-storage>McCommands>restore>MirrorBucket>_run_command)[in function] : args=('du', '--versions', 'cluster/cdn-sessions-storage')
+2024-01-29 08:55:42.067521   DEBUG (restore>RestoreS3>restore_minio_cdn-sessions-storage>McCommands>restore>MirrorBucket)[VerifyTargetBucket] : json={'prefix': 'cdn-sessions-storage', 'size': 428836, 'objects': 267, 'status': 'success', 'isVersions': True}
+2024-01-29 08:55:42.069403   DEBUG (restore>RestoreS3>restore_minio_cdn-sessions-storage>McCommands>restore>MirrorBucket>_run_command)[exit function]
+2024-01-29 08:55:42.069755   DEBUG (restore>RestoreS3>restore_minio_cdn-sessions-storage>McCommands>restore>MirrorBucket)[exit function]
+2024-01-29 08:55:42.069857   DEBUG (restore>RestoreS3>restore_minio_cdn-sessions-storage>McCommands>restore)[exit function]
+2024-01-29 08:55:42.069942  NOTIFY (restore>RestoreS3>restore_minio_cdn-sessions-storage)[Done]
+2024-01-29 08:55:42.070030  NOTIFY (restore>RestoreS3>restore_minio_data)[Starting]
+2024-01-29 08:55:42.070112   DEBUG (restore>RestoreS3>restore_minio_data>McCommands)[Starting]
+2024-01-29 08:55:42.070183   DEBUG (restore>RestoreS3>restore_minio_data>McCommands>restore)[in function]
+2024-01-29 08:55:42.070246   DEBUG (restore>RestoreS3>restore_minio_data>McCommands>restore>_run_command)[in function]
+2024-01-29 08:55:42.070329   DEBUG (restore>RestoreS3>restore_minio_data>McCommands>restore>_run_command)[in function] : args=('rb', '--force', 'cluster/data')
+2024-01-29 08:56:08.299842   DEBUG (restore>RestoreS3>restore_minio_data>McCommands>restore>_run_command)[exit function]
+2024-01-29 08:56:08.300279   DEBUG (restore>RestoreS3>restore_minio_data>McCommands>restore)[CreateClusterBucket]
+2024-01-29 08:56:08.300462   DEBUG (restore>RestoreS3>restore_minio_data>McCommands>restore>_run_command)[in function]
+2024-01-29 08:56:08.300597   DEBUG (restore>RestoreS3>restore_minio_data>McCommands>restore>_run_command)[in function] : args=('mb', 'cluster/data')
+2024-01-29 08:56:08.618549   DEBUG (restore>RestoreS3>restore_minio_data>McCommands>restore>_run_command)[exit function]
+2024-01-29 08:56:08.618996   DEBUG (restore>RestoreS3>restore_minio_data>McCommands>restore)[Transfert]
+2024-01-29 08:56:08.619854   DEBUG (restore>RestoreS3>restore_minio_data>McCommands>restore>MirrorBucket)[in function]
+2024-01-29 08:56:08.620076   DEBUG (restore>RestoreS3>restore_minio_data>McCommands>restore>MirrorBucket)[DiskUsageSourceBucket]
+2024-01-29 08:56:08.620270   DEBUG (restore>RestoreS3>restore_minio_data>McCommands>restore>MirrorBucket>_run_command)[in function]
+2024-01-29 08:56:08.620405   DEBUG (restore>RestoreS3>restore_minio_data>McCommands>restore>MirrorBucket>_run_command)[in function] : args=('du', '--versions', 'local/data')
+2024-01-29 08:56:09.186741   DEBUG (restore>RestoreS3>restore_minio_data>McCommands>restore>MirrorBucket)[DiskUsageSourceBucket] : json={'prefix': 'data', 'size': 1758410314, 'objects': 4022, 'status': 'success', 'isVersions': True}
+2024-01-29 08:56:09.190816   DEBUG (restore>RestoreS3>restore_minio_data>McCommands>restore>MirrorBucket>_run_command)[exit function]
+2024-01-29 08:56:09.191016  NOTIFY (restore>RestoreS3>restore_minio_data>McCommands>restore>MirrorBucket)[DiskUsageSourceBucket] : source bucket : 4022 objects / 1758410314 bytes
+2024-01-29 08:56:09.191153   DEBUG (restore>RestoreS3>restore_minio_data>McCommands>restore>MirrorBucket)[Transfert]
+2024-01-29 08:56:09.191277   DEBUG (restore>RestoreS3>restore_minio_data>McCommands>restore>MirrorBucket>_run_command)[in function]
+2024-01-29 08:56:09.191399   DEBUG (restore>RestoreS3>restore_minio_data>McCommands>restore>MirrorBucket>_run_command)[in function] : args=('mirror', '--overwrite', '--preserve', '--remove', 'local/data', 'cluster/data')
+2024-01-29 08:56:14.313666   DEBUG (restore>RestoreS3>restore_minio_data>McCommands>restore>MirrorBucket)[Transfert] : transferred 143 objects on 4022
+2024-01-29 08:56:19.320128   DEBUG (restore>RestoreS3>restore_minio_data>McCommands>restore>MirrorBucket)[Transfert] : transferred 292 objects on 4022
+2024-01-29 08:56:24.356845   DEBUG (restore>RestoreS3>restore_minio_data>McCommands>restore>MirrorBucket)[Transfert] : transferred 433 objects on 4022
+2024-01-29 08:56:29.376527   DEBUG (restore>RestoreS3>restore_minio_data>McCommands>restore>MirrorBucket)[Transfert] : transferred 613 objects on 4022
+2024-01-29 08:56:35.218663   DEBUG (restore>RestoreS3>restore_minio_data>McCommands>restore>MirrorBucket)[Transfert] : transferred 773 objects on 4022
+2024-01-29 08:56:40.239096   DEBUG (restore>RestoreS3>restore_minio_data>McCommands>restore>MirrorBucket)[Transfert] : transferred 942 objects on 4022
+2024-01-29 08:56:45.398983   DEBUG (restore>RestoreS3>restore_minio_data>McCommands>restore>MirrorBucket)[Transfert] : transferred 1155 objects on 4022
+2024-01-29 08:56:50.570278   DEBUG (restore>RestoreS3>restore_minio_data>McCommands>restore>MirrorBucket)[Transfert] : transferred 1332 objects on 4022
+2024-01-29 08:56:55.578924   DEBUG (restore>RestoreS3>restore_minio_data>McCommands>restore>MirrorBucket)[Transfert] : transferred 1532 objects on 4022
+2024-01-29 08:57:00.670250   DEBUG (restore>RestoreS3>restore_minio_data>McCommands>restore>MirrorBucket)[Transfert] : transferred 1845 objects on 4022
+2024-01-29 08:57:05.679289   DEBUG (restore>RestoreS3>restore_minio_data>McCommands>restore>MirrorBucket)[Transfert] : transferred 1991 objects on 4022
+2024-01-29 08:57:10.773385   DEBUG (restore>RestoreS3>restore_minio_data>McCommands>restore>MirrorBucket)[Transfert] : transferred 2166 objects on 4022
+2024-01-29 08:57:15.870988   DEBUG (restore>RestoreS3>restore_minio_data>McCommands>restore>MirrorBucket)[Transfert] : transferred 2345 objects on 4022
+2024-01-29 08:57:21.095523   DEBUG (restore>RestoreS3>restore_minio_data>McCommands>restore>MirrorBucket)[Transfert] : transferred 2512 objects on 4022
+2024-01-29 08:57:26.096214   DEBUG (restore>RestoreS3>restore_minio_data>McCommands>restore>MirrorBucket)[Transfert] : transferred 2704 objects on 4022
+2024-01-29 08:57:31.111185   DEBUG (restore>RestoreS3>restore_minio_data>McCommands>restore>MirrorBucket)[Transfert] : transferred 2827 objects on 4022
+2024-01-29 08:57:36.112394   DEBUG (restore>RestoreS3>restore_minio_data>McCommands>restore>MirrorBucket)[Transfert] : transferred 2968 objects on 4022
+2024-01-29 08:57:41.400534   DEBUG (restore>RestoreS3>restore_minio_data>McCommands>restore>MirrorBucket)[Transfert] : transferred 3230 objects on 4022
+2024-01-29 08:57:46.403999   DEBUG (restore>RestoreS3>restore_minio_data>McCommands>restore>MirrorBucket)[Transfert] : transferred 3416 objects on 4022
+2024-01-29 08:57:51.632321   DEBUG (restore>RestoreS3>restore_minio_data>McCommands>restore>MirrorBucket)[Transfert] : transferred 3634 objects on 4022
+2024-01-29 08:57:56.931079   DEBUG (restore>RestoreS3>restore_minio_data>McCommands>restore>MirrorBucket)[Transfert] : transferred 3789 objects on 4022
+2024-01-29 08:58:02.733983   DEBUG (restore>RestoreS3>restore_minio_data>McCommands>restore>MirrorBucket)[Transfert] : transferred 3937 objects on 4022
+2024-01-29 08:58:07.805748   DEBUG (restore>RestoreS3>restore_minio_data>McCommands>restore>MirrorBucket)[Transfert] : transferred 3980 objects on 4022
+2024-01-29 08:58:16.706589   DEBUG (restore>RestoreS3>restore_minio_data>McCommands>restore>MirrorBucket>_run_command)[exit function]
+2024-01-29 08:58:16.706888  NOTIFY (restore>RestoreS3>restore_minio_data>McCommands>restore>MirrorBucket)[Transfert] : Done
+2024-01-29 08:58:16.707444   DEBUG (restore>RestoreS3>restore_minio_data>McCommands>restore>MirrorBucket)[VerifyTargetBucket]
+2024-01-29 08:58:16.707589   DEBUG (restore>RestoreS3>restore_minio_data>McCommands>restore>MirrorBucket>_run_command)[in function]
+2024-01-29 08:58:16.707734   DEBUG (restore>RestoreS3>restore_minio_data>McCommands>restore>MirrorBucket>_run_command)[in function] : args=('du', '--versions', 'cluster/data')
+2024-01-29 08:58:18.471207   DEBUG (restore>RestoreS3>restore_minio_data>McCommands>restore>MirrorBucket)[VerifyTargetBucket] : json={'prefix': 'data', 'size': 1758410314, 'objects': 4022, 'status': 'success', 'isVersions': True}
+2024-01-29 08:58:18.471479   DEBUG (restore>RestoreS3>restore_minio_data>McCommands>restore>MirrorBucket>_run_command)[exit function]
+2024-01-29 08:58:18.471588   DEBUG (restore>RestoreS3>restore_minio_data>McCommands>restore>MirrorBucket)[exit function]
+2024-01-29 08:58:18.471712   DEBUG (restore>RestoreS3>restore_minio_data>McCommands>restore)[exit function]
+2024-01-29 08:58:18.471847  NOTIFY (restore>RestoreS3>restore_minio_data)[Done]
+2024-01-29 08:58:18.471936  NOTIFY (restore>RestoreS3>restore_minio_flux)[Starting]
+2024-01-29 08:58:18.472013   DEBUG (restore>RestoreS3>restore_minio_flux>McCommands)[Starting]
+2024-01-29 08:58:18.472151   DEBUG (restore>RestoreS3>restore_minio_flux>McCommands>restore)[in function]
+2024-01-29 08:58:18.472286   DEBUG (restore>RestoreS3>restore_minio_flux>McCommands>restore>_run_command)[in function]
+2024-01-29 08:58:18.472357   DEBUG (restore>RestoreS3>restore_minio_flux>McCommands>restore>_run_command)[in function] : args=('rb', '--force', 'cluster/flux')
+2024-01-29 08:58:24.321143   DEBUG (restore>RestoreS3>restore_minio_flux>McCommands>restore>_run_command)[exit function]
+2024-01-29 08:58:24.321350   DEBUG (restore>RestoreS3>restore_minio_flux>McCommands>restore)[CreateClusterBucket]
+2024-01-29 08:58:24.321436   DEBUG (restore>RestoreS3>restore_minio_flux>McCommands>restore>_run_command)[in function]
+2024-01-29 08:58:24.321511   DEBUG (restore>RestoreS3>restore_minio_flux>McCommands>restore>_run_command)[in function] : args=('mb', 'cluster/flux')
+2024-01-29 08:58:24.698077   DEBUG (restore>RestoreS3>restore_minio_flux>McCommands>restore>_run_command)[exit function]
+2024-01-29 08:58:24.698461   DEBUG (restore>RestoreS3>restore_minio_flux>McCommands>restore)[Transfert]
+2024-01-29 08:58:24.698626   DEBUG (restore>RestoreS3>restore_minio_flux>McCommands>restore>MirrorBucket)[in function]
+2024-01-29 08:58:24.698833   DEBUG (restore>RestoreS3>restore_minio_flux>McCommands>restore>MirrorBucket)[DiskUsageSourceBucket]
+2024-01-29 08:58:24.699171   DEBUG (restore>RestoreS3>restore_minio_flux>McCommands>restore>MirrorBucket>_run_command)[in function]
+2024-01-29 08:58:24.699485   DEBUG (restore>RestoreS3>restore_minio_flux>McCommands>restore>MirrorBucket>_run_command)[in function] : args=('du', '--versions', 'local/flux')
+2024-01-29 08:58:24.898032   DEBUG (restore>RestoreS3>restore_minio_flux>McCommands>restore>MirrorBucket)[DiskUsageSourceBucket] : json={'prefix': 'flux', 'size': 4903598, 'objects': 716, 'status': 'success', 'isVersions': True}
+2024-01-29 08:58:24.900952   DEBUG (restore>RestoreS3>restore_minio_flux>McCommands>restore>MirrorBucket>_run_command)[exit function]
+2024-01-29 08:58:24.902045  NOTIFY (restore>RestoreS3>restore_minio_flux>McCommands>restore>MirrorBucket)[DiskUsageSourceBucket] : source bucket : 716 objects / 4903598 bytes
+2024-01-29 08:58:24.902279   DEBUG (restore>RestoreS3>restore_minio_flux>McCommands>restore>MirrorBucket)[Transfert]
+2024-01-29 08:58:24.902433   DEBUG (restore>RestoreS3>restore_minio_flux>McCommands>restore>MirrorBucket>_run_command)[in function]
+2024-01-29 08:58:24.902534   DEBUG (restore>RestoreS3>restore_minio_flux>McCommands>restore>MirrorBucket>_run_command)[in function] : args=('mirror', '--overwrite', '--preserve', '--remove', 'local/flux', 'cluster/flux')
+2024-01-29 08:58:30.142699   DEBUG (restore>RestoreS3>restore_minio_flux>McCommands>restore>MirrorBucket)[Transfert] : transferred 78 objects on 716
+2024-01-29 08:58:35.214917   DEBUG (restore>RestoreS3>restore_minio_flux>McCommands>restore>MirrorBucket)[Transfert] : transferred 180 objects on 716
+2024-01-29 08:58:40.227470   DEBUG (restore>RestoreS3>restore_minio_flux>McCommands>restore>MirrorBucket)[Transfert] : transferred 281 objects on 716
+2024-01-29 08:58:45.402407   DEBUG (restore>RestoreS3>restore_minio_flux>McCommands>restore>MirrorBucket)[Transfert] : transferred 489 objects on 716
+2024-01-29 08:58:50.488619   DEBUG (restore>RestoreS3>restore_minio_flux>McCommands>restore>MirrorBucket)[Transfert] : transferred 643 objects on 716
+2024-01-29 08:58:52.897792   DEBUG (restore>RestoreS3>restore_minio_flux>McCommands>restore>MirrorBucket>_run_command)[exit function]
+2024-01-29 08:58:52.898126  NOTIFY (restore>RestoreS3>restore_minio_flux>McCommands>restore>MirrorBucket)[Transfert] : Done
+2024-01-29 08:58:52.898859   DEBUG (restore>RestoreS3>restore_minio_flux>McCommands>restore>MirrorBucket)[VerifyTargetBucket]
+2024-01-29 08:58:52.898981   DEBUG (restore>RestoreS3>restore_minio_flux>McCommands>restore>MirrorBucket>_run_command)[in function]
+2024-01-29 08:58:52.899085   DEBUG (restore>RestoreS3>restore_minio_flux>McCommands>restore>MirrorBucket>_run_command)[in function] : args=('du', '--versions', 'cluster/flux')
+2024-01-29 08:58:53.816434   DEBUG (restore>RestoreS3>restore_minio_flux>McCommands>restore>MirrorBucket)[VerifyTargetBucket] : json={'prefix': 'flux', 'size': 4903598, 'objects': 716, 'status': 'success', 'isVersions': True}
+2024-01-29 08:58:53.818543   DEBUG (restore>RestoreS3>restore_minio_flux>McCommands>restore>MirrorBucket>_run_command)[exit function]
+2024-01-29 08:58:53.818675   DEBUG (restore>RestoreS3>restore_minio_flux>McCommands>restore>MirrorBucket)[exit function]
+2024-01-29 08:58:53.818746   DEBUG (restore>RestoreS3>restore_minio_flux>McCommands>restore)[exit function]
+2024-01-29 08:58:53.818807  NOTIFY (restore>RestoreS3>restore_minio_flux)[Done]
+2024-01-29 08:58:53.818885  NOTIFY (restore>RestoreS3>restore_minio_stories)[Starting]
+2024-01-29 08:58:53.818961   DEBUG (restore>RestoreS3>restore_minio_stories>McCommands)[Starting]
+2024-01-29 08:58:53.819020   DEBUG (restore>RestoreS3>restore_minio_stories>McCommands>restore)[in function]
+2024-01-29 08:58:53.819079   DEBUG (restore>RestoreS3>restore_minio_stories>McCommands>restore>_run_command)[in function]
+2024-01-29 08:58:53.819136   DEBUG (restore>RestoreS3>restore_minio_stories>McCommands>restore>_run_command)[in function] : args=('rb', '--force', 'cluster/stories')
+2024-01-29 08:59:09.497533   DEBUG (restore>RestoreS3>restore_minio_stories>McCommands>restore>_run_command)[exit function]
+2024-01-29 08:59:09.497842   DEBUG (restore>RestoreS3>restore_minio_stories>McCommands>restore)[CreateClusterBucket]
+2024-01-29 08:59:09.498515   DEBUG (restore>RestoreS3>restore_minio_stories>McCommands>restore>_run_command)[in function]
+2024-01-29 08:59:09.498677   DEBUG (restore>RestoreS3>restore_minio_stories>McCommands>restore>_run_command)[in function] : args=('mb', 'cluster/stories')
+2024-01-29 08:59:09.890843   DEBUG (restore>RestoreS3>restore_minio_stories>McCommands>restore>_run_command)[exit function]
+2024-01-29 08:59:09.891079   DEBUG (restore>RestoreS3>restore_minio_stories>McCommands>restore)[Transfert]
+2024-01-29 08:59:09.891254   DEBUG (restore>RestoreS3>restore_minio_stories>McCommands>restore>MirrorBucket)[in function]
+2024-01-29 08:59:09.891366   DEBUG (restore>RestoreS3>restore_minio_stories>McCommands>restore>MirrorBucket)[DiskUsageSourceBucket]
+2024-01-29 08:59:09.891472   DEBUG (restore>RestoreS3>restore_minio_stories>McCommands>restore>MirrorBucket>_run_command)[in function]
+2024-01-29 08:59:09.891567   DEBUG (restore>RestoreS3>restore_minio_stories>McCommands>restore>MirrorBucket>_run_command)[in function] : args=('du', '--versions', 'local/stories')
+2024-01-29 08:59:10.359468   DEBUG (restore>RestoreS3>restore_minio_stories>McCommands>restore>MirrorBucket)[DiskUsageSourceBucket] : json={'prefix': 'stories', 'size': 3980989, 'objects': 2695, 'status': 'success', 'isVersions': True}
+2024-01-29 08:59:10.362843   DEBUG (restore>RestoreS3>restore_minio_stories>McCommands>restore>MirrorBucket>_run_command)[exit function]
+2024-01-29 08:59:10.363001  NOTIFY (restore>RestoreS3>restore_minio_stories>McCommands>restore>MirrorBucket)[DiskUsageSourceBucket] : source bucket : 2695 objects / 3980989 bytes
+2024-01-29 08:59:10.363079   DEBUG (restore>RestoreS3>restore_minio_stories>McCommands>restore>MirrorBucket)[Transfert]
+2024-01-29 08:59:10.363149   DEBUG (restore>RestoreS3>restore_minio_stories>McCommands>restore>MirrorBucket>_run_command)[in function]
+2024-01-29 08:59:10.363245   DEBUG (restore>RestoreS3>restore_minio_stories>McCommands>restore>MirrorBucket>_run_command)[in function] : args=('mirror', '--overwrite', '--preserve', '--remove', 'local/stories', 'cluster/stories')
+2024-01-29 08:59:15.676223   DEBUG (restore>RestoreS3>restore_minio_stories>McCommands>restore>MirrorBucket)[Transfert] : transferred 123 objects on 2695
+2024-01-29 08:59:21.019120   DEBUG (restore>RestoreS3>restore_minio_stories>McCommands>restore>MirrorBucket)[Transfert] : transferred 312 objects on 2695
+2024-01-29 08:59:26.194200   DEBUG (restore>RestoreS3>restore_minio_stories>McCommands>restore>MirrorBucket)[Transfert] : transferred 559 objects on 2695
+2024-01-29 08:59:31.201105   DEBUG (restore>RestoreS3>restore_minio_stories>McCommands>restore>MirrorBucket)[Transfert] : transferred 926 objects on 2695
+2024-01-29 08:59:37.160934   DEBUG (restore>RestoreS3>restore_minio_stories>McCommands>restore>MirrorBucket)[Transfert] : transferred 1206 objects on 2695
+2024-01-29 08:59:42.161452   DEBUG (restore>RestoreS3>restore_minio_stories>McCommands>restore>MirrorBucket)[Transfert] : transferred 1558 objects on 2695
+2024-01-29 08:59:47.162084   DEBUG (restore>RestoreS3>restore_minio_stories>McCommands>restore>MirrorBucket)[Transfert] : transferred 1890 objects on 2695
+2024-01-29 08:59:52.196385   DEBUG (restore>RestoreS3>restore_minio_stories>McCommands>restore>MirrorBucket)[Transfert] : transferred 2320 objects on 2695
+2024-01-29 08:59:57.597178   DEBUG (restore>RestoreS3>restore_minio_stories>McCommands>restore>MirrorBucket>_run_command)[exit function]
+2024-01-29 08:59:57.597709  NOTIFY (restore>RestoreS3>restore_minio_stories>McCommands>restore>MirrorBucket)[Transfert] : Done
+2024-01-29 08:59:57.599003   DEBUG (restore>RestoreS3>restore_minio_stories>McCommands>restore>MirrorBucket)[VerifyTargetBucket]
+2024-01-29 08:59:57.601371   DEBUG (restore>RestoreS3>restore_minio_stories>McCommands>restore>MirrorBucket>_run_command)[in function]
+2024-01-29 08:59:57.601495   DEBUG (restore>RestoreS3>restore_minio_stories>McCommands>restore>MirrorBucket>_run_command)[in function] : args=('du', '--versions', 'cluster/stories')
+2024-01-29 08:59:58.529944   DEBUG (restore>RestoreS3>restore_minio_stories>McCommands>restore>MirrorBucket)[VerifyTargetBucket] : json={'prefix': 'stories', 'size': 3980989, 'objects': 2695, 'status': 'success', 'isVersions': True}
+2024-01-29 08:59:58.532444   DEBUG (restore>RestoreS3>restore_minio_stories>McCommands>restore>MirrorBucket>_run_command)[exit function]
+2024-01-29 08:59:58.532597   DEBUG (restore>RestoreS3>restore_minio_stories>McCommands>restore>MirrorBucket)[exit function]
+2024-01-29 08:59:58.532675   DEBUG (restore>RestoreS3>restore_minio_stories>McCommands>restore)[exit function]
+2024-01-29 08:59:58.532750  NOTIFY (restore>RestoreS3>restore_minio_stories)[Done]
+2024-01-29 08:59:58.532821   DEBUG (restore>RestoreS3>McCommands)[ComponentInitialized]
+2024-01-29 08:59:58.532900   DEBUG (restore>RestoreS3>McCommands>stop_local)[in function]
+2024-01-29 08:59:58.532971   DEBUG (restore>RestoreS3>McCommands>stop_local>_run_command)[in function]
+2024-01-29 08:59:58.533043   DEBUG (restore>RestoreS3>McCommands>stop_local>_run_command)[in function] : args=('admin', 'service', 'stop', 'local')
+2024-01-29 08:59:58.627430   FATAL (restore>RestoreS3>McCommands>stop_local>_run_command)[in function] : b'{"status":"error","error":{"message":"Unable to stop the server.","cause":{"message":"process actions are not supported via this API anymore, please upgrade \'mc\' or madmin-go to use ServiceV2() API","error":{"Code":"MalformedPOSTRequest","Message":"process actions are not supported via this API anymore, please upgrade \'mc\' or madmin-go to use ServiceV2() API","BucketName":"","Key":"","RequestID":"17AEC5CE4A95DCC7","HostID":"dd9025bab4ad464b049177c95eb6ebf374d3b3fd1af9251148b658df7ac2e3e8","Region":""}},"type":"fatal"}}\n'
+2024-01-29 08:59:58.630963  NOTIFY (restore>ClusterMaintenance)[MaintenanceModeOFF]
+2024-01-29 08:59:58.631219   DEBUG (restore>kubernetes_api>set_config_map_value[static-assets-maintenance-includes.infra#details.txt])[in function]
+2024-01-29 08:59:58.631475   DEBUG (restore>kubernetes_api>set_config_map_value[static-assets-maintenance-includes.infra#details.txt])[in function] : value=<span>No further information at the moment</span>
+2024-01-29 08:59:58.697546   DEBUG (restore>kubernetes_api>set_config_map_value[static-assets-maintenance-includes.infra#details.txt])[in function] : Done
+2024-01-29 08:59:58.698254   DEBUG (restore>kubernetes_api>set_ingress_class_name[static-assets-maintenance.infra](None))[in function]
+2024-01-29 08:59:58.698431   DEBUG (restore>kubernetes_api>set_ingress_class_name[static-assets-maintenance.infra](None))[in function] : value=None
+2024-01-29 08:59:58.740832   DEBUG (restore>kubernetes_api>set_ingress_class_name[static-assets-maintenance.infra](None))[in function] : Done
+Traceback (most recent call last):
+  File "/opt/pipx/bin/data-manager", line 8, in <module>
+    sys.exit(run())
+             ^^^^^
+  File "/opt/pipx/home/venvs/cluster-data-manager/lib/python3.11/site-packages/youwol/data_manager/entry_point.py", line 33, in run
+    task.run()
+  File "/opt/pipx/home/venvs/cluster-data-manager/lib/python3.11/site-packages/youwol/data_manager/tasks/restore/task.py", line 47, in run
+    subtask.run()
+  File "/opt/pipx/home/venvs/cluster-data-manager/lib/python3.11/site-packages/youwol/data_manager/tasks/restore/s3.py", line 61, in run
+    mc_commands.stop_local()
+  File "/opt/pipx/home/venvs/cluster-data-manager/lib/python3.11/site-packages/youwol/data_manager/services/mc_commands.py", line 209, in stop_local
+    self._run_command(report, "admin", "service", "stop", McCommands.ALIAS_LOCAL)
+  File "/opt/pipx/home/venvs/cluster-data-manager/lib/python3.11/site-packages/youwol/data_manager/services/mc_commands.py", line 337, in _run_command
+    raise RuntimeError(
+RuntimeError: failure when running mc command : {'message': 'Unable to stop the server.', 'cause': {'message': "process actions are not supported via this API anymore, please upgrade 'mc' or madmin-go to use ServiceV2() API", 'error': {'Code': 'MalformedPOSTRequest', 'Message': "process actions are not supported via this API anymore, please upgrade 'mc' or madmin-go to use ServiceV2() API", 'BucketName': '', 'Key': '', 'RequestID': '17AEC5CE4A95DCC7', 'HostID': 'dd9025bab4ad464b049177c95eb6ebf374d3b3fd1af9251148b658df7ac2e3e8', 'Region': ''}}, 'type': 'fatal'}

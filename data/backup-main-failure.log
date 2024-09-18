@@ -1,0 +1,290 @@
+2024-02-01 08:08:31.725484  NOTIFY (backup)[Starting]
+2024-02-01 08:08:31.726273   DEBUG (backup>McCommands)[InitializingComponent]
+2024-02-01 08:08:31.726383   DEBUG (backup>McCommands)[InitializingComponent] : using binary /opt/minio-client/bin/mc
+2024-02-01 08:08:31.726473   DEBUG (backup>McCommands)[InitializingComponent] : using config /opt/data-manager/.mc
+2024-02-01 08:08:31.726537   DEBUG (backup>McCommands)[ComponentInitialized]
+2024-02-01 08:08:31.726623  NOTIFY (backup>BackupS3)[ComponentInitialized]
+2024-02-01 08:08:31.726804   DEBUG (backup>CqlshCommands)[InitializingComponent]
+2024-02-01 08:08:31.726871   DEBUG (backup>CqlshCommands)[InitializingComponent] : using instance scylla-db-client.infra.svc.cluster.local
+2024-02-01 08:08:31.726988  NOTIFY (backup>BackupCassandra)[ComponentInitialized]
+2024-02-01 08:08:31.727203   DEBUG (backup>KeycloakAdmin)[ComponentInitialized]
+2024-02-01 08:08:31.727283   DEBUG (backup>KeycloakAdmin>OidcClient)[Component Initialized]
+2024-02-01 08:08:31.727376   DEBUG (backup>KeycloakAdmin>TokensManager)[ComponentInitialized]
+2024-02-01 08:08:31.727500  NOTIFY (backup>Keycloak)[ComponentInitialized]
+2024-02-01 08:08:31.727608   DEBUG (backup>ProbeMinio)[ComponentInitialized]
+2024-02-01 08:08:31.728445   DEBUG (backup>ProbeKeycloak)[ComponentInitialized]
+2024-02-01 08:08:31.728653   DEBUG (backup>OidcClient)[Component Initialized]
+2024-02-01 08:08:31.728745   DEBUG (backup>GoogleDrive)[InitializingComponent]
+2024-02-01 08:08:31.728816  NOTIFY (backup>GoogleDrive)[InitializingComponent] : Using drive_id 0ANBW1Ba6lNqiUk9PVA
+2024-02-01 08:08:31.728907   DEBUG (backup>GoogleDrive)[ComponentInitialized]
+2024-02-01 08:08:31.729070   DEBUG (backup>Archiver)[InitializingComponent]
+2024-02-01 08:08:31.729161  NOTIFY (backup)[ComponentInitialized]
+2024-02-01 08:08:31.729372   DEBUG (backup>Archiver>Archive_4bec1588-3b80-4978-bcb1-fa8d73a08d8f)[ComponentInitialized]
+2024-02-01 08:08:31.729509   DEBUG (backup>kubernetes_api)[InitializingComponent]
+2024-02-01 08:08:31.729572  NOTIFY (backup>kubernetes_api)[InitializingComponent] : using Pod service account
+2024-02-01 08:08:31.730120  NOTIFY (backup>kubernetes_api)[InitializingComponent] : Done
+2024-02-01 08:08:31.730225  NOTIFY (backup>ClusterMaintenance)[ComponentInitialized]
+2024-02-01 08:08:31.730360   DEBUG (backup>ProbeMinio>probe)[in function]
+2024-02-01 08:08:31.730475   DEBUG (backup>ProbeMinio>_probe)[in function]
+2024-02-01 08:08:31.783978  NOTIFY (backup>ProbeMinio>_probe)[in function] : GET http://localhost:9000/minio/health/live response with status 200
+2024-02-01 08:08:31.784207  NOTIFY (backup>ProbeMinio>probe)[in function] : result: True
+2024-02-01 08:08:31.785689   DEBUG (backup>ProbeKeycloak>probe)[in function]
+2024-02-01 08:08:31.785832   DEBUG (backup>ProbeKeycloak>_probe)[in function]
+2024-02-01 08:08:31.786016  NOTIFY (backup>ProbeKeycloak>_probe)[in function] : status file /var/opt/data-manager/kc/kc_status content is EXPORTING
+2024-02-01 08:08:31.786118  NOTIFY (backup>ProbeKeycloak>probe)[in function] : result: True
+2024-02-01 08:08:31.786212   DEBUG (backup>McCommands>admin_info)[in function]
+2024-02-01 08:08:31.786293   DEBUG (backup>McCommands>_mc_alias_local)[in function]
+2024-02-01 08:08:31.786371   DEBUG (backup>McCommands>_mc_alias_local>_run_command)[in function]
+2024-02-01 08:08:31.786430   DEBUG (backup>McCommands>_mc_alias_local>_run_command)[in function] : args=('alias', 'set', 'local', 'http://localhost:9000', 'root', 'vzr3dqwtrHBDEYFiXXGOeF3gfeudrObB')
+2024-02-01 08:08:32.457985   DEBUG (backup>McCommands>_mc_alias_local>_run_command)[exit function]
+2024-02-01 08:08:32.458236   DEBUG (backup>McCommands>_mc_alias_local)[exit function]
+2024-02-01 08:08:32.458320   DEBUG (backup>McCommands>_mc_alias_cluster)[in function]
+2024-02-01 08:08:32.458387   DEBUG (backup>McCommands>_mc_alias_cluster>_run_command)[in function]
+2024-02-01 08:08:32.458463   DEBUG (backup>McCommands>_mc_alias_cluster>_run_command)[in function] : args=('alias', 'set', 'cluster', 'http://minio.infra.svc.cluster.local:9000', 'admin', 'tWDxl1aq7HXwXem35GpCXuyXcxgdstMM')
+2024-02-01 08:08:32.580885   DEBUG (backup>McCommands>_mc_alias_cluster>_run_command)[exit function]
+2024-02-01 08:08:32.581159   DEBUG (backup>McCommands>_mc_alias_cluster)[exit function]
+2024-02-01 08:08:32.581261   DEBUG (backup>McCommands>admin_info>_run_command)[in function]
+2024-02-01 08:08:32.581328   DEBUG (backup>McCommands>admin_info>_run_command)[in function] : args=('admin', 'info', 'cluster')
+2024-02-01 08:08:32.743562   DEBUG (backup>McCommands>admin_info>_run_command)[exit function]
+2024-02-01 08:08:32.743785   DEBUG (backup>CqlshCommands>show_host)[in function]
+2024-02-01 08:08:32.743871   DEBUG (backup>CqlshCommands>show_host>__run_command)[in function]
+2024-02-01 08:08:32.743955   DEBUG (backup>CqlshCommands>show_host>__run_command)[in function] : cql='SHOW HOST;', args='[]', stdin='SHOW HOST;'
+2024-02-01 08:08:34.209645   DEBUG (backup>CqlshCommands>show_host>__run_command)[in function] : return_code=0
+2024-02-01 08:08:34.209869   DEBUG (backup>CqlshCommands>show_host>__run_command)[in function] : out=Connected to scylla-db at scylla-db-client.infra.svc.cluster.local:9042
+
+2024-02-01 08:08:34.209945   DEBUG (backup>CqlshCommands>show_host>__run_command)[in function] : err=
+2024-02-01 08:08:34.210016   DEBUG (backup>CqlshCommands>show_host)[Result: Connected to scylla-db at scylla-db-client.infra.svc.cluster.local:9042
+]
+2024-02-01 08:08:34.210107   DEBUG (backup>CqlshCommands>show_version)[in function]
+2024-02-01 08:08:34.210200   DEBUG (backup>CqlshCommands>show_version>__run_command)[in function]
+2024-02-01 08:08:34.210363   DEBUG (backup>CqlshCommands>show_version>__run_command)[in function] : cql='SHOW VERSION;', args='[]', stdin='SHOW VERSION;'
+2024-02-01 08:08:35.390689   DEBUG (backup>CqlshCommands>show_version>__run_command)[in function] : return_code=0
+2024-02-01 08:08:35.390874   DEBUG (backup>CqlshCommands>show_version>__run_command)[in function] : out=[cqlsh 6.0.7 | Scylla 5.1.8-0.20230319.c90807d29f30 | CQL spec 3.3.1 | Native protocol v4]
+
+2024-02-01 08:08:35.390981   DEBUG (backup>CqlshCommands>show_version>__run_command)[in function] : err=
+2024-02-01 08:08:35.391062   DEBUG (backup>CqlshCommands>show_version)[Result: [cqlsh 6.0.7 | Scylla 5.1.8-0.20230319.c90807d29f30 | CQL spec 3.3.1 | Native protocol v4]
+]
+2024-02-01 08:08:35.391174   DEBUG (backup>KeycloakAdmin>system_info)[in function]
+2024-02-01 08:08:35.391260   DEBUG (backup>KeycloakAdmin>TokensManager>get_access_token)[in function]
+2024-02-01 08:08:35.391343  NOTIFY (backup>KeycloakAdmin>TokensManager>get_access_token)[in function] : refresh_token missing or expired : need new tokens
+2024-02-01 08:08:35.391423   DEBUG (backup>KeycloakAdmin>TokensManager>grant_password_tokens)[in function]
+2024-02-01 08:08:35.391505   DEBUG (backup>KeycloakAdmin>TokensManager>grant_password_tokens)[in function] : calling OidcClient
+2024-02-01 08:08:35.391575   DEBUG (backup>KeycloakAdmin>OidcClient>grant_password_tokens)[in function]
+2024-02-01 08:08:35.556788   DEBUG (backup>KeycloakAdmin>OidcClient>grant_password_tokens)[in function] : calling endpoint
+2024-02-01 08:08:35.700290   DEBUG (backup>KeycloakAdmin>OidcClient>grant_password_tokens)[in function] : decoding response
+2024-02-01 08:08:35.700763   DEBUG (backup>KeycloakAdmin>OidcClient>grant_password_tokens)[exit function]
+2024-02-01 08:08:35.700912   DEBUG (backup>KeycloakAdmin>TokensManager>grant_password_tokens)[in function] : caching tokens
+2024-02-01 08:08:35.700991   DEBUG (backup>KeycloakAdmin>TokensManager>grant_password_tokens)[in function] : done
+2024-02-01 08:08:35.701087   DEBUG (backup>KeycloakAdmin>system_info)[in function] : Calling endpoint https://platform.int.youwol.com/auth/admin/serverinfo
+2024-02-01 08:08:35.767719   DEBUG (backup>KeycloakAdmin>system_info)[in function] : decoding response
+2024-02-01 08:08:35.775583   DEBUG (backup>KeycloakAdmin>system_info)[exit function]
+2024-02-01 08:08:35.776043   DEBUG (backup>BackupS3)[ComponentInitialized] : disk usage cluster buckets: ['assets', 'cdn', 'cdn-sessions-storage', 'data', 'flux', 'stories']
+2024-02-01 08:08:35.776144  NOTIFY (backup>BackupS3>disk_usage_assets)[Starting]
+2024-02-01 08:08:35.776245   DEBUG (backup>BackupS3>disk_usage_assets>McCommands)[Starting]
+2024-02-01 08:08:35.776311   DEBUG (backup>BackupS3>disk_usage_assets>McCommands>du_cluster_bucket_assets)[in function]
+2024-02-01 08:08:35.776388   DEBUG (backup>BackupS3>disk_usage_assets>McCommands>du_cluster_bucket_assets>_run_command)[in function]
+2024-02-01 08:08:35.776494   DEBUG (backup>BackupS3>disk_usage_assets>McCommands>du_cluster_bucket_assets>_run_command)[in function] : args=('du', '--versions', 'cluster/assets')
+2024-02-01 08:08:39.387226   DEBUG (backup>BackupS3>disk_usage_assets>McCommands>du_cluster_bucket_assets)[in function] : json={'prefix': 'assets', 'size': 7316292525, 'objects': 484, 'status': 'success', 'isVersions': True}
+2024-02-01 08:08:39.389541   DEBUG (backup>BackupS3>disk_usage_assets>McCommands>du_cluster_bucket_assets>_run_command)[exit function]
+2024-02-01 08:08:39.389699   DEBUG (backup>BackupS3>disk_usage_assets>McCommands>du_cluster_bucket_assets)[in function] : done
+2024-02-01 08:08:39.389810  NOTIFY (backup>BackupS3>disk_usage_assets)[Starting] : nb_objects: 484, size: 7316292525
+2024-02-01 08:08:39.389903  NOTIFY (backup>BackupS3>disk_usage_assets)[Done]
+2024-02-01 08:08:39.389991  NOTIFY (backup>BackupS3>disk_usage_cdn)[Starting]
+2024-02-01 08:08:39.390066   DEBUG (backup>BackupS3>disk_usage_cdn>McCommands)[Starting]
+2024-02-01 08:08:39.390138   DEBUG (backup>BackupS3>disk_usage_cdn>McCommands>du_cluster_bucket_cdn)[in function]
+2024-02-01 08:08:39.390219   DEBUG (backup>BackupS3>disk_usage_cdn>McCommands>du_cluster_bucket_cdn>_run_command)[in function]
+2024-02-01 08:08:39.390293   DEBUG (backup>BackupS3>disk_usage_cdn>McCommands>du_cluster_bucket_cdn>_run_command)[in function] : args=('du', '--versions', 'cluster/cdn')
+2024-02-01 08:24:27.273100   DEBUG (backup>BackupS3>disk_usage_cdn>McCommands>du_cluster_bucket_cdn)[in function] : json={'prefix': 'cdn', 'size': 3016749167, 'objects': 126479, 'status': 'success', 'isVersions': True}
+2024-02-01 08:24:27.278099   DEBUG (backup>BackupS3>disk_usage_cdn>McCommands>du_cluster_bucket_cdn>_run_command)[exit function]
+2024-02-01 08:24:27.278388   DEBUG (backup>BackupS3>disk_usage_cdn>McCommands>du_cluster_bucket_cdn)[in function] : done
+2024-02-01 08:24:27.278522  NOTIFY (backup>BackupS3>disk_usage_cdn)[Starting] : nb_objects: 126479, size: 3016749167
+2024-02-01 08:24:27.278621  NOTIFY (backup>BackupS3>disk_usage_cdn)[Done]
+2024-02-01 08:24:27.278750  NOTIFY (backup>BackupS3>disk_usage_cdn-sessions-storage)[Starting]
+2024-02-01 08:24:27.278841   DEBUG (backup>BackupS3>disk_usage_cdn-sessions-storage>McCommands)[Starting]
+2024-02-01 08:24:27.278931   DEBUG (backup>BackupS3>disk_usage_cdn-sessions-storage>McCommands>du_cluster_bucket_cdn-sessions-storage)[in function]
+2024-02-01 08:24:27.279019   DEBUG (backup>BackupS3>disk_usage_cdn-sessions-storage>McCommands>du_cluster_bucket_cdn-sessions-storage>_run_command)[in function]
+2024-02-01 08:24:27.279104   DEBUG (backup>BackupS3>disk_usage_cdn-sessions-storage>McCommands>du_cluster_bucket_cdn-sessions-storage>_run_command)[in function] : args=('du', '--versions', 'cluster/cdn-sessions-storage')
+2024-02-01 08:24:30.269122   DEBUG (backup>BackupS3>disk_usage_cdn-sessions-storage>McCommands>du_cluster_bucket_cdn-sessions-storage)[in function] : json={'prefix': 'cdn-sessions-storage', 'size': 433304, 'objects': 267, 'status': 'success', 'isVersions': True}
+2024-02-01 08:24:30.271713   DEBUG (backup>BackupS3>disk_usage_cdn-sessions-storage>McCommands>du_cluster_bucket_cdn-sessions-storage>_run_command)[exit function]
+2024-02-01 08:24:30.271857   DEBUG (backup>BackupS3>disk_usage_cdn-sessions-storage>McCommands>du_cluster_bucket_cdn-sessions-storage)[in function] : done
+2024-02-01 08:24:30.271955  NOTIFY (backup>BackupS3>disk_usage_cdn-sessions-storage)[Starting] : nb_objects: 267, size: 433304
+2024-02-01 08:24:30.272034  NOTIFY (backup>BackupS3>disk_usage_cdn-sessions-storage)[Done]
+2024-02-01 08:24:30.272117  NOTIFY (backup>BackupS3>disk_usage_data)[Starting]
+2024-02-01 08:24:30.272209   DEBUG (backup>BackupS3>disk_usage_data>McCommands)[Starting]
+2024-02-01 08:24:30.272294   DEBUG (backup>BackupS3>disk_usage_data>McCommands>du_cluster_bucket_data)[in function]
+2024-02-01 08:24:30.272382   DEBUG (backup>BackupS3>disk_usage_data>McCommands>du_cluster_bucket_data>_run_command)[in function]
+2024-02-01 08:24:30.272460   DEBUG (backup>BackupS3>disk_usage_data>McCommands>du_cluster_bucket_data>_run_command)[in function] : args=('du', '--versions', 'cluster/data')
+2024-02-01 08:24:56.262848   DEBUG (backup>BackupS3>disk_usage_data>McCommands>du_cluster_bucket_data)[in function] : json={'prefix': 'data', 'size': 1758410314, 'objects': 4022, 'status': 'success', 'isVersions': True}
+2024-02-01 08:24:56.266378   DEBUG (backup>BackupS3>disk_usage_data>McCommands>du_cluster_bucket_data>_run_command)[exit function]
+2024-02-01 08:24:56.266549   DEBUG (backup>BackupS3>disk_usage_data>McCommands>du_cluster_bucket_data)[in function] : done
+2024-02-01 08:24:56.266652  NOTIFY (backup>BackupS3>disk_usage_data)[Starting] : nb_objects: 4022, size: 1758410314
+2024-02-01 08:24:56.266739  NOTIFY (backup>BackupS3>disk_usage_data)[Done]
+2024-02-01 08:24:56.266828  NOTIFY (backup>BackupS3>disk_usage_flux)[Starting]
+2024-02-01 08:24:56.266913   DEBUG (backup>BackupS3>disk_usage_flux>McCommands)[Starting]
+2024-02-01 08:24:56.267587   DEBUG (backup>BackupS3>disk_usage_flux>McCommands>du_cluster_bucket_flux)[in function]
+2024-02-01 08:24:56.267945   DEBUG (backup>BackupS3>disk_usage_flux>McCommands>du_cluster_bucket_flux>_run_command)[in function]
+2024-02-01 08:24:56.268079   DEBUG (backup>BackupS3>disk_usage_flux>McCommands>du_cluster_bucket_flux>_run_command)[in function] : args=('du', '--versions', 'cluster/flux')
+2024-02-01 08:25:00.328446   DEBUG (backup>BackupS3>disk_usage_flux>McCommands>du_cluster_bucket_flux)[in function] : json={'prefix': 'flux', 'size': 4903598, 'objects': 716, 'status': 'success', 'isVersions': True}
+2024-02-01 08:25:00.332314   DEBUG (backup>BackupS3>disk_usage_flux>McCommands>du_cluster_bucket_flux>_run_command)[exit function]
+2024-02-01 08:25:00.332539   DEBUG (backup>BackupS3>disk_usage_flux>McCommands>du_cluster_bucket_flux)[in function] : done
+2024-02-01 08:25:00.332644  NOTIFY (backup>BackupS3>disk_usage_flux)[Starting] : nb_objects: 716, size: 4903598
+2024-02-01 08:25:00.332726  NOTIFY (backup>BackupS3>disk_usage_flux)[Done]
+2024-02-01 08:25:00.332809  NOTIFY (backup>BackupS3>disk_usage_stories)[Starting]
+2024-02-01 08:25:00.332912   DEBUG (backup>BackupS3>disk_usage_stories>McCommands)[Starting]
+2024-02-01 08:25:00.333021   DEBUG (backup>BackupS3>disk_usage_stories>McCommands>du_cluster_bucket_stories)[in function]
+2024-02-01 08:25:00.333117   DEBUG (backup>BackupS3>disk_usage_stories>McCommands>du_cluster_bucket_stories>_run_command)[in function]
+2024-02-01 08:25:00.333200   DEBUG (backup>BackupS3>disk_usage_stories>McCommands>du_cluster_bucket_stories>_run_command)[in function] : args=('du', '--versions', 'cluster/stories')
+2024-02-01 08:25:21.116393   DEBUG (backup>BackupS3>disk_usage_stories>McCommands>du_cluster_bucket_stories)[in function] : json={'prefix': 'stories', 'size': 3980989, 'objects': 2695, 'status': 'success', 'isVersions': True}
+2024-02-01 08:25:21.128180   DEBUG (backup>BackupS3>disk_usage_stories>McCommands>du_cluster_bucket_stories>_run_command)[exit function]
+2024-02-01 08:25:21.128412   DEBUG (backup>BackupS3>disk_usage_stories>McCommands>du_cluster_bucket_stories)[in function] : done
+2024-02-01 08:25:21.128586  NOTIFY (backup>BackupS3>disk_usage_stories)[Starting] : nb_objects: 2695, size: 3980989
+2024-02-01 08:25:21.130158  NOTIFY (backup>BackupS3>disk_usage_stories)[Done]
+2024-02-01 08:25:21.130780  NOTIFY (backup>ClusterMaintenance)[MaintenanceModeOn]
+2024-02-01 08:25:21.131175   DEBUG (backup>kubernetes_api>set_config_map_value[static-assets-maintenance-includes.infra#details.txt])[in function]
+2024-02-01 08:25:21.211792   DEBUG (backup>kubernetes_api>set_config_map_value[static-assets-maintenance-includes.infra#details.txt])[in function] : Result: <span>Restoration in progress …</span><br><span>Try again in a few minutes</span>
+2024-02-01 08:25:21.212718   DEBUG (backup>kubernetes_api>get_ingress_class_name[static-assets-maintenance.infra])[in function]
+2024-02-01 08:25:21.253305   DEBUG (backup>kubernetes_api>get_ingress_class_name[static-assets-maintenance.infra])[in function] : Result: None
+2024-02-01 08:25:21.253850   DEBUG (backup>kubernetes_api>set_config_map_value[static-assets-maintenance-includes.infra#details.txt])[in function]
+2024-02-01 08:25:21.254001   DEBUG (backup>kubernetes_api>set_config_map_value[static-assets-maintenance-includes.infra#details.txt])[in function] : value=<span>Backup in progress …</span><br><span>Try again in a few minutes</span>
+2024-02-01 08:25:21.476652   DEBUG (backup>kubernetes_api>set_config_map_value[static-assets-maintenance-includes.infra#details.txt])[in function] : Done
+2024-02-01 08:25:21.477354   DEBUG (backup>kubernetes_api>set_ingress_class_name[static-assets-maintenance.infra](kong))[in function]
+2024-02-01 08:25:21.477784   DEBUG (backup>kubernetes_api>set_ingress_class_name[static-assets-maintenance.infra](kong))[in function] : value=kong
+2024-02-01 08:25:21.525313   DEBUG (backup>kubernetes_api>set_ingress_class_name[static-assets-maintenance.infra](kong))[in function] : Done
+2024-02-01 08:25:26.526065   DEBUG (backup>BackupS3)[ComponentInitialized] : mirroring buckets: ['assets', 'cdn', 'cdn-sessions-storage', 'data', 'flux', 'stories']
+2024-02-01 08:25:26.527262  NOTIFY (backup>BackupS3>backup_minio_assets)[Starting]
+2024-02-01 08:25:26.527510   DEBUG (backup>BackupS3>backup_minio_assets>McCommands)[Starting]
+2024-02-01 08:25:26.527647   DEBUG (backup>BackupS3>backup_minio_assets>McCommands>backup_assets)[in function]
+2024-02-01 08:25:26.528422   DEBUG (backup>BackupS3>backup_minio_assets>McCommands>backup_assets)[CreateLocalBucket]
+2024-02-01 08:25:26.528642   DEBUG (backup>BackupS3>backup_minio_assets>McCommands>backup_assets>_run_command)[in function]
+2024-02-01 08:25:26.528897   DEBUG (backup>BackupS3>backup_minio_assets>McCommands>backup_assets>_run_command)[in function] : args=('mb', '--ignore-existing', 'local/assets')
+2024-02-01 08:25:26.638043   DEBUG (backup>BackupS3>backup_minio_assets>McCommands>backup_assets>_run_command)[exit function]
+2024-02-01 08:25:26.638301   DEBUG (backup>BackupS3>backup_minio_assets>McCommands>backup_assets)[Transfert]
+2024-02-01 08:25:26.638423   DEBUG (backup>BackupS3>backup_minio_assets>McCommands>backup_assets>MirrorBucket)[in function]
+2024-02-01 08:25:26.638506   DEBUG (backup>BackupS3>backup_minio_assets>McCommands>backup_assets>MirrorBucket)[DiskUsageSourceBucket]
+2024-02-01 08:25:26.638589   DEBUG (backup>BackupS3>backup_minio_assets>McCommands>backup_assets>MirrorBucket>_run_command)[in function]
+2024-02-01 08:25:26.638722   DEBUG (backup>BackupS3>backup_minio_assets>McCommands>backup_assets>MirrorBucket>_run_command)[in function] : args=('du', '--versions', 'cluster/assets')
+2024-02-01 08:25:30.324697   DEBUG (backup>BackupS3>backup_minio_assets>McCommands>backup_assets>MirrorBucket)[DiskUsageSourceBucket] : json={'prefix': 'assets', 'size': 7316292525, 'objects': 484, 'status': 'success', 'isVersions': True}
+2024-02-01 08:25:30.328493   DEBUG (backup>BackupS3>backup_minio_assets>McCommands>backup_assets>MirrorBucket>_run_command)[exit function]
+2024-02-01 08:25:30.328708  NOTIFY (backup>BackupS3>backup_minio_assets>McCommands>backup_assets>MirrorBucket)[DiskUsageSourceBucket] : source bucket : 484 objects / 7316292525 bytes
+2024-02-01 08:25:30.329000   DEBUG (backup>BackupS3>backup_minio_assets>McCommands>backup_assets>MirrorBucket)[Transfert]
+2024-02-01 08:25:30.329125   DEBUG (backup>BackupS3>backup_minio_assets>McCommands>backup_assets>MirrorBucket>_run_command)[in function]
+2024-02-01 08:25:30.329225   DEBUG (backup>BackupS3>backup_minio_assets>McCommands>backup_assets>MirrorBucket>_run_command)[in function] : args=('mirror', '--overwrite', '--preserve', '--remove', 'cluster/assets', 'local/assets')
+2024-02-01 08:25:35.518312   DEBUG (backup>BackupS3>backup_minio_assets>McCommands>backup_assets>MirrorBucket)[Transfert] : transferred 18 objects on 484
+2024-02-01 08:25:42.446215   DEBUG (backup>BackupS3>backup_minio_assets>McCommands>backup_assets>MirrorBucket)[Transfert] : transferred 36 objects on 484
+2024-02-01 08:25:47.593500   DEBUG (backup>BackupS3>backup_minio_assets>McCommands>backup_assets>MirrorBucket)[Transfert] : transferred 62 objects on 484
+2024-02-01 08:25:53.043383   DEBUG (backup>BackupS3>backup_minio_assets>McCommands>backup_assets>MirrorBucket)[Transfert] : transferred 70 objects on 484
+2024-02-01 08:26:04.379221   DEBUG (backup>BackupS3>backup_minio_assets>McCommands>backup_assets>MirrorBucket)[Transfert] : transferred 95 objects on 484
+2024-02-01 08:26:10.484086   DEBUG (backup>BackupS3>backup_minio_assets>McCommands>backup_assets>MirrorBucket)[Transfert] : transferred 106 objects on 484
+2024-02-01 08:26:16.056065   DEBUG (backup>BackupS3>backup_minio_assets>McCommands>backup_assets>MirrorBucket)[Transfert] : transferred 112 objects on 484
+2024-02-01 08:26:21.386369   DEBUG (backup>BackupS3>backup_minio_assets>McCommands>backup_assets>MirrorBucket)[Transfert] : transferred 122 objects on 484
+2024-02-01 08:26:26.420820   DEBUG (backup>BackupS3>backup_minio_assets>McCommands>backup_assets>MirrorBucket)[Transfert] : transferred 165 objects on 484
+2024-02-01 08:26:31.568079   DEBUG (backup>BackupS3>backup_minio_assets>McCommands>backup_assets>MirrorBucket)[Transfert] : transferred 201 objects on 484
+2024-02-01 08:26:36.970625   DEBUG (backup>BackupS3>backup_minio_assets>McCommands>backup_assets>MirrorBucket)[Transfert] : transferred 226 objects on 484
+2024-02-01 08:26:42.090451   DEBUG (backup>BackupS3>backup_minio_assets>McCommands>backup_assets>MirrorBucket)[Transfert] : transferred 256 objects on 484
+2024-02-01 08:26:47.367145   DEBUG (backup>BackupS3>backup_minio_assets>McCommands>backup_assets>MirrorBucket)[Transfert] : transferred 278 objects on 484
+2024-02-01 08:26:52.487428   DEBUG (backup>BackupS3>backup_minio_assets>McCommands>backup_assets>MirrorBucket)[Transfert] : transferred 329 objects on 484
+2024-02-01 08:26:57.618946   DEBUG (backup>BackupS3>backup_minio_assets>McCommands>backup_assets>MirrorBucket)[Transfert] : transferred 382 objects on 484
+2024-02-01 08:27:03.079250   DEBUG (backup>BackupS3>backup_minio_assets>McCommands>backup_assets>MirrorBucket)[Transfert] : transferred 415 objects on 484
+2024-02-01 08:27:08.210749   DEBUG (backup>BackupS3>backup_minio_assets>McCommands>backup_assets>MirrorBucket)[Transfert] : transferred 457 objects on 484
+2024-02-01 08:29:46.202259   DEBUG (backup>BackupS3>backup_minio_assets>McCommands>backup_assets>MirrorBucket>_run_command)[exit function]
+2024-02-01 08:29:46.203108  NOTIFY (backup>BackupS3>backup_minio_assets>McCommands>backup_assets>MirrorBucket)[Transfert] : Done
+2024-02-01 08:29:46.203242   DEBUG (backup>BackupS3>backup_minio_assets>McCommands>backup_assets>MirrorBucket)[VerifyTargetBucket]
+2024-02-01 08:29:46.203369   DEBUG (backup>BackupS3>backup_minio_assets>McCommands>backup_assets>MirrorBucket>_run_command)[in function]
+2024-02-01 08:29:46.203486   DEBUG (backup>BackupS3>backup_minio_assets>McCommands>backup_assets>MirrorBucket>_run_command)[in function] : args=('du', '--versions', 'local/assets')
+2024-02-01 08:29:47.040161   DEBUG (backup>BackupS3>backup_minio_assets>McCommands>backup_assets>MirrorBucket)[VerifyTargetBucket] : json={'prefix': 'assets', 'size': 7316292525, 'objects': 484, 'status': 'success', 'isVersions': True}
+2024-02-01 08:29:47.042056   DEBUG (backup>BackupS3>backup_minio_assets>McCommands>backup_assets>MirrorBucket>_run_command)[exit function]
+2024-02-01 08:29:47.042209   DEBUG (backup>BackupS3>backup_minio_assets>McCommands>backup_assets>MirrorBucket)[exit function]
+2024-02-01 08:29:47.042322   DEBUG (backup>BackupS3>backup_minio_assets>McCommands>backup_assets)[exit function]
+2024-02-01 08:29:47.042436  NOTIFY (backup>BackupS3>backup_minio_assets)[Done]
+2024-02-01 08:29:47.042545  NOTIFY (backup>BackupS3>backup_minio_cdn)[Starting]
+2024-02-01 08:29:47.042653   DEBUG (backup>BackupS3>backup_minio_cdn>McCommands)[Starting]
+2024-02-01 08:29:47.042752   DEBUG (backup>BackupS3>backup_minio_cdn>McCommands>backup_cdn)[in function]
+2024-02-01 08:29:47.042837   DEBUG (backup>BackupS3>backup_minio_cdn>McCommands>backup_cdn)[CreateLocalBucket]
+2024-02-01 08:29:47.042925   DEBUG (backup>BackupS3>backup_minio_cdn>McCommands>backup_cdn>_run_command)[in function]
+2024-02-01 08:29:47.043005   DEBUG (backup>BackupS3>backup_minio_cdn>McCommands>backup_cdn>_run_command)[in function] : args=('mb', '--ignore-existing', 'local/cdn')
+2024-02-01 08:29:47.141769   DEBUG (backup>BackupS3>backup_minio_cdn>McCommands>backup_cdn>_run_command)[exit function]
+2024-02-01 08:29:47.142033   DEBUG (backup>BackupS3>backup_minio_cdn>McCommands>backup_cdn)[Transfert]
+2024-02-01 08:29:47.142134   DEBUG (backup>BackupS3>backup_minio_cdn>McCommands>backup_cdn>MirrorBucket)[in function]
+2024-02-01 08:29:47.142219   DEBUG (backup>BackupS3>backup_minio_cdn>McCommands>backup_cdn>MirrorBucket)[DiskUsageSourceBucket]
+2024-02-01 08:29:47.142340   DEBUG (backup>BackupS3>backup_minio_cdn>McCommands>backup_cdn>MirrorBucket>_run_command)[in function]
+2024-02-01 08:29:47.142426   DEBUG (backup>BackupS3>backup_minio_cdn>McCommands>backup_cdn>MirrorBucket>_run_command)[in function] : args=('du', '--versions', 'cluster/cdn')
+2024-02-01 08:42:39.028622   DEBUG (backup>BackupS3>backup_minio_cdn>McCommands>backup_cdn>MirrorBucket)[DiskUsageSourceBucket] : json={'prefix': 'cdn', 'size': 3016749167, 'objects': 126479, 'status': 'success', 'isVersions': True}
+2024-02-01 08:42:39.032808   DEBUG (backup>BackupS3>backup_minio_cdn>McCommands>backup_cdn>MirrorBucket>_run_command)[exit function]
+2024-02-01 08:42:39.033062  NOTIFY (backup>BackupS3>backup_minio_cdn>McCommands>backup_cdn>MirrorBucket)[DiskUsageSourceBucket] : source bucket : 126479 objects / 3016749167 bytes
+2024-02-01 08:42:39.033315   DEBUG (backup>BackupS3>backup_minio_cdn>McCommands>backup_cdn>MirrorBucket)[Transfert]
+2024-02-01 08:42:39.033452   DEBUG (backup>BackupS3>backup_minio_cdn>McCommands>backup_cdn>MirrorBucket>_run_command)[in function]
+2024-02-01 08:42:39.033539   DEBUG (backup>BackupS3>backup_minio_cdn>McCommands>backup_cdn>MirrorBucket>_run_command)[in function] : args=('mirror', '--overwrite', '--preserve', '--remove', 'cluster/cdn', 'local/cdn')
+2024-02-01 08:42:45.007341   DEBUG (backup>BackupS3>backup_minio_cdn>McCommands>backup_cdn>MirrorBucket)[Transfert] : transferred 2 objects on 126479
+2024-02-01 08:42:50.019712   DEBUG (backup>BackupS3>backup_minio_cdn>McCommands>backup_cdn>MirrorBucket)[Transfert] : transferred 340 objects on 126479
+2024-02-01 08:42:55.062564   DEBUG (backup>BackupS3>backup_minio_cdn>McCommands>backup_cdn>MirrorBucket)[Transfert] : transferred 843 objects on 126479
+2024-02-01 08:43:00.101551   DEBUG (backup>BackupS3>backup_minio_cdn>McCommands>backup_cdn>MirrorBucket)[Transfert] : transferred 1387 objects on 126479
+2024-02-01 08:43:05.104143   DEBUG (backup>BackupS3>backup_minio_cdn>McCommands>backup_cdn>MirrorBucket)[Transfert] : transferred 1962 objects on 126479
+2024-02-01 08:43:10.188689   DEBUG (backup>BackupS3>backup_minio_cdn>McCommands>backup_cdn>MirrorBucket)[Transfert] : transferred 2726 objects on 126479
+2024-02-01 08:43:15.254404   DEBUG (backup>BackupS3>backup_minio_cdn>McCommands>backup_cdn>MirrorBucket)[Transfert] : transferred 3255 objects on 126479
+2024-02-01 08:43:20.270731   DEBUG (backup>BackupS3>backup_minio_cdn>McCommands>backup_cdn>MirrorBucket)[Transfert] : transferred 3840 objects on 126479
+2024-02-01 08:43:25.343266   DEBUG (backup>BackupS3>backup_minio_cdn>McCommands>backup_cdn>MirrorBucket)[Transfert] : transferred 4724 objects on 126479
+2024-02-01 08:43:30.348019   DEBUG (backup>BackupS3>backup_minio_cdn>McCommands>backup_cdn>MirrorBucket)[Transfert] : transferred 5596 objects on 126479
+2024-02-01 08:43:35.409268   DEBUG (backup>BackupS3>backup_minio_cdn>McCommands>backup_cdn>MirrorBucket)[Transfert] : transferred 6333 objects on 126479
+2024-02-01 08:43:40.420088   DEBUG (backup>BackupS3>backup_minio_cdn>McCommands>backup_cdn>MirrorBucket)[Transfert] : transferred 6979 objects on 126479
+2024-02-01 08:43:45.428010   DEBUG (backup>BackupS3>backup_minio_cdn>McCommands>backup_cdn>MirrorBucket)[Transfert] : transferred 7886 objects on 126479
+2024-02-01 08:43:50.428352   DEBUG (backup>BackupS3>backup_minio_cdn>McCommands>backup_cdn>MirrorBucket)[Transfert] : transferred 8324 objects on 126479
+2024-02-01 08:43:55.515686   DEBUG (backup>BackupS3>backup_minio_cdn>McCommands>backup_cdn>MirrorBucket)[Transfert] : transferred 8832 objects on 126479
+2024-02-01 08:44:00.719755   DEBUG (backup>BackupS3>backup_minio_cdn>McCommands>backup_cdn>MirrorBucket)[Transfert] : transferred 9219 objects on 126479
+2024-02-01 08:44:05.721780   DEBUG (backup>BackupS3>backup_minio_cdn>McCommands>backup_cdn>MirrorBucket)[Transfert] : transferred 9765 objects on 126479
+2024-02-01 08:44:10.749734   DEBUG (backup>BackupS3>backup_minio_cdn>McCommands>backup_cdn>MirrorBucket)[Transfert] : transferred 10347 objects on 126479
+2024-02-01 08:44:15.799699   DEBUG (backup>BackupS3>backup_minio_cdn>McCommands>backup_cdn>MirrorBucket)[Transfert] : transferred 10931 objects on 126479
+2024-02-01 08:44:20.826694   DEBUG (backup>BackupS3>backup_minio_cdn>McCommands>backup_cdn>MirrorBucket)[Transfert] : transferred 11693 objects on 126479
+2024-02-01 08:44:25.834643   DEBUG (backup>BackupS3>backup_minio_cdn>McCommands>backup_cdn>MirrorBucket)[Transfert] : transferred 12398 objects on 126479
+2024-02-01 08:44:30.848065   DEBUG (backup>BackupS3>backup_minio_cdn>McCommands>backup_cdn>MirrorBucket)[Transfert] : transferred 13210 objects on 126479
+2024-02-01 08:44:35.855826   DEBUG (backup>BackupS3>backup_minio_cdn>McCommands>backup_cdn>MirrorBucket)[Transfert] : transferred 13961 objects on 126479
+2024-02-01 08:44:40.857059   DEBUG (backup>BackupS3>backup_minio_cdn>McCommands>backup_cdn>MirrorBucket)[Transfert] : transferred 14684 objects on 126479
+2024-02-01 08:44:45.860362   DEBUG (backup>BackupS3>backup_minio_cdn>McCommands>backup_cdn>MirrorBucket)[Transfert] : transferred 15358 objects on 126479
+2024-02-01 08:44:50.968352   DEBUG (backup>BackupS3>backup_minio_cdn>McCommands>backup_cdn>MirrorBucket)[Transfert] : transferred 16052 objects on 126479
+2024-02-01 08:44:55.974425   DEBUG (backup>BackupS3>backup_minio_cdn>McCommands>backup_cdn>MirrorBucket)[Transfert] : transferred 16694 objects on 126479
+2024-02-01 08:45:00.975623   DEBUG (backup>BackupS3>backup_minio_cdn>McCommands>backup_cdn>MirrorBucket)[Transfert] : transferred 17425 objects on 126479
+2024-02-01 08:45:06.028911   DEBUG (backup>BackupS3>backup_minio_cdn>McCommands>backup_cdn>MirrorBucket)[Transfert] : transferred 17973 objects on 126479
+2024-02-01 08:45:11.036576   DEBUG (backup>BackupS3>backup_minio_cdn>McCommands>backup_cdn>MirrorBucket)[Transfert] : transferred 18610 objects on 126479
+2024-02-01 08:45:16.041863   DEBUG (backup>BackupS3>backup_minio_cdn>McCommands>backup_cdn>MirrorBucket)[Transfert] : transferred 19025 objects on 126479
+2024-02-01 08:45:21.042103   DEBUG (backup>BackupS3>backup_minio_cdn>McCommands>backup_cdn>MirrorBucket)[Transfert] : transferred 19583 objects on 126479
+2024-02-01 08:45:26.121573   DEBUG (backup>BackupS3>backup_minio_cdn>McCommands>backup_cdn>MirrorBucket)[Transfert] : transferred 19824 objects on 126479
+2024-02-01 08:45:31.197794   DEBUG (backup>BackupS3>backup_minio_cdn>McCommands>backup_cdn>MirrorBucket)[Transfert] : transferred 20015 objects on 126479
+2024-02-01 08:45:36.228060   DEBUG (backup>BackupS3>backup_minio_cdn>McCommands>backup_cdn>MirrorBucket)[Transfert] : transferred 20178 objects on 126479
+2024-02-01 08:45:41.250641   DEBUG (backup>BackupS3>backup_minio_cdn>McCommands>backup_cdn>MirrorBucket)[Transfert] : transferred 20312 objects on 126479
+2024-02-01 08:45:46.273702   DEBUG (backup>BackupS3>backup_minio_cdn>McCommands>backup_cdn>MirrorBucket)[Transfert] : transferred 20693 objects on 126479
+2024-02-01 08:45:51.383923   DEBUG (backup>BackupS3>backup_minio_cdn>McCommands>backup_cdn>MirrorBucket)[Transfert] : transferred 21437 objects on 126479
+2024-02-01 08:45:56.421429   DEBUG (backup>BackupS3>backup_minio_cdn>McCommands>backup_cdn>MirrorBucket)[Transfert] : transferred 22047 objects on 126479
+2024-02-01 08:46:01.455394   DEBUG (backup>BackupS3>backup_minio_cdn>McCommands>backup_cdn>MirrorBucket)[Transfert] : transferred 22758 objects on 126479
+2024-02-01 08:46:06.495599   DEBUG (backup>BackupS3>backup_minio_cdn>McCommands>backup_cdn>MirrorBucket)[Transfert] : transferred 23163 objects on 126479
+2024-02-01 08:46:11.496638   DEBUG (backup>BackupS3>backup_minio_cdn>McCommands>backup_cdn>MirrorBucket)[Transfert] : transferred 23459 objects on 126479
+2024-02-01 08:46:16.519514   DEBUG (backup>BackupS3>backup_minio_cdn>McCommands>backup_cdn>MirrorBucket)[Transfert] : transferred 24041 objects on 126479
+2024-02-01 08:46:21.556105   DEBUG (backup>BackupS3>backup_minio_cdn>McCommands>backup_cdn>MirrorBucket)[Transfert] : transferred 24609 objects on 126479
+2024-02-01 08:46:26.640524   DEBUG (backup>BackupS3>backup_minio_cdn>McCommands>backup_cdn>MirrorBucket)[Transfert] : transferred 25106 objects on 126479
+2024-02-01 08:46:31.740537   DEBUG (backup>BackupS3>backup_minio_cdn>McCommands>backup_cdn>MirrorBucket)[Transfert] : transferred 25550 objects on 126479
+2024-02-01 08:46:36.804564   DEBUG (backup>BackupS3>backup_minio_cdn>McCommands>backup_cdn>MirrorBucket)[Transfert] : transferred 26087 objects on 126479
+2024-02-01 08:46:41.804861   DEBUG (backup>BackupS3>backup_minio_cdn>McCommands>backup_cdn>MirrorBucket)[Transfert] : transferred 26551 objects on 126479
+2024-02-01 08:46:47.041036   DEBUG (backup>BackupS3>backup_minio_cdn>McCommands>backup_cdn>MirrorBucket)[Transfert] : transferred 26808 objects on 126479
+2024-02-01 08:46:47.045321   FATAL (backup>BackupS3>backup_minio_cdn>McCommands>backup_cdn>MirrorBucket>_run_command)[in function] : b'{"status":"error","error":{"message":"Failed to copy `http://minio.infra.svc.cluster.local:9000/cdn/youwol-users/libraries/youwol/cdn-client/2.0.0/dist/docs/modules/WorkersPoolModule.html`.","cause":{"message":"Put \\"http://localhost:9000/cdn/youwol-users/libraries/youwol/cdn-client/2.0.0/dist/docs/modules/WorkersPoolModule.html\\": dial tcp [::1]:9000: connect: connection refused","error":{"Op":"Put","URL":"http://localhost:9000/cdn/youwol-users/libraries/youwol/cdn-client/2.0.0/dist/docs/modules/WorkersPoolModule.html","Err":{"Op":"dial","Net":"tcp","Source":null,"Addr":{"IP":"::1","Port":9000,"Zone":""},"Err":{"Syscall":"connect","Err":111}}}},"type":"error"}}\n'
+2024-02-01 08:46:47.057811  NOTIFY (backup>ClusterMaintenance)[MaintenanceModeOFF]
+2024-02-01 08:46:47.058148   DEBUG (backup>kubernetes_api>set_config_map_value[static-assets-maintenance-includes.infra#details.txt])[in function]
+2024-02-01 08:46:47.058266   DEBUG (backup>kubernetes_api>set_config_map_value[static-assets-maintenance-includes.infra#details.txt])[in function] : value=<span>Restoration in progress …</span><br><span>Try again in a few minutes</span>
+2024-02-01 08:46:47.115916   DEBUG (backup>kubernetes_api>set_config_map_value[static-assets-maintenance-includes.infra#details.txt])[in function] : Done
+2024-02-01 08:46:47.116561   DEBUG (backup>kubernetes_api>set_ingress_class_name[static-assets-maintenance.infra](None))[in function]
+2024-02-01 08:46:47.116853   DEBUG (backup>kubernetes_api>set_ingress_class_name[static-assets-maintenance.infra](None))[in function] : value=None
+2024-02-01 08:46:47.167588   DEBUG (backup>kubernetes_api>set_ingress_class_name[static-assets-maintenance.infra](None))[in function] : Done
+Traceback (most recent call last):
+  File "/opt/pipx/bin/data-manager", line 8, in <module>
+    sys.exit(run())
+             ^^^^^
+  File "/opt/pipx/home/venvs/cluster-data-manager/lib/python3.12/site-packages/youwol/data_manager/entry_point.py", line 33, in run
+    task.run()
+  File "/opt/pipx/home/venvs/cluster-data-manager/lib/python3.12/site-packages/youwol/data_manager/tasks/backup/task.py", line 99, in run
+    subtask.run()
+  File "/opt/pipx/home/venvs/cluster-data-manager/lib/python3.12/site-packages/youwol/data_manager/tasks/backup/s3.py", line 84, in run
+    mc_commands.backup_bucket(bucket)
+  File "/opt/pipx/home/venvs/cluster-data-manager/lib/python3.12/site-packages/youwol/data_manager/services/mc_commands.py", line 176, in backup_bucket
+    self._mirror_buckets(report, source, target)
+  File "/opt/pipx/home/venvs/cluster-data-manager/lib/python3.12/site-packages/youwol/data_manager/services/mc_commands.py", line 236, in _mirror_buckets
+    self._run_command(
+  File "/opt/pipx/home/venvs/cluster-data-manager/lib/python3.12/site-packages/youwol/data_manager/services/mc_commands.py", line 337, in _run_command
+    raise RuntimeError(
+RuntimeError: failure when running mc command : {'message': 'Failed to copy `http://minio.infra.svc.cluster.local:9000/cdn/youwol-users/libraries/youwol/cdn-client/2.0.0/dist/docs/modules/WorkersPoolModule.html`.', 'cause': {'message': 'Put "http://localhost:9000/cdn/youwol-users/libraries/youwol/cdn-client/2.0.0/dist/docs/modules/WorkersPoolModule.html": dial tcp [::1]:9000: connect: connection refused', 'error': {'Op': 'Put', 'URL': 'http://localhost:9000/cdn/youwol-users/libraries/youwol/cdn-client/2.0.0/dist/docs/modules/WorkersPoolModule.html', 'Err': {'Op': 'dial', 'Net': 'tcp', 'Source': None, 'Addr': {'IP': '::1', 'Port': 9000, 'Zone': ''}, 'Err': {'Syscall': 'connect', 'Err': 111}}}}, 'type': 'error'}

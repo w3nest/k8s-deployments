@@ -1,0 +1,455 @@
+++ set -o pipefail
+++ cd /data/kc
+++ trap 'echo '\''Trapping SIGINT. The script ended with errors'\''; echo '\''ERROR'\'' > '\''/data/kc/kc_status'\''; exit 1' INT
+++ trap 'echo '\''Trapping SIGTERM . The script ended with errors'\''; echo '\''ERROR'\'' > '\''/data/kc/kc_status'\''; exit 1' TERM
+++ trap 'echo '\''Trapping SIGABRT. The script ended with errors'\''; echo '\''ERROR'\'' > '\''/data/kc/kc_status'\''; exit 1' ABRT
+++ trap 'echo '\''Trapping SIGQUIT. The script ended with errors'\''; echo '\''ERROR'\'' > '\''/data/kc/kc_status'\''; exit 1' QUIT
+++ trap 'echo '\''Trapping error. The script ended with errors'\''; echo '\''ERROR'\'' > '\''/data/kc/kc_status'\''; exit 1' ERR
+++ one_hour_in_seconds=3600
+++ export JAVA_OPTS_APPEND=-Dquarkus.transaction-manager.default-transaction-timeout=3600
+++ JAVA_OPTS_APPEND=-Dquarkus.transaction-manager.default-transaction-timeout=3600
+++ export PRINT_ENV=true
+++ PRINT_ENV=true
+++ status_file=/data/kc/kc_status
+++ status INIT
+++ status=INIT
+++ echo INIT
+++ echo
+++ echo STATUS=INIT
+++ kc_adm=/opt/keycloak/bin/kcadm.sh
+++ kc_adm_configured=0
+++ existing_providers=
+++ kc_sh=/opt/keycloak/bin/kc.sh
+++ '[' -z 1 ']'
+++ kc_import='/opt/keycloak/bin/kc.sh import --optimized'
+++ kc_export='/opt/keycloak/bin/kc.sh export --optimized'
++ status IMPORTING
++ status=IMPORTING
++ echo IMPORTING
++ echo
++ echo STATUS=IMPORTING
++ /opt/keycloak/bin/kc.sh import --optimized --override true --dir /data/kc
++ tee /data/kc/import.log
+
+STATUS=INIT
+
+STATUS=IMPORTING
+Appending additional Java properties to JAVA_OPTS: -Dquarkus.transaction-manager.default-transaction-timeout=3600
+Using JAVA_OPTS: -Xms64m -Xmx512m -XX:MetaspaceSize=96M -XX:MaxMetaspaceSize=256m -Dfile.encoding=UTF-8 -Dsun.stdout.encoding=UTF-8 -Dsun.err.encoding=UTF-8 -Dstdout.encoding=UTF-8 -Dstderr.encoding=UTF-8 -XX:+ExitOnOutOfMemoryError -Djava.security.egd=file:/dev/urandom -XX:+UseParallelGC -XX:MinHeapFreeRatio=10 -XX:MaxHeapFreeRatio=20 -XX:GCTimeRatio=4 -XX:AdaptiveSizePolicyWeight=90 --add-opens=java.base/java.util=ALL-UNNAMED --add-opens=java.base/java.util.concurrent=ALL-UNNAMED --add-opens=java.base/java.security=ALL-UNNAMED -Dquarkus.transaction-manager.default-transaction-timeout=3600
+Using JAVA_RUN_OPTS: -Xms64m -Xmx512m -XX:MetaspaceSize=96M -XX:MaxMetaspaceSize=256m -Dfile.encoding=UTF-8 -Dsun.stdout.encoding=UTF-8 -Dsun.err.encoding=UTF-8 -Dstdout.encoding=UTF-8 -Dstderr.encoding=UTF-8 -XX:+ExitOnOutOfMemoryError -Djava.security.egd=file:/dev/urandom -XX:+UseParallelGC -XX:MinHeapFreeRatio=10 -XX:MaxHeapFreeRatio=20 -XX:GCTimeRatio=4 -XX:AdaptiveSizePolicyWeight=90 --add-opens=java.base/java.util=ALL-UNNAMED --add-opens=java.base/java.util.concurrent=ALL-UNNAMED --add-opens=java.base/java.security=ALL-UNNAMED -Dquarkus.transaction-manager.default-transaction-timeout=3600 -Dkc.home.dir='/opt/keycloak/bin/..' -Djboss.server.config.dir='/opt/keycloak/bin/../conf' -Djava.util.logging.manager=org.jboss.logmanager.LogManager -Dquarkus-log-max-startup-records=10000 -cp '/opt/keycloak/bin/../lib/quarkus-run.jar' io.quarkus.bootstrap.runner.QuarkusEntryPoint import --optimized --override true --dir /data/kc
+2024-02-05 08:17:29,320 INFO  [org.keycloak.common.Profile] (main) Preview features enabled: admin-fine-grained-authz, recovery-codes, token-exchange
+2024-02-05 08:17:30,349 INFO  [org.keycloak.quarkus.runtime.hostname.DefaultHostnameProvider] (main) Hostname settings: Base URL: <unset>, Hostname: platform.int.youwol.com, Strict HTTPS: false, Path: <request>, Strict BackChannel: false, Admin URL: <unset>, Admin: <request>, Port: -1, Proxied: true
+2024-02-05 08:17:33,463 WARN  [io.quarkus.agroal.runtime.DataSources] (main) Datasource <default> enables XA but transaction recovery is not enabled. Please enable transaction recovery by setting quarkus.transaction-manager.enable-recovery=true, otherwise data may be lost if the application is terminated abruptly
+2024-02-05 08:17:34,756 WARN  [org.infinispan.PERSISTENCE] (keycloak-cache-init) ISPN000554: jboss-marshalling is deprecated and planned for removal
+2024-02-05 08:17:35,007 INFO  [org.infinispan.CONTAINER] (keycloak-cache-init) ISPN000556: Starting user marshaller 'org.infinispan.jboss.marshalling.core.JBossUserMarshaller'
+2024-02-05 08:17:35,452 WARN  [org.infinispan.commons.util.StringPropertyReplacer] (keycloak-cache-init) ISPN000901: Property jgroups.dns.query could not be replaced as intended!
+2024-02-05 08:17:35,746 INFO  [org.infinispan.CLUSTER] (keycloak-cache-init) ISPN000078: Starting JGroups channel `ISPN` with stack `kubernetes`
+2024-02-05 08:17:35,749 INFO  [org.jgroups.JChannel] (keycloak-cache-init) local_addr: 9f04ba46-555f-40f7-b4f7-66f6ca7ec05e, name: data-manager-restore-cwk6v-50055
+2024-02-05 08:17:35,777 INFO  [org.jgroups.protocols.FD_SOCK2] (keycloak-cache-init) server listening on *.57800
+2024-02-05 08:17:35,938 INFO  [org.infinispan.CLUSTER] (keycloak-cache-init) ISPN000094: Received new cluster view for channel ISPN: [keycloak-0-15607|42] (3) [keycloak-0-15607, keycloak-1-56451, data-manager-restore-cwk6v-50055]
+2024-02-05 08:17:36,165 INFO  [org.infinispan.CLUSTER] (keycloak-cache-init) ISPN000079: Channel `ISPN` local address is `data-manager-restore-cwk6v-50055`, physical addresses are `[10.2.1.93:7800]`
+2024-02-05 08:17:36,210 WARN  [org.infinispan.CONFIG] (keycloak-cache-init) ISPN000569: Unable to persist Infinispan internal caches as no global state enabled
+2024-02-05 08:17:36,806 WARN  [io.quarkus.vertx.http.runtime.VertxHttpRecorder] (main) The X-Forwarded-* and Forwarded headers will be considered when determining the proxy address. This configuration can cause a security issue as clients can forge requests and send a forwarded header that is not overwritten by the proxy. Please consider use one of these headers just to forward the proxy address in requests.
+2024-02-05 08:17:36,817 INFO  [org.keycloak.broker.provider.AbstractIdentityProviderMapper] (main) Registering class org.keycloak.broker.provider.mappersync.ConfigSyncEventListener
+2024-02-05 08:17:36,895 INFO  [org.infinispan.LIFECYCLE] (jgroups-5,data-manager-restore-cwk6v-50055) [Context=org.infinispan.PERMISSIONS] ISPN100002: Starting rebalance with members [keycloak-0-15607, keycloak-1-56451, data-manager-restore-cwk6v-50055], phase READ_OLD_WRITE_ALL, topology id 186
+2024-02-05 08:17:36,940 INFO  [org.infinispan.LIFECYCLE] (non-blocking-thread--p2-t1) [Context=org.infinispan.PERMISSIONS] ISPN100010: Finished rebalance with members [keycloak-0-15607, keycloak-1-56451, data-manager-restore-cwk6v-50055], topology id 186
+2024-02-05 08:17:36,967 INFO  [org.infinispan.LIFECYCLE] (jgroups-5,data-manager-restore-cwk6v-50055) [Context=org.infinispan.ROLES] ISPN100002: Starting rebalance with members [keycloak-0-15607, keycloak-1-56451, data-manager-restore-cwk6v-50055], phase READ_OLD_WRITE_ALL, topology id 186
+2024-02-05 08:17:37,179 INFO  [org.infinispan.LIFECYCLE] (non-blocking-thread--p2-t4) [Context=org.infinispan.ROLES] ISPN100010: Finished rebalance with members [keycloak-0-15607, keycloak-1-56451, data-manager-restore-cwk6v-50055], topology id 186
+2024-02-05 08:17:37,245 INFO  [org.infinispan.LIFECYCLE] (jgroups-13,data-manager-restore-cwk6v-50055) [Context=org.infinispan.CONFIG] ISPN100002: Starting rebalance with members [keycloak-0-15607, keycloak-1-56451, data-manager-restore-cwk6v-50055], phase READ_OLD_WRITE_ALL, topology id 186
+2024-02-05 08:17:37,253 INFO  [org.infinispan.LIFECYCLE] (non-blocking-thread--p2-t4) [Context=org.infinispan.CONFIG] ISPN100010: Finished rebalance with members [keycloak-0-15607, keycloak-1-56451, data-manager-restore-cwk6v-50055], topology id 186
+2024-02-05 08:17:37,300 INFO  [org.infinispan.LIFECYCLE] (jgroups-12,data-manager-restore-cwk6v-50055) [Context=actionTokens] ISPN100002: Starting rebalance with members [keycloak-0-15607, keycloak-1-56451, data-manager-restore-cwk6v-50055], phase READ_OLD_WRITE_ALL, topology id 186
+2024-02-05 08:17:37,305 INFO  [org.infinispan.LIFECYCLE] (jgroups-13,data-manager-restore-cwk6v-50055) [Context=actionTokens] ISPN100010: Finished rebalance with members [keycloak-0-15607, keycloak-1-56451, data-manager-restore-cwk6v-50055], topology id 186
+2024-02-05 08:17:37,347 INFO  [org.infinispan.LIFECYCLE] (jgroups-13,data-manager-restore-cwk6v-50055) [Context=authenticationSessions] ISPN100002: Starting rebalance with members [keycloak-0-15607, keycloak-1-56451, data-manager-restore-cwk6v-50055], phase READ_OLD_WRITE_ALL, topology id 186
+2024-02-05 08:17:37,387 INFO  [org.infinispan.LIFECYCLE] (jgroups-13,data-manager-restore-cwk6v-50055) [Context=authenticationSessions] ISPN100010: Finished rebalance with members [keycloak-0-15607, keycloak-1-56451, data-manager-restore-cwk6v-50055], topology id 186
+2024-02-05 08:17:37,523 INFO  [org.infinispan.LIFECYCLE] (jgroups-13,data-manager-restore-cwk6v-50055) [Context=clientSessions] ISPN100002: Starting rebalance with members [keycloak-0-15607, keycloak-1-56451, data-manager-restore-cwk6v-50055], phase READ_OLD_WRITE_ALL, topology id 186
+2024-02-05 08:17:37,533 INFO  [org.infinispan.LIFECYCLE] (jgroups-13,data-manager-restore-cwk6v-50055) [Context=clientSessions] ISPN100010: Finished rebalance with members [keycloak-0-15607, keycloak-1-56451, data-manager-restore-cwk6v-50055], topology id 186
+2024-02-05 08:17:37,758 INFO  [org.infinispan.LIFECYCLE] (jgroups-13,data-manager-restore-cwk6v-50055) [Context=loginFailures] ISPN100002: Starting rebalance with members [keycloak-0-15607, keycloak-1-56451, data-manager-restore-cwk6v-50055], phase READ_OLD_WRITE_ALL, topology id 186
+2024-02-05 08:17:37,762 INFO  [org.infinispan.LIFECYCLE] (jgroups-13,data-manager-restore-cwk6v-50055) [Context=loginFailures] ISPN100010: Finished rebalance with members [keycloak-0-15607, keycloak-1-56451, data-manager-restore-cwk6v-50055], topology id 186
+2024-02-05 08:17:37,863 INFO  [org.infinispan.LIFECYCLE] (jgroups-13,data-manager-restore-cwk6v-50055) [Context=offlineClientSessions] ISPN100002: Starting rebalance with members [keycloak-0-15607, keycloak-1-56451, data-manager-restore-cwk6v-50055], phase READ_OLD_WRITE_ALL, topology id 186
+2024-02-05 08:17:37,868 INFO  [org.infinispan.LIFECYCLE] (jgroups-13,data-manager-restore-cwk6v-50055) [Context=offlineClientSessions] ISPN100010: Finished rebalance with members [keycloak-0-15607, keycloak-1-56451, data-manager-restore-cwk6v-50055], topology id 186
+2024-02-05 08:17:38,039 INFO  [org.infinispan.LIFECYCLE] (jgroups-13,data-manager-restore-cwk6v-50055) [Context=offlineSessions] ISPN100002: Starting rebalance with members [keycloak-0-15607, keycloak-1-56451, data-manager-restore-cwk6v-50055], phase READ_OLD_WRITE_ALL, topology id 186
+2024-02-05 08:17:38,047 INFO  [org.infinispan.LIFECYCLE] (jgroups-13,data-manager-restore-cwk6v-50055) [Context=offlineSessions] ISPN100010: Finished rebalance with members [keycloak-0-15607, keycloak-1-56451, data-manager-restore-cwk6v-50055], topology id 186
+2024-02-05 08:17:38,257 INFO  [org.infinispan.LIFECYCLE] (jgroups-6,data-manager-restore-cwk6v-50055) [Context=sessions] ISPN100002: Starting rebalance with members [keycloak-0-15607, keycloak-1-56451, data-manager-restore-cwk6v-50055], phase READ_OLD_WRITE_ALL, topology id 186
+2024-02-05 08:17:38,266 INFO  [org.infinispan.LIFECYCLE] (jgroups-6,data-manager-restore-cwk6v-50055) [Context=sessions] ISPN100010: Finished rebalance with members [keycloak-0-15607, keycloak-1-56451, data-manager-restore-cwk6v-50055], topology id 186
+2024-02-05 08:17:38,435 INFO  [org.infinispan.LIFECYCLE] (jgroups-13,data-manager-restore-cwk6v-50055) [Context=work] ISPN100002: Starting rebalance with members [keycloak-0-15607, keycloak-1-56451, data-manager-restore-cwk6v-50055], phase READ_OLD_WRITE_ALL, topology id 186
+2024-02-05 08:17:38,439 INFO  [org.infinispan.LIFECYCLE] (non-blocking-thread--p2-t1) [Context=work] ISPN100010: Finished rebalance with members [keycloak-0-15607, keycloak-1-56451, data-manager-restore-cwk6v-50055], topology id 186
+2024-02-05 08:17:38,606 INFO  [org.keycloak.connections.infinispan.DefaultInfinispanConnectionProviderFactory] (main) Node name: data-manager-restore-cwk6v-50055, Site name: null
+2024-02-05 08:17:40,384 INFO  [org.keycloak.exportimport.dir.DirImportProvider] (main) Importing from directory /data/kc
+2024-02-05 08:17:42,391 INFO  [org.keycloak.services] (main) KC-SERVICES0030: Full model import requested. Strategy: OVERWRITE_EXISTING
+2024-02-05 08:17:43,983 INFO  [org.keycloak.exportimport.util.ImportUtils] (main) Realm 'youwol' already exists. Removing it before import
+2024-02-05 08:20:43,243 INFO  [org.keycloak.exportimport.util.ImportUtils] (main) Realm 'youwol' imported
+2024-02-05 08:21:30,834 INFO  [org.keycloak.exportimport.dir.DirImportProvider] (main) Imported users from /data/kc/youwol-users-51.json
+2024-02-05 08:21:50,399 INFO  [org.keycloak.exportimport.dir.DirImportProvider] (main) Imported users from /data/kc/youwol-users-78.json
+2024-02-05 08:21:58,567 INFO  [org.keycloak.exportimport.dir.DirImportProvider] (main) Imported users from /data/kc/youwol-users-112.json
+2024-02-05 08:22:03,046 INFO  [org.keycloak.exportimport.dir.DirImportProvider] (main) Imported users from /data/kc/youwol-users-73.json
+2024-02-05 08:22:07,297 INFO  [org.keycloak.exportimport.dir.DirImportProvider] (main) Imported users from /data/kc/youwol-users-77.json
+2024-02-05 08:22:11,233 INFO  [org.keycloak.exportimport.dir.DirImportProvider] (main) Imported users from /data/kc/youwol-users-110.json
+2024-02-05 08:22:15,196 INFO  [org.keycloak.exportimport.dir.DirImportProvider] (main) Imported users from /data/kc/youwol-users-32.json
+2024-02-05 08:22:19,435 INFO  [org.keycloak.exportimport.dir.DirImportProvider] (main) Imported users from /data/kc/youwol-users-33.json
+2024-02-05 08:22:23,352 INFO  [org.keycloak.exportimport.dir.DirImportProvider] (main) Imported users from /data/kc/youwol-users-42.json
+2024-02-05 08:22:27,404 INFO  [org.keycloak.exportimport.dir.DirImportProvider] (main) Imported users from /data/kc/youwol-users-127.json
+2024-02-05 08:22:31,257 INFO  [org.keycloak.exportimport.dir.DirImportProvider] (main) Imported users from /data/kc/youwol-users-111.json
+2024-02-05 08:22:34,879 INFO  [org.keycloak.exportimport.dir.DirImportProvider] (main) Imported users from /data/kc/youwol-users-202.json
+2024-02-05 08:22:38,453 INFO  [org.keycloak.exportimport.dir.DirImportProvider] (main) Imported users from /data/kc/youwol-users-10.json
+2024-02-05 08:22:42,611 INFO  [org.keycloak.exportimport.dir.DirImportProvider] (main) Imported users from /data/kc/youwol-users-199.json
+2024-02-05 08:22:46,538 INFO  [org.keycloak.exportimport.dir.DirImportProvider] (main) Imported users from /data/kc/youwol-users-158.json
+2024-02-05 08:22:50,195 INFO  [org.keycloak.exportimport.dir.DirImportProvider] (main) Imported users from /data/kc/youwol-users-135.json
+2024-02-05 08:22:53,785 INFO  [org.keycloak.exportimport.dir.DirImportProvider] (main) Imported users from /data/kc/youwol-users-40.json
+2024-02-05 08:22:57,430 INFO  [org.keycloak.exportimport.dir.DirImportProvider] (main) Imported users from /data/kc/youwol-users-29.json
+2024-02-05 08:23:01,377 INFO  [org.keycloak.exportimport.dir.DirImportProvider] (main) Imported users from /data/kc/youwol-users-143.json
+2024-02-05 08:23:05,001 INFO  [org.keycloak.exportimport.dir.DirImportProvider] (main) Imported users from /data/kc/youwol-users-30.json
+2024-02-05 08:23:08,659 INFO  [org.keycloak.exportimport.dir.DirImportProvider] (main) Imported users from /data/kc/youwol-users-16.json
+2024-02-05 08:23:12,369 INFO  [org.keycloak.exportimport.dir.DirImportProvider] (main) Imported users from /data/kc/youwol-users-126.json
+2024-02-05 08:23:16,005 INFO  [org.keycloak.exportimport.dir.DirImportProvider] (main) Imported users from /data/kc/youwol-users-181.json
+2024-02-05 08:23:19,904 INFO  [org.keycloak.exportimport.dir.DirImportProvider] (main) Imported users from /data/kc/youwol-users-190.json
+2024-02-05 08:23:23,632 INFO  [org.keycloak.exportimport.dir.DirImportProvider] (main) Imported users from /data/kc/youwol-users-79.json
+2024-02-05 08:23:27,796 INFO  [org.keycloak.exportimport.dir.DirImportProvider] (main) Imported users from /data/kc/youwol-users-76.json
+2024-02-05 08:23:31,487 INFO  [org.keycloak.exportimport.dir.DirImportProvider] (main) Imported users from /data/kc/youwol-users-192.json
+2024-02-05 08:23:35,099 INFO  [org.keycloak.exportimport.dir.DirImportProvider] (main) Imported users from /data/kc/youwol-users-0.json
+2024-02-05 08:23:38,738 INFO  [org.keycloak.exportimport.dir.DirImportProvider] (main) Imported users from /data/kc/youwol-users-174.json
+2024-02-05 08:23:42,514 INFO  [org.keycloak.exportimport.dir.DirImportProvider] (main) Imported users from /data/kc/youwol-users-88.json
+2024-02-05 08:23:46,053 INFO  [org.keycloak.exportimport.dir.DirImportProvider] (main) Imported users from /data/kc/youwol-users-87.json
+2024-02-05 08:23:49,510 INFO  [org.keycloak.exportimport.dir.DirImportProvider] (main) Imported users from /data/kc/youwol-users-113.json
+2024-02-05 08:23:53,464 INFO  [org.keycloak.exportimport.dir.DirImportProvider] (main) Imported users from /data/kc/youwol-users-3.json
+2024-02-05 08:23:56,947 INFO  [org.keycloak.exportimport.dir.DirImportProvider] (main) Imported users from /data/kc/youwol-users-206.json
+2024-02-05 08:24:00,617 INFO  [org.keycloak.exportimport.dir.DirImportProvider] (main) Imported users from /data/kc/youwol-users-177.json
+2024-02-05 08:24:03,986 INFO  [org.keycloak.exportimport.dir.DirImportProvider] (main) Imported users from /data/kc/youwol-users-21.json
+2024-02-05 08:24:08,083 INFO  [org.keycloak.exportimport.dir.DirImportProvider] (main) Imported users from /data/kc/youwol-users-2.json
+2024-02-05 08:24:12,010 INFO  [org.keycloak.exportimport.dir.DirImportProvider] (main) Imported users from /data/kc/youwol-users-163.json
+2024-02-05 08:24:15,559 INFO  [org.keycloak.exportimport.dir.DirImportProvider] (main) Imported users from /data/kc/youwol-users-157.json
+2024-02-05 08:24:19,275 INFO  [org.keycloak.exportimport.dir.DirImportProvider] (main) Imported users from /data/kc/youwol-users-170.json
+2024-02-05 08:24:22,697 INFO  [org.keycloak.exportimport.dir.DirImportProvider] (main) Imported users from /data/kc/youwol-users-64.json
+2024-02-05 08:24:26,163 INFO  [org.keycloak.exportimport.dir.DirImportProvider] (main) Imported users from /data/kc/youwol-users-69.json
+2024-02-05 08:24:29,918 INFO  [org.keycloak.exportimport.dir.DirImportProvider] (main) Imported users from /data/kc/youwol-users-47.json
+2024-02-05 08:24:33,636 INFO  [org.keycloak.exportimport.dir.DirImportProvider] (main) Imported users from /data/kc/youwol-users-121.json
+2024-02-05 08:24:37,484 INFO  [org.keycloak.exportimport.dir.DirImportProvider] (main) Imported users from /data/kc/youwol-users-178.json
+2024-02-05 08:24:41,397 INFO  [org.keycloak.exportimport.dir.DirImportProvider] (main) Imported users from /data/kc/youwol-users-53.json
+2024-02-05 08:24:45,103 INFO  [org.keycloak.exportimport.dir.DirImportProvider] (main) Imported users from /data/kc/youwol-users-138.json
+2024-02-05 08:24:49,343 INFO  [org.keycloak.exportimport.dir.DirImportProvider] (main) Imported users from /data/kc/youwol-users-97.json
+2024-02-05 08:24:52,669 INFO  [org.keycloak.exportimport.dir.DirImportProvider] (main) Imported users from /data/kc/youwol-users-11.json
+2024-02-05 08:24:56,214 INFO  [org.keycloak.exportimport.dir.DirImportProvider] (main) Imported users from /data/kc/youwol-users-164.json
+2024-02-05 08:24:59,539 INFO  [org.keycloak.exportimport.dir.DirImportProvider] (main) Imported users from /data/kc/youwol-users-153.json
+2024-02-05 08:25:03,244 INFO  [org.keycloak.exportimport.dir.DirImportProvider] (main) Imported users from /data/kc/youwol-users-200.json
+2024-02-05 08:25:06,792 INFO  [org.keycloak.exportimport.dir.DirImportProvider] (main) Imported users from /data/kc/youwol-users-109.json
+2024-02-05 08:25:10,337 INFO  [org.keycloak.exportimport.dir.DirImportProvider] (main) Imported users from /data/kc/youwol-users-104.json
+2024-02-05 08:25:14,032 INFO  [org.keycloak.exportimport.dir.DirImportProvider] (main) Imported users from /data/kc/youwol-users-95.json
+2024-02-05 08:25:17,695 INFO  [org.keycloak.exportimport.dir.DirImportProvider] (main) Imported users from /data/kc/youwol-users-59.json
+2024-02-05 08:25:21,191 INFO  [org.keycloak.exportimport.dir.DirImportProvider] (main) Imported users from /data/kc/youwol-users-191.json
+2024-02-05 08:25:24,586 INFO  [org.keycloak.exportimport.dir.DirImportProvider] (main) Imported users from /data/kc/youwol-users-68.json
+2024-02-05 08:25:28,512 INFO  [org.keycloak.exportimport.dir.DirImportProvider] (main) Imported users from /data/kc/youwol-users-5.json
+2024-02-05 08:25:32,605 INFO  [org.keycloak.exportimport.dir.DirImportProvider] (main) Imported users from /data/kc/youwol-users-74.json
+2024-02-05 08:25:36,406 INFO  [org.keycloak.exportimport.dir.DirImportProvider] (main) Imported users from /data/kc/youwol-users-142.json
+2024-02-05 08:25:40,059 INFO  [org.keycloak.exportimport.dir.DirImportProvider] (main) Imported users from /data/kc/youwol-users-35.json
+2024-02-05 08:25:43,728 INFO  [org.keycloak.exportimport.dir.DirImportProvider] (main) Imported users from /data/kc/youwol-users-6.json
+2024-02-05 08:25:47,165 INFO  [org.keycloak.exportimport.dir.DirImportProvider] (main) Imported users from /data/kc/youwol-users-91.json
+2024-02-05 08:25:50,843 INFO  [org.keycloak.exportimport.dir.DirImportProvider] (main) Imported users from /data/kc/youwol-users-9.json
+2024-02-05 08:25:54,664 INFO  [org.keycloak.exportimport.dir.DirImportProvider] (main) Imported users from /data/kc/youwol-users-210.json
+2024-02-05 08:25:58,682 INFO  [org.keycloak.exportimport.dir.DirImportProvider] (main) Imported users from /data/kc/youwol-users-182.json
+2024-02-05 08:26:02,503 INFO  [org.keycloak.exportimport.dir.DirImportProvider] (main) Imported users from /data/kc/youwol-users-186.json
+2024-02-05 08:26:06,174 INFO  [org.keycloak.exportimport.dir.DirImportProvider] (main) Imported users from /data/kc/youwol-users-55.json
+2024-02-05 08:26:10,380 INFO  [org.keycloak.exportimport.dir.DirImportProvider] (main) Imported users from /data/kc/youwol-users-48.json
+2024-02-05 08:26:14,032 INFO  [org.keycloak.exportimport.dir.DirImportProvider] (main) Imported users from /data/kc/youwol-users-92.json
+2024-02-05 08:26:17,574 INFO  [org.keycloak.exportimport.dir.DirImportProvider] (main) Imported users from /data/kc/youwol-users-70.json
+2024-02-05 08:26:21,357 INFO  [org.keycloak.exportimport.dir.DirImportProvider] (main) Imported users from /data/kc/youwol-users-65.json
+2024-02-05 08:26:24,467 INFO  [org.keycloak.exportimport.dir.DirImportProvider] (main) Imported users from /data/kc/youwol-users-172.json
+2024-02-05 08:26:27,961 INFO  [org.keycloak.exportimport.dir.DirImportProvider] (main) Imported users from /data/kc/youwol-users-150.json
+2024-02-05 08:26:31,838 INFO  [org.keycloak.exportimport.dir.DirImportProvider] (main) Imported users from /data/kc/youwol-users-14.json
+2024-02-05 08:26:35,489 INFO  [org.keycloak.exportimport.dir.DirImportProvider] (main) Imported users from /data/kc/youwol-users-185.json
+2024-02-05 08:26:39,490 INFO  [org.keycloak.exportimport.dir.DirImportProvider] (main) Imported users from /data/kc/youwol-users-136.json
+2024-02-05 08:26:42,997 INFO  [org.keycloak.exportimport.dir.DirImportProvider] (main) Imported users from /data/kc/youwol-users-140.json
+2024-02-05 08:26:46,784 INFO  [org.keycloak.exportimport.dir.DirImportProvider] (main) Imported users from /data/kc/youwol-users-100.json
+2024-02-05 08:26:50,676 INFO  [org.keycloak.exportimport.dir.DirImportProvider] (main) Imported users from /data/kc/youwol-users-201.json
+2024-02-05 08:26:53,999 INFO  [org.keycloak.exportimport.dir.DirImportProvider] (main) Imported users from /data/kc/youwol-users-198.json
+2024-02-05 08:26:57,222 INFO  [org.keycloak.exportimport.dir.DirImportProvider] (main) Imported users from /data/kc/youwol-users-187.json
+2024-02-05 08:27:01,001 INFO  [org.keycloak.exportimport.dir.DirImportProvider] (main) Imported users from /data/kc/youwol-users-148.json
+2024-02-05 08:27:04,791 INFO  [org.keycloak.exportimport.dir.DirImportProvider] (main) Imported users from /data/kc/youwol-users-43.json
+2024-02-05 08:27:08,570 INFO  [org.keycloak.exportimport.dir.DirImportProvider] (main) Imported users from /data/kc/youwol-users-17.json
+2024-02-05 08:27:12,242 INFO  [org.keycloak.exportimport.dir.DirImportProvider] (main) Imported users from /data/kc/youwol-users-183.json
+2024-02-05 08:27:16,095 INFO  [org.keycloak.exportimport.dir.DirImportProvider] (main) Imported users from /data/kc/youwol-users-84.json
+2024-02-05 08:27:19,530 INFO  [org.keycloak.exportimport.dir.DirImportProvider] (main) Imported users from /data/kc/youwol-users-141.json
+2024-02-05 08:27:22,773 INFO  [org.keycloak.exportimport.dir.DirImportProvider] (main) Imported users from /data/kc/youwol-users-169.json
+2024-02-05 08:27:26,265 INFO  [org.keycloak.exportimport.dir.DirImportProvider] (main) Imported users from /data/kc/youwol-users-37.json
+2024-02-05 08:27:29,806 INFO  [org.keycloak.exportimport.dir.DirImportProvider] (main) Imported users from /data/kc/youwol-users-128.json
+2024-02-05 08:27:33,333 INFO  [org.keycloak.exportimport.dir.DirImportProvider] (main) Imported users from /data/kc/youwol-users-81.json
+2024-02-05 08:27:36,669 INFO  [org.keycloak.exportimport.dir.DirImportProvider] (main) Imported users from /data/kc/youwol-users-58.json
+2024-02-05 08:27:40,253 INFO  [org.keycloak.exportimport.dir.DirImportProvider] (main) Imported users from /data/kc/youwol-users-125.json
+2024-02-05 08:27:43,848 INFO  [org.keycloak.exportimport.dir.DirImportProvider] (main) Imported users from /data/kc/youwol-users-12.json
+2024-02-05 08:27:47,360 INFO  [org.keycloak.exportimport.dir.DirImportProvider] (main) Imported users from /data/kc/youwol-users-149.json
+2024-02-05 08:27:50,749 INFO  [org.keycloak.exportimport.dir.DirImportProvider] (main) Imported users from /data/kc/youwol-users-106.json
+2024-02-05 08:27:54,721 INFO  [org.keycloak.exportimport.dir.DirImportProvider] (main) Imported users from /data/kc/youwol-users-94.json
+2024-02-05 08:27:57,884 INFO  [org.keycloak.exportimport.dir.DirImportProvider] (main) Imported users from /data/kc/youwol-users-207.json
+2024-02-05 08:28:01,852 INFO  [org.keycloak.exportimport.dir.DirImportProvider] (main) Imported users from /data/kc/youwol-users-108.json
+2024-02-05 08:28:04,326 INFO  [org.keycloak.exportimport.dir.DirImportProvider] (main) Imported users from /data/kc/youwol-users-213.json
+2024-02-05 08:28:06,263 INFO  [org.keycloak.exportimport.dir.DirImportProvider] (main) Imported users from /data/kc/youwol-users-189.json
+2024-02-05 08:28:09,707 INFO  [org.keycloak.exportimport.dir.DirImportProvider] (main) Imported users from /data/kc/youwol-users-176.json
+2024-02-05 08:28:13,175 INFO  [org.keycloak.exportimport.dir.DirImportProvider] (main) Imported users from /data/kc/youwol-users-184.json
+2024-02-05 08:28:16,533 INFO  [org.keycloak.exportimport.dir.DirImportProvider] (main) Imported users from /data/kc/youwol-users-165.json
+2024-02-05 08:28:20,028 INFO  [org.keycloak.exportimport.dir.DirImportProvider] (main) Imported users from /data/kc/youwol-users-129.json
+2024-02-05 08:28:23,749 INFO  [org.keycloak.exportimport.dir.DirImportProvider] (main) Imported users from /data/kc/youwol-users-54.json
+2024-02-05 08:28:27,117 INFO  [org.keycloak.exportimport.dir.DirImportProvider] (main) Imported users from /data/kc/youwol-users-133.json
+2024-02-05 08:28:30,828 INFO  [org.keycloak.exportimport.dir.DirImportProvider] (main) Imported users from /data/kc/youwol-users-139.json
+2024-02-05 08:28:34,384 INFO  [org.keycloak.exportimport.dir.DirImportProvider] (main) Imported users from /data/kc/youwol-users-50.json
+2024-02-05 08:28:38,134 INFO  [org.keycloak.exportimport.dir.DirImportProvider] (main) Imported users from /data/kc/youwol-users-66.json
+2024-02-05 08:28:41,971 INFO  [org.keycloak.exportimport.dir.DirImportProvider] (main) Imported users from /data/kc/youwol-users-15.json
+2024-02-05 08:28:45,781 INFO  [org.keycloak.exportimport.dir.DirImportProvider] (main) Imported users from /data/kc/youwol-users-154.json
+2024-02-05 08:28:49,407 INFO  [org.keycloak.exportimport.dir.DirImportProvider] (main) Imported users from /data/kc/youwol-users-156.json
+2024-02-05 08:28:52,940 INFO  [org.keycloak.exportimport.dir.DirImportProvider] (main) Imported users from /data/kc/youwol-users-4.json
+2024-02-05 08:28:56,577 INFO  [org.keycloak.exportimport.dir.DirImportProvider] (main) Imported users from /data/kc/youwol-users-161.json
+2024-02-05 08:29:00,674 INFO  [org.keycloak.exportimport.dir.DirImportProvider] (main) Imported users from /data/kc/youwol-users-120.json
+2024-02-05 08:29:04,550 INFO  [org.keycloak.exportimport.dir.DirImportProvider] (main) Imported users from /data/kc/youwol-users-166.json
+2024-02-05 08:29:08,264 INFO  [org.keycloak.exportimport.dir.DirImportProvider] (main) Imported users from /data/kc/youwol-users-134.json
+2024-02-05 08:29:12,271 INFO  [org.keycloak.exportimport.dir.DirImportProvider] (main) Imported users from /data/kc/youwol-users-167.json
+2024-02-05 08:29:15,420 INFO  [org.keycloak.exportimport.dir.DirImportProvider] (main) Imported users from /data/kc/youwol-users-179.json
+2024-02-05 08:29:18,894 INFO  [org.keycloak.exportimport.dir.DirImportProvider] (main) Imported users from /data/kc/youwol-users-124.json
+2024-02-05 08:29:22,389 INFO  [org.keycloak.exportimport.dir.DirImportProvider] (main) Imported users from /data/kc/youwol-users-27.json
+2024-02-05 08:29:26,223 INFO  [org.keycloak.exportimport.dir.DirImportProvider] (main) Imported users from /data/kc/youwol-users-20.json
+2024-02-05 08:29:29,844 INFO  [org.keycloak.exportimport.dir.DirImportProvider] (main) Imported users from /data/kc/youwol-users-211.json
+2024-02-05 08:29:33,243 INFO  [org.keycloak.exportimport.dir.DirImportProvider] (main) Imported users from /data/kc/youwol-users-61.json
+2024-02-05 08:29:37,277 INFO  [org.keycloak.exportimport.dir.DirImportProvider] (main) Imported users from /data/kc/youwol-users-57.json
+2024-02-05 08:29:40,996 INFO  [org.keycloak.exportimport.dir.DirImportProvider] (main) Imported users from /data/kc/youwol-users-22.json
+2024-02-05 08:29:44,257 INFO  [org.keycloak.exportimport.dir.DirImportProvider] (main) Imported users from /data/kc/youwol-users-44.json
+2024-02-05 08:29:47,370 INFO  [org.keycloak.exportimport.dir.DirImportProvider] (main) Imported users from /data/kc/youwol-users-34.json
+2024-02-05 08:29:50,841 INFO  [org.keycloak.exportimport.dir.DirImportProvider] (main) Imported users from /data/kc/youwol-users-49.json
+2024-02-05 08:29:54,596 INFO  [org.keycloak.exportimport.dir.DirImportProvider] (main) Imported users from /data/kc/youwol-users-208.json
+2024-02-05 08:29:58,855 INFO  [org.keycloak.exportimport.dir.DirImportProvider] (main) Imported users from /data/kc/youwol-users-147.json
+2024-02-05 08:30:02,809 INFO  [org.keycloak.exportimport.dir.DirImportProvider] (main) Imported users from /data/kc/youwol-users-98.json
+2024-02-05 08:30:06,694 INFO  [org.keycloak.exportimport.dir.DirImportProvider] (main) Imported users from /data/kc/youwol-users-130.json
+2024-02-05 08:30:09,847 INFO  [org.keycloak.exportimport.dir.DirImportProvider] (main) Imported users from /data/kc/youwol-users-75.json
+2024-02-05 08:30:13,487 INFO  [org.keycloak.exportimport.dir.DirImportProvider] (main) Imported users from /data/kc/youwol-users-103.json
+2024-02-05 08:30:17,063 INFO  [org.keycloak.exportimport.dir.DirImportProvider] (main) Imported users from /data/kc/youwol-users-1.json
+2024-02-05 08:30:20,439 INFO  [org.keycloak.exportimport.dir.DirImportProvider] (main) Imported users from /data/kc/youwol-users-116.json
+2024-02-05 08:30:23,950 INFO  [org.keycloak.exportimport.dir.DirImportProvider] (main) Imported users from /data/kc/youwol-users-90.json
+2024-02-05 08:30:28,027 INFO  [org.keycloak.exportimport.dir.DirImportProvider] (main) Imported users from /data/kc/youwol-users-122.json
+2024-02-05 08:30:32,215 INFO  [org.keycloak.exportimport.dir.DirImportProvider] (main) Imported users from /data/kc/youwol-users-36.json
+2024-02-05 08:30:35,790 INFO  [org.keycloak.exportimport.dir.DirImportProvider] (main) Imported users from /data/kc/youwol-users-144.json
+2024-02-05 08:30:39,504 INFO  [org.keycloak.exportimport.dir.DirImportProvider] (main) Imported users from /data/kc/youwol-users-38.json
+2024-02-05 08:30:43,419 INFO  [org.keycloak.exportimport.dir.DirImportProvider] (main) Imported users from /data/kc/youwol-users-152.json
+2024-02-05 08:30:46,943 INFO  [org.keycloak.exportimport.dir.DirImportProvider] (main) Imported users from /data/kc/youwol-users-168.json
+2024-02-05 08:30:50,702 INFO  [org.keycloak.exportimport.dir.DirImportProvider] (main) Imported users from /data/kc/youwol-users-171.json
+2024-02-05 08:30:54,306 INFO  [org.keycloak.exportimport.dir.DirImportProvider] (main) Imported users from /data/kc/youwol-users-71.json
+2024-02-05 08:30:58,047 INFO  [org.keycloak.exportimport.dir.DirImportProvider] (main) Imported users from /data/kc/youwol-users-194.json
+2024-02-05 08:31:01,103 INFO  [org.keycloak.exportimport.dir.DirImportProvider] (main) Imported users from /data/kc/youwol-users-19.json
+2024-02-05 08:31:04,036 INFO  [org.keycloak.exportimport.dir.DirImportProvider] (main) Imported users from /data/kc/youwol-users-118.json
+2024-02-05 08:31:07,489 INFO  [org.keycloak.exportimport.dir.DirImportProvider] (main) Imported users from /data/kc/youwol-users-39.json
+2024-02-05 08:31:10,802 INFO  [org.keycloak.exportimport.dir.DirImportProvider] (main) Imported users from /data/kc/youwol-users-162.json
+2024-02-05 08:31:14,338 INFO  [org.keycloak.exportimport.dir.DirImportProvider] (main) Imported users from /data/kc/youwol-users-146.json
+2024-02-05 08:31:17,772 INFO  [org.keycloak.exportimport.dir.DirImportProvider] (main) Imported users from /data/kc/youwol-users-175.json
+2024-02-05 08:31:21,167 INFO  [org.keycloak.exportimport.dir.DirImportProvider] (main) Imported users from /data/kc/youwol-users-155.json
+2024-02-05 08:31:24,779 INFO  [org.keycloak.exportimport.dir.DirImportProvider] (main) Imported users from /data/kc/youwol-users-132.json
+2024-02-05 08:31:28,079 INFO  [org.keycloak.exportimport.dir.DirImportProvider] (main) Imported users from /data/kc/youwol-users-203.json
+2024-02-05 08:31:31,403 INFO  [org.keycloak.exportimport.dir.DirImportProvider] (main) Imported users from /data/kc/youwol-users-204.json
+2024-02-05 08:31:34,881 INFO  [org.keycloak.exportimport.dir.DirImportProvider] (main) Imported users from /data/kc/youwol-users-195.json
+2024-02-05 08:31:38,207 INFO  [org.keycloak.exportimport.dir.DirImportProvider] (main) Imported users from /data/kc/youwol-users-46.json
+2024-02-05 08:31:41,939 INFO  [org.keycloak.exportimport.dir.DirImportProvider] (main) Imported users from /data/kc/youwol-users-197.json
+2024-02-05 08:31:45,713 INFO  [org.keycloak.exportimport.dir.DirImportProvider] (main) Imported users from /data/kc/youwol-users-96.json
+2024-02-05 08:31:49,138 INFO  [org.keycloak.exportimport.dir.DirImportProvider] (main) Imported users from /data/kc/youwol-users-123.json
+2024-02-05 08:31:52,531 INFO  [org.keycloak.exportimport.dir.DirImportProvider] (main) Imported users from /data/kc/youwol-users-145.json
+2024-02-05 08:31:56,335 INFO  [org.keycloak.exportimport.dir.DirImportProvider] (main) Imported users from /data/kc/youwol-users-188.json
+2024-02-05 08:31:59,932 INFO  [org.keycloak.exportimport.dir.DirImportProvider] (main) Imported users from /data/kc/youwol-users-83.json
+2024-02-05 08:32:03,792 INFO  [org.keycloak.exportimport.dir.DirImportProvider] (main) Imported users from /data/kc/youwol-users-151.json
+2024-02-05 08:32:07,072 INFO  [org.keycloak.exportimport.dir.DirImportProvider] (main) Imported users from /data/kc/youwol-users-7.json
+2024-02-05 08:32:10,191 INFO  [org.keycloak.exportimport.dir.DirImportProvider] (main) Imported users from /data/kc/youwol-users-101.json
+2024-02-05 08:32:13,653 INFO  [org.keycloak.exportimport.dir.DirImportProvider] (main) Imported users from /data/kc/youwol-users-117.json
+2024-02-05 08:32:16,966 INFO  [org.keycloak.exportimport.dir.DirImportProvider] (main) Imported users from /data/kc/youwol-users-159.json
+2024-02-05 08:32:20,848 INFO  [org.keycloak.exportimport.dir.DirImportProvider] (main) Imported users from /data/kc/youwol-users-209.json
+2024-02-05 08:32:24,357 INFO  [org.keycloak.exportimport.dir.DirImportProvider] (main) Imported users from /data/kc/youwol-users-115.json
+2024-02-05 08:32:27,908 INFO  [org.keycloak.exportimport.dir.DirImportProvider] (main) Imported users from /data/kc/youwol-users-45.json
+2024-02-05 08:32:31,244 INFO  [org.keycloak.exportimport.dir.DirImportProvider] (main) Imported users from /data/kc/youwol-users-114.json
+2024-02-05 08:32:34,501 INFO  [org.keycloak.exportimport.dir.DirImportProvider] (main) Imported users from /data/kc/youwol-users-67.json
+2024-02-05 08:32:37,930 INFO  [org.keycloak.exportimport.dir.DirImportProvider] (main) Imported users from /data/kc/youwol-users-25.json
+2024-02-05 08:32:41,990 INFO  [org.keycloak.exportimport.dir.DirImportProvider] (main) Imported users from /data/kc/youwol-users-99.json
+2024-02-05 08:32:45,355 INFO  [org.keycloak.exportimport.dir.DirImportProvider] (main) Imported users from /data/kc/youwol-users-196.json
+2024-02-05 08:32:48,810 INFO  [org.keycloak.exportimport.dir.DirImportProvider] (main) Imported users from /data/kc/youwol-users-31.json
+2024-02-05 08:32:52,500 INFO  [org.keycloak.exportimport.dir.DirImportProvider] (main) Imported users from /data/kc/youwol-users-86.json
+2024-02-05 08:32:56,128 INFO  [org.keycloak.exportimport.dir.DirImportProvider] (main) Imported users from /data/kc/youwol-users-119.json
+2024-02-05 08:32:59,759 INFO  [org.keycloak.exportimport.dir.DirImportProvider] (main) Imported users from /data/kc/youwol-users-82.json
+2024-02-05 08:33:03,343 INFO  [org.keycloak.exportimport.dir.DirImportProvider] (main) Imported users from /data/kc/youwol-users-24.json
+2024-02-05 08:33:06,918 INFO  [org.keycloak.exportimport.dir.DirImportProvider] (main) Imported users from /data/kc/youwol-users-137.json
+2024-02-05 08:33:10,130 INFO  [org.keycloak.exportimport.dir.DirImportProvider] (main) Imported users from /data/kc/youwol-users-212.json
+2024-02-05 08:33:13,738 INFO  [org.keycloak.exportimport.dir.DirImportProvider] (main) Imported users from /data/kc/youwol-users-85.json
+2024-02-05 08:33:16,999 INFO  [org.keycloak.exportimport.dir.DirImportProvider] (main) Imported users from /data/kc/youwol-users-160.json
+2024-02-05 08:33:20,493 INFO  [org.keycloak.exportimport.dir.DirImportProvider] (main) Imported users from /data/kc/youwol-users-62.json
+2024-02-05 08:33:23,543 INFO  [org.keycloak.exportimport.dir.DirImportProvider] (main) Imported users from /data/kc/youwol-users-18.json
+2024-02-05 08:33:26,864 INFO  [org.keycloak.exportimport.dir.DirImportProvider] (main) Imported users from /data/kc/youwol-users-63.json
+2024-02-05 08:33:30,971 INFO  [org.keycloak.exportimport.dir.DirImportProvider] (main) Imported users from /data/kc/youwol-users-13.json
+2024-02-05 08:33:34,417 INFO  [org.keycloak.exportimport.dir.DirImportProvider] (main) Imported users from /data/kc/youwol-users-93.json
+2024-02-05 08:33:37,819 INFO  [org.keycloak.exportimport.dir.DirImportProvider] (main) Imported users from /data/kc/youwol-users-180.json
+2024-02-05 08:33:41,713 INFO  [org.keycloak.exportimport.dir.DirImportProvider] (main) Imported users from /data/kc/youwol-users-205.json
+2024-02-05 08:33:45,284 INFO  [org.keycloak.exportimport.dir.DirImportProvider] (main) Imported users from /data/kc/youwol-users-193.json
+2024-02-05 08:33:48,957 INFO  [org.keycloak.exportimport.dir.DirImportProvider] (main) Imported users from /data/kc/youwol-users-8.json
+2024-02-05 08:33:53,001 INFO  [org.keycloak.exportimport.dir.DirImportProvider] (main) Imported users from /data/kc/youwol-users-72.json
+2024-02-05 08:33:56,961 INFO  [org.keycloak.exportimport.dir.DirImportProvider] (main) Imported users from /data/kc/youwol-users-28.json
+2024-02-05 08:34:00,674 INFO  [org.keycloak.exportimport.dir.DirImportProvider] (main) Imported users from /data/kc/youwol-users-26.json
+2024-02-05 08:34:04,055 INFO  [org.keycloak.exportimport.dir.DirImportProvider] (main) Imported users from /data/kc/youwol-users-173.json
+2024-02-05 08:34:07,754 INFO  [org.keycloak.exportimport.dir.DirImportProvider] (main) Imported users from /data/kc/youwol-users-107.json
+2024-02-05 08:34:11,429 INFO  [org.keycloak.exportimport.dir.DirImportProvider] (main) Imported users from /data/kc/youwol-users-80.json
+2024-02-05 08:34:15,499 INFO  [org.keycloak.exportimport.dir.DirImportProvider] (main) Imported users from /data/kc/youwol-users-41.json
+2024-02-05 08:34:18,959 INFO  [org.keycloak.exportimport.dir.DirImportProvider] (main) Imported users from /data/kc/youwol-users-105.json
+2024-02-05 08:34:22,905 INFO  [org.keycloak.exportimport.dir.DirImportProvider] (main) Imported users from /data/kc/youwol-users-131.json
+2024-02-05 08:34:26,443 INFO  [org.keycloak.exportimport.dir.DirImportProvider] (main) Imported users from /data/kc/youwol-users-52.json
+2024-02-05 08:34:30,378 INFO  [org.keycloak.exportimport.dir.DirImportProvider] (main) Imported users from /data/kc/youwol-users-60.json
+2024-02-05 08:34:33,798 INFO  [org.keycloak.exportimport.dir.DirImportProvider] (main) Imported users from /data/kc/youwol-users-89.json
+2024-02-05 08:34:37,541 INFO  [org.keycloak.exportimport.dir.DirImportProvider] (main) Imported users from /data/kc/youwol-users-102.json
+2024-02-05 08:34:41,403 INFO  [org.keycloak.exportimport.dir.DirImportProvider] (main) Imported users from /data/kc/youwol-users-56.json
+2024-02-05 08:34:45,047 INFO  [org.keycloak.exportimport.dir.DirImportProvider] (main) Imported users from /data/kc/youwol-users-23.json
+2024-02-05 08:34:47,185 INFO  [org.keycloak.services] (main) KC-SERVICES0032: Import finished successfully
+2024-02-05 08:34:47,396 INFO  [io.quarkus] (main) Keycloak 22.0.3 on JVM (powered by Quarkus 3.2.5.Final) started in 1039.605s. Listening on: 
+2024-02-05 08:34:47,397 INFO  [io.quarkus] (main) Profile import_export activated. 
+2024-02-05 08:34:47,397 INFO  [io.quarkus] (main) Installed features: [agroal, cdi, hibernate-orm, jdbc-h2, jdbc-mariadb, jdbc-mssql, jdbc-mysql, jdbc-oracle, jdbc-postgresql, keycloak, logging-gelf, micrometer, narayana-jta, reactive-routes, resteasy, resteasy-jackson, smallrye-context-propagation, smallrye-health, vertx]
+2024-02-05 08:34:47,911 INFO  [org.infinispan.CLUSTER] (main) ISPN000080: Disconnecting JGroups channel `ISPN`
+2024-02-05 08:34:48,015 INFO  [io.quarkus] (main) Keycloak stopped in 0.604s
++ status IMPORTED
+
+STATUS=IMPORTED
++ status=IMPORTED
++ echo IMPORTED
++ echo
++ echo STATUS=IMPORTED
++ '[' -n rotate ']'
++ status ROTATING_KEYS
++ status=ROTATING_KEYS
++ echo ROTATING_KEYS
++ echo
+
++ echo STATUS=ROTATING_KEYS
+STATUS=ROTATING_KEYS
++ '[' xrotate == xrotate ']'
++ deactivate_existing_keys
++ list_existing_providers
++ config_credentials
++ '[' x0 '!=' x1 ']'
++ /opt/keycloak/bin/kcadm.sh config credentials --server https://platform.int.youwol.com/auth --realm master --user XJwgCZYZE9OzKwIGkC2P2glOM4RTKEU5 --password x7HJwTr0trnnIMHHkY8Om0qlXeb8Djva
+Logging into https://platform.int.youwol.com/auth as user XJwgCZYZE9OzKwIGkC2P2glOM4RTKEU5 of realm master
++ kc_adm_configured=1
+++ /opt/keycloak/bin/kcadm.sh get keys --target-realm youwol --fields 'keys(providerId)' --format csv --noquotes
++ existing_providers=bc0c2a0d-248b-4a34-b2b1-c311e11ab192,ce986330-b48f-4189-88cf-859a9ce4c0da,dc4b0299-d6db-408c-8984-d1c28a03c485,06541d47-d086-4e31-84f9-bb5f5756c37a,18395a6d-3c27-41e5-b2b5-f97f32f51c3f,3f0f0503-ddb5-4b9e-8817-8b84931110ae,7d4e24d8-9c5c-47a4-bf7a-5a70f0025157,9aeb527e-4434-4486-ab8a-c071014bc4f6,cfd652a8-c36e-4d50-9ec7-a9d2c1986ac3
++ IFS=,
++ read -ra providers
++ for pid in "${providers[@]}"
++ /opt/keycloak/bin/kcadm.sh update components/bc0c2a0d-248b-4a34-b2b1-c311e11ab192 --target-realm youwol --set 'config.active=["false"]' --set 'config.priority=["-200"]'
++ for pid in "${providers[@]}"
++ /opt/keycloak/bin/kcadm.sh update components/ce986330-b48f-4189-88cf-859a9ce4c0da --target-realm youwol --set 'config.active=["false"]' --set 'config.priority=["-200"]'
++ for pid in "${providers[@]}"
++ /opt/keycloak/bin/kcadm.sh update components/dc4b0299-d6db-408c-8984-d1c28a03c485 --target-realm youwol --set 'config.active=["false"]' --set 'config.priority=["-200"]'
++ for pid in "${providers[@]}"
++ /opt/keycloak/bin/kcadm.sh update components/06541d47-d086-4e31-84f9-bb5f5756c37a --target-realm youwol --set 'config.active=["false"]' --set 'config.priority=["-200"]'
++ for pid in "${providers[@]}"
++ /opt/keycloak/bin/kcadm.sh update components/18395a6d-3c27-41e5-b2b5-f97f32f51c3f --target-realm youwol --set 'config.active=["false"]' --set 'config.priority=["-200"]'
++ for pid in "${providers[@]}"
++ /opt/keycloak/bin/kcadm.sh update components/3f0f0503-ddb5-4b9e-8817-8b84931110ae --target-realm youwol --set 'config.active=["false"]' --set 'config.priority=["-200"]'
++ for pid in "${providers[@]}"
++ /opt/keycloak/bin/kcadm.sh update components/7d4e24d8-9c5c-47a4-bf7a-5a70f0025157 --target-realm youwol --set 'config.active=["false"]' --set 'config.priority=["-200"]'
++ for pid in "${providers[@]}"
++ /opt/keycloak/bin/kcadm.sh update components/9aeb527e-4434-4486-ab8a-c071014bc4f6 --target-realm youwol --set 'config.active=["false"]' --set 'config.priority=["-200"]'
++ for pid in "${providers[@]}"
++ /opt/keycloak/bin/kcadm.sh update components/cfd652a8-c36e-4d50-9ec7-a9d2c1986ac3 --target-realm youwol --set 'config.active=["false"]' --set 'config.priority=["-200"]'
++ insert_new_keys
++ config_credentials
++ '[' x1 '!=' x1 ']'
+++ get_realm_id
+++ realm=youwol
+++ config_credentials
+++ '[' x1 '!=' x1 ']'
++++ /opt/keycloak/bin/kcadm.sh get realms/youwol --fields id --format csv --noquotes
+++ rid=youwol
+++ '[' -z youwol ']'
+++ echo youwol
++ realm_id=youwol
++ /opt/keycloak/bin/kcadm.sh create components --target-realm youwol --set providerType=org.keycloak.keys.KeyProvider --set parentId=youwol --set name=rsa-generated --set providerId=rsa-generated --set 'config.enabled=["true"]' --set 'config.active=["true"]' --set 'config.priority=["100"]' --set 'config.keySize=["2048"]' --set 'config.algorithm=["RS256"]'
+Created new component with id '68b81d92-1d9e-4754-93d0-c9dc68b4ecb0'
++ /opt/keycloak/bin/kcadm.sh create components --target-realm youwol --set providerType=org.keycloak.keys.KeyProvider --set parentId=youwol --set name=hmac-generated --set providerId=hmac-generated --set 'config.enabled=["true"]' --set 'config.active=["true"]' --set 'config.priority=["100"]' --set 'config.algorithm=["HS256"]'
+Created new component with id '725b16f1-a49e-4f2c-bd7d-b0bfcab8ac19'
++ /opt/keycloak/bin/kcadm.sh create components --target-realm youwol --set providerType=org.keycloak.keys.KeyProvider --set parentId=youwol --set name=aes-generated --set providerId=aes-generated --set 'config.enabled=["true"]' --set 'config.active=["true"]' --set 'config.priority=["100"]'
+Created new component with id '43d90bb4-0346-445f-9cf2-3a0695d8d613'
++ /opt/keycloak/bin/kcadm.sh create components --target-realm youwol --set providerType=org.keycloak.keys.KeyProvider --set parentId=youwol --set name=fallback-ES256 --set providerId=ecdsa-generated --set 'config.enabled=["true"]' --set 'config.active=["true"]' --set 'config.priority=["-100"]' --set 'config.ecdsaEllipticCurveKey=["P-256"]'
+Created new component with id '51411c17-95a6-4737-9317-c6254460ef27'
++ status CONFIGURING_CLIENTS
++ status=CONFIGURING_CLIENTS
++ echo CONFIGURING_CLIENTS
++ echo
++ echo STATUS=CONFIGURING_CLIENTS
++ set_client_secret admin-cli Bi3OlTGzmPvxcGafJvDEHFTkumR3fYF1
++ client_id=admin-cli
++ client_secret=Bi3OlTGzmPvxcGafJvDEHFTkumR3fYF1
++ update_client admin-cli secret=Bi3OlTGzmPvxcGafJvDEHFTkumR3fYF1
++ client_id=admin-cli
++ set_param=secret=Bi3OlTGzmPvxcGafJvDEHFTkumR3fYF1
+
+STATUS=CONFIGURING_CLIENTS
+++ get_client_id admin-cli
+++ client_id=admin-cli
+++ config_credentials
+++ '[' x1 '!=' x1 ']'
++++ /opt/keycloak/bin/kcadm.sh get clients --target-realm youwol --fields id --query clientId=admin-cli --format csv --noquotes
+++ cid=3587d7ce-4bc9-40b0-ba78-93fec666ee50
+++ '[' -z 3587d7ce-4bc9-40b0-ba78-93fec666ee50 ']'
+++ echo 3587d7ce-4bc9-40b0-ba78-93fec666ee50
++ cid=3587d7ce-4bc9-40b0-ba78-93fec666ee50
++ /opt/keycloak/bin/kcadm.sh update clients/3587d7ce-4bc9-40b0-ba78-93fec666ee50 --target-realm youwol --set secret=Bi3OlTGzmPvxcGafJvDEHFTkumR3fYF1
++ set_client_secret integration-tests PpQC7EMZ4u4PAZwyB6dw5tnidZhmRNQn
++ client_id=integration-tests
++ client_secret=PpQC7EMZ4u4PAZwyB6dw5tnidZhmRNQn
++ update_client integration-tests secret=PpQC7EMZ4u4PAZwyB6dw5tnidZhmRNQn
++ client_id=integration-tests
++ set_param=secret=PpQC7EMZ4u4PAZwyB6dw5tnidZhmRNQn
+++ get_client_id integration-tests
+++ client_id=integration-tests
+++ config_credentials
+++ '[' x1 '!=' x1 ']'
++++ /opt/keycloak/bin/kcadm.sh get clients --target-realm youwol --fields id --query clientId=integration-tests --format csv --noquotes
+++ cid=1947dc90-b1ee-48fb-8b37-cebc4bcb5934
+++ '[' -z 1947dc90-b1ee-48fb-8b37-cebc4bcb5934 ']'
+++ echo 1947dc90-b1ee-48fb-8b37-cebc4bcb5934
++ cid=1947dc90-b1ee-48fb-8b37-cebc4bcb5934
++ /opt/keycloak/bin/kcadm.sh update clients/1947dc90-b1ee-48fb-8b37-cebc4bcb5934 --target-realm youwol --set secret=PpQC7EMZ4u4PAZwyB6dw5tnidZhmRNQn
++ set_client_secret youwol-platform B998crmQIvwswprSIHlLVfCqTnNwxrwP
++ client_id=youwol-platform
++ client_secret=B998crmQIvwswprSIHlLVfCqTnNwxrwP
++ update_client youwol-platform secret=B998crmQIvwswprSIHlLVfCqTnNwxrwP
++ client_id=youwol-platform
++ set_param=secret=B998crmQIvwswprSIHlLVfCqTnNwxrwP
+++ get_client_id youwol-platform
+++ client_id=youwol-platform
+++ config_credentials
+++ '[' x1 '!=' x1 ']'
++++ /opt/keycloak/bin/kcadm.sh get clients --target-realm youwol --fields id --query clientId=youwol-platform --format csv --noquotes
+++ cid=78a6d379-23a1-4456-9130-57ec0ba85005
+++ '[' -z 78a6d379-23a1-4456-9130-57ec0ba85005 ']'
+++ echo 78a6d379-23a1-4456-9130-57ec0ba85005
++ cid=78a6d379-23a1-4456-9130-57ec0ba85005
++ /opt/keycloak/bin/kcadm.sh update clients/78a6d379-23a1-4456-9130-57ec0ba85005 --target-realm youwol --set secret=B998crmQIvwswprSIHlLVfCqTnNwxrwP
++ set_client_redirect_uris youwol-platform '"https://platform.int.youwol.com/*"'
++ client_id=youwol-platform
++ redirect_uris='"https://platform.int.youwol.com/*"'
++ update_client youwol-platform 'redirectUris=["https://platform.int.youwol.com/*"]'
++ client_id=youwol-platform
++ set_param='redirectUris=["https://platform.int.youwol.com/*"]'
+++ get_client_id youwol-platform
+++ client_id=youwol-platform
+++ config_credentials
+++ '[' x1 '!=' x1 ']'
++++ /opt/keycloak/bin/kcadm.sh get clients --target-realm youwol --fields id --query clientId=youwol-platform --format csv --noquotes
+++ cid=78a6d379-23a1-4456-9130-57ec0ba85005
+++ '[' -z 78a6d379-23a1-4456-9130-57ec0ba85005 ']'
+++ echo 78a6d379-23a1-4456-9130-57ec0ba85005
++ cid=78a6d379-23a1-4456-9130-57ec0ba85005
++ /opt/keycloak/bin/kcadm.sh update clients/78a6d379-23a1-4456-9130-57ec0ba85005 --target-realm youwol --set 'redirectUris=["https://platform.int.youwol.com/*"]'
++ set_client_secret webpm THXxSiUbJ1sldYPJSzdIMl4JP0rab84R
++ client_id=webpm
++ client_secret=THXxSiUbJ1sldYPJSzdIMl4JP0rab84R
++ update_client webpm secret=THXxSiUbJ1sldYPJSzdIMl4JP0rab84R
++ client_id=webpm
++ set_param=secret=THXxSiUbJ1sldYPJSzdIMl4JP0rab84R
+++ get_client_id webpm
+++ client_id=webpm
+++ config_credentials
+++ '[' x1 '!=' x1 ']'
++++ /opt/keycloak/bin/kcadm.sh get clients --target-realm youwol --fields id --query clientId=webpm --format csv --noquotes
+++ cid=d1e12cff-09d1-48c1-b172-6f9369ba5924
+++ '[' -z d1e12cff-09d1-48c1-b172-6f9369ba5924 ']'
+++ echo d1e12cff-09d1-48c1-b172-6f9369ba5924
++ cid=d1e12cff-09d1-48c1-b172-6f9369ba5924
++ /opt/keycloak/bin/kcadm.sh update clients/d1e12cff-09d1-48c1-b172-6f9369ba5924 --target-realm youwol --set secret=THXxSiUbJ1sldYPJSzdIMl4JP0rab84R
++ status DONE
++ status=DONE
++ echo DONE
