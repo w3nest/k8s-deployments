@@ -19,6 +19,10 @@ spec:
   {{- end }}
   hostname:
     hostname: {{ $hostname }}
+  proxy:
+    headers: "xforwarded"
+  http:
+    httpEnabled: true
   db:
     usernameSecret:
       name: keycloak-pguser-keycloak
@@ -31,10 +35,11 @@ spec:
       secret:
         name: keycloak-pguser-keycloak
         key: jdbc-uri
-    - name: proxy
-      value: edge
     - name: http-relative-path
       value: "/auth"
+  bootstrapAdmin:
+    user:
+      secret: "keycloak-bootstrap-admin"
   unsupported:
     podTemplate:
       spec:
