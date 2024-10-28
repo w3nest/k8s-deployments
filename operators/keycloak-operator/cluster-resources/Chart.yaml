@@ -1,4 +1,4 @@
 apiVersion: v2
 name: keycloak-operator-cluster-resources
-version: 1.0.0
-appVersion: 22.0.1
+version: 2.0.0
+appVersion: "26.0.1"

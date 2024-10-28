@@ -31,9 +31,9 @@ template:
     - name: {{ $root.Values.imagePullSecret }}
     {{- end }}
     securityContext:
-      runAsUser: 10000
-      runAsGroup: 10000
-      fsGroup: 10000
+      runAsUser: 1000
+      runAsGroup: 1000
+      fsGroup: 1000
     initContainers:
       - name: setup
         image: "registry.gitlab.com/youwol/platform/cluster-data-manager:{{ $root.Chart.AppVersion }}"
@@ -267,12 +267,12 @@ template:
             value: kubernetes
           - name: KC_CACHE
             value: ispn
-          - name: KC_FEATURES
-            value: token-exchange
           - name: KC_PROXY
             value: edge
           - name: KC_HTTP_RELATIVE_PATH
             value: /auth
+          - name: KC_HTTP_MANAGEMENT_PORT
+            value: "9123"
           - name: KC_DB
             value: postgres
           - name: KC_DB_URL_HOST
@@ -325,6 +325,8 @@ template:
           - name: KEYS_ROTATION
             value: {{ $keycloakRealmKeysRotation }}
           {{- end }}
+          - name: QUARKUS_TRANSACTION_MANAGER_ENABLE_RECOVERY
+            value: "false"
           - name: ADMIN_CLI_CLIENT_SECRET
             valueFrom:
               secretKeyRef:

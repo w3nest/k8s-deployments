@@ -7,15 +7,22 @@ metadata:
 spec:
   backups:
     pgbackrest:
+      global:
+        repo1-retention-full: "14"
+        repo1-retention-full-type: time
       repos:
         - name: repo1
+          schedules:
+            full:         "37 23 * * sun"
+            differential: "24 22 * *   *"
+            incremental:  "12  * * *   *"
           volume:
             volumeClaimSpec:
               accessModes:
                 - "ReadWriteOnce"
               resources:
                 requests:
-                  storage: 10G
+                  storage: 20G
 
   instances:
     - dataVolumeClaimSpec:
@@ -23,7 +30,7 @@ spec:
           - "ReadWriteOnce"
         resources:
           requests:
-            storage: 10G
+            storage: 20G
 
   postgresVersion: 15
   databaseInitSQL:

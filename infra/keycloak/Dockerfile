@@ -1,4 +1,4 @@
-ARG kc_version=22.0.3
+ARG kc_version=26.0.1
 FROM quay.io/keycloak/keycloak:$kc_version AS builder
 
 # See https://www.keycloak.org/server/all-config for build-time configuration
