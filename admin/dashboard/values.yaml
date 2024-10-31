@@ -7,7 +7,7 @@ dashboard:
     ingress:
       enabled: true
       hosts:
-        - tooling.youwol.com
+        - "tooling.w3nest.minikube"
       ingressClassName: nginx
       path: /dashboard
       issuer:
