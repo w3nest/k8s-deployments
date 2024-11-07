@@ -157,13 +157,13 @@ template:
             valueFrom:
               secretKeyRef:
                 key: username
-                name: keycloak-initial-admin
+                name: keycloak-bootstrap-admin
                 optional: false
           - name: KEYCLOAK_PASSWORD
             valueFrom:
               secretKeyRef:
                 key: password
-                name: keycloak-initial-admin
+                name: keycloak-bootstrap-admin
                 optional: false
           {{- end }}
           {{- if $subtasks }}
