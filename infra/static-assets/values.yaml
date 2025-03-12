@@ -1,6 +1,6 @@
 repo:
-#  ref: main # if not set, use Chart appVersion
-  url: https://github.com/youwol/cluster-static-assets.git
+  ref: main # if not set, use Chart appVersion
+  url: https://github.com/w3nest/k8s-static-resources
 # maintenance:
 #  permanentDomain: maintenance.platform.youwol.com
 #  enable: false
