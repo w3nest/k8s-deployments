@@ -1,0 +1,7 @@
+apiVersion: v2
+name: accounts # Will be used as docker image name
+description: Deployment of accounts backend
+type: application
+
+# Chart version : increment when, and only when, modifying ./chart/ directory content
+version: 0.1.1

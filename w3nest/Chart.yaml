@@ -1,0 +1,7 @@
+apiVersion: v2
+name: w3nest
+description: Deployment of W3Nest backends
+type: application
+
+# Chart version : increment when, and only when, modifying ./chart/ directory content
+version: 0.1.0

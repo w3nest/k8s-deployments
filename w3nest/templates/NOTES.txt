@@ -1,0 +1,22 @@
+
+{{- $name := .Release.Name}}
+{{- $ins := .Release.IsInstall}}
+{{- $up := .Release.IsUpgrade}}
+{{- $rev := .Release.Revision}}
+{{- $v := .Values.global.appVersion}}
+{{- $ns := .Release.Namespace}}
+{{- $fullname := include "w3nest.fullname" .}}
+
+🚀 {{ .Chart.Name }}-{{ .Chart.Version }} ({{ include "w3nest.notes.selfNameVersion" . }}) **
+
+    {{ if $ins -}}
+    🔄 Installing release '{{ $name }}' of app version {{ $v }} into namespace '{{ $ns }}'.{{ end -}}
+{{ if $up -}}
+    🔄 Upgrading release '{{ $name }}' to revision {{ $rev }} for app version {{ $v }}.{{ end -}}
+{{ ""}}
+    🛠️  Deployment in cluster version '{{ include "w3nest.lookup.clusterVersion" .}}'.
+    {{ include "w3nest.image.notes" . }}
+
+{{- range $name, $subchart := .Subcharts }}
+    {{ include "w3nest.notes" $subchart }}
+{{- end }}

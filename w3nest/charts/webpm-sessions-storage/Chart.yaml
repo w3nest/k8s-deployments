@@ -1,0 +1,6 @@
+apiVersion: v2
+name: webpm-sessions-storage # Will be used as docker image name
+description: Deployment of WebPM's session storage manager
+type: application
+
+version: 1.3.1

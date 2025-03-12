@@ -1,0 +1,178 @@
+appVersion: "0.1.13-wip"
+
+global:
+  appVersion: "0.1.13-wip"
+  imagePullPolicy: "Never"
+  # repository: "registry.gitlab.com/w3lab/platform/backends"
+
+
+# Pass down values to sub-charts explicitly. See available options at the end of the file.
+accounts:
+  fullnameOverride: "accounts"
+  ingressEnabled: true
+  env:
+    - forwardedAllowIps # FORWARDED_ALLOW_IPS
+    - openidClient     # OPENID_BASE_URL, OPENID_CLIENT_ID, OPENID_CLIENT_SECRET
+    - redis            # REDIS_HOST, REDIS_USERNAME, REDIS_PASSWORD
+    - keycloakAdmin    # KEYCLOAK_ADMIN_CLIENT_ID, KEYCLOAK_ADMIN_CLIENT_SECRET, KEYCLOAK_ADMIN_BASE_URL
+
+assets-gateway:
+  fullnameOverride: "assets-gateway"
+  containerArgs: 
+    - "assets_gtw"
+  env:
+    - openidClient     # OPENID_BASE_URL, OPENID_CLIENT_ID, OPENID_CLIENT_SECRET
+    - redis            # REDIS_HOST, REDIS_USERNAME, REDIS_PASSWORD
+  tempVolume: true
+  ingressEnabled: true
+
+assets: 
+  fullnameOverride: "assets"
+  containerArgs: 
+    - "assets"
+  env:
+    - openidClient     # OPENID_BASE_URL, OPENID_CLIENT_ID, OPENID_CLIENT_SECRET
+    - minio            # MINIO_HOST_PORT, MINIO_ACCESS_KEY, MINIO_ACCESS_SECRET
+  tempVolume: true
+
+webpm: 
+  fullnameOverride: "webpm"
+  containerArgs: 
+    - "webpm"
+  env:
+    - openidClient     # OPENID_BASE_URL, OPENID_CLIENT_ID, OPENID_CLIENT_SECRET
+    - minio            # MINIO_HOST_PORT, MINIO_ACCESS_KEY, MINIO_ACCESS_SECRET
+  tempVolume: true
+
+webpm-apps-server: 
+  fullnameOverride: "webpm-apps-server"
+  containerArgs: 
+    - "webpm_apps_server"
+  env:
+    - openidClient     # OPENID_BASE_URL, OPENID_CLIENT_ID, OPENID_CLIENT_SECRET
+    - redis            # REDIS_HOST, REDIS_USERNAME, REDIS_PASSWORD
+  ingressEnabled: true
+  ingressPath: "/applications"
+
+webpm-sessions-storage: 
+  fullnameOverride: "webpm-sessions-storage"
+  containerArgs: 
+    - "webpm_sessions_storage"
+  env:
+    - openidClient     # OPENID_BASE_URL, OPENID_CLIENT_ID, OPENID_CLIENT_SECRET
+    - redis            # REDIS_HOST, REDIS_USERNAME, REDIS_PASSWORD
+    - minio            # MINIO_HOST_PORT, MINIO_ACCESS_KEY, MINIO_ACCESS_SECRET
+  ingressEnabled: true
+
+explorer: 
+  fullnameOverride: "explorer"
+  containerArgs: 
+    - "explorer"
+  env:
+    - openidClient     # OPENID_BASE_URL, OPENID_CLIENT_ID, OPENID_CLIENT_SECRET
+
+files: 
+  fullnameOverride: "files"
+  containerArgs: 
+    - "files"
+  env:
+    - openidClient     # OPENID_BASE_URL, OPENID_CLIENT_ID, OPENID_CLIENT_SECRET
+    - minio            # MINIO_HOST_PORT, MINIO_ACCESS_KEY, MINIO_ACCESS_SECRET
+  tempVolume: true
+
+
+##### Container Environments values #####
+
+# env : set of values from "minio", "redis", "openidBaseUrl", "openidClient", "keycloakAdmin"
+#
+# Setup container environnement for these functionalities.
+#
+# env:
+#  - forwardedAllowIps # FORWARDED_ALLOW_IPS
+#  - openidBaseUrl    # OPENID_BASE_URL
+#  - openidClient     # OPENID_BASE_URL, OPENID_CLIENT_ID, OPENID_CLIENT_SECRET
+#  - redis            # REDIS_HOST, REDIS_USERNAME, REDIS_PASSWORD
+#  - minio            # MINIO_HOST_PORT, MINIO_ACCESS_KEY, MINIO_ACCESS_SECRET
+#  - keycloakAdmin    # KEYCLOAK_ADMIN_CLIENT_ID, KEYCLOAK_ADMIN_CLIENT_SECRET, KEYCLOAK_ADMIN_BASE_URL
+
+
+
+##### Ingress #####
+
+# ingressEnabled : boolean
+#
+# If true, an ingress with className "kong" will be templated. This ingress will be specified with the
+# platform domain as host, a certificate managed by letsencrypt and various konghq.com annotations.
+#
+# If not set or false, no Ingress object is templated.
+#
+# ingressEnabled: true
+
+
+# Ingress path : url path
+#
+# The path to declare in the ingress manifest, if ingress is true.
+#
+# If not set, the path is constructed by appending release fullname to /api/
+#
+# ingressPath: "/api/foo"
+
+
+
+##### Container Docker Image #####
+
+# docker image tag : string
+#
+# If not set, the AppVersion of the chart will be use for docker image tag
+#
+# See also imagePullPolicy
+#
+# imageTag: "latest"
+
+
+# Image pull policy : one of "Always", "IfNotPresent" or "Never"
+#
+# If not set, the behaviour will depend upon docker image tag and chart AppVersion :
+#
+#    Tag      |   AppVersion   |  policy  | Notes
+# ------------+----------------+----------+-------
+#  any        |    x.y.z-wip   | "Always" |
+#  "latest"   |    x.y.z       | not set  | k8s will default to Always since tag is "latest"
+#  ≠ "latest" |    x.y.z       | mot est  | k8s will default to IfNotPresent
+#
+# See also imageTag
+#
+# imagePullPolicy: "Always"
+
+# Container arguments: The arguments forwarded as command line args when starting the service. 
+# The python module name of the corresponding service.
+# 
+# containerArgs:
+#   - "webpm"  
+
+
+##### Probing #####
+
+# probeSecret: boolean
+#
+# If true:
+# - a random string is looked up in live deployment or generated on chart first installation.
+# - health check probes by k8s will send an HTTP header "x-k8s-probe-secret" with that value.
+# - An environnement variable "K8S_PROBE_SECRET" is defined with that value.
+#
+# If not set or false, none of the above is done
+#
+# probeSecret: true
+
+
+
+##### Offline templating #####
+
+#  platform domain value : FQDN
+#
+# A replacement for the platform domain specified in the ingress manifest.
+#
+# Since platform domain is lookup in deployed configMap, templating will fail when using helm template or --dry-run.
+# This value is only use in these cases.
+#
+# platformDomain: "platform.domain"
