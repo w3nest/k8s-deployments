@@ -24,3 +24,7 @@
 {{- define "static-assets.includes-maintenance-configmap.name" }}
 {{- printf "%s-%s" (include "static-assets.service-maintenance.name" .) "includes" }}
 {{- end }}
+
+{{- define "static-assets.assets-zip-configmap.name" }}
+{{- printf "%s-%s" .Release.Name "assets-zip" | trunc 63 | trimSuffix "-" }}
+{{- end }}

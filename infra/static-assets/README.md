@@ -5,13 +5,18 @@
 This Helm chart deploy an [Nginx Docker image](https://hub.docker.com/_/nginx/)
 using a [Kubernetes Deployment](https://kubernetes.io/docs/concepts/workloads/controllers/deployment/)
 
-It uses the git repository
-[cluster-static-assets](https://github.com/youwol/cluster-static-assets) for its data:
-* The appVersion defined in
-[Chart.yaml](./Chart.yaml) will be used as the _branch_ to clone, where _branch_ could be
-a specific branch name or (better for immutability) a specific tag.
+It uses the folder `/assets` for its data:
 * The `templates` directory is mounted at `/etc/nginx/templates` 
 * The `sites` directory is mounted at `/usr/share/nginx`.
+
+It is exposed through a ConfigMap, with content taken from 
+[includes/assets.zip.b64](./includes/assets.zip.b64).
+This is the base-64 encoded version of `/assets`, to generate it:
+
+`zip -r assets.zip assets/ && base64 assets.zip > includes/assets.zip.b64 && rm assets.zip`
+
+At each update of '/assets`, this command should be re-run and the chart upgraded 
+(`helm upgrade static-assets ./ --namespace=infra`).
 
 Also deployed is a ConfigMap, whose content is mounted at `/usr/share/nginx/includes/maintenance/details.txt`.
 That content is taken from [includes/maintenance-details.txt](./includes/maintenance-details.txt).

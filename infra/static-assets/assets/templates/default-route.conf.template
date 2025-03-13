@@ -1,0 +1,16 @@
+server {
+	listen 80;
+	server_name default-route default-route.*;
+
+ 	root /usr/share/nginx/default-route;
+
+	location = / {
+	    return 301 $scheme://$PLATFORM_HOST/applications/@youwol/platform/latest;
+	}
+
+	location ^~ / {
+		return 404;
+	}
+
+	include /etc/nginx/conf.d/common.inc;
+}

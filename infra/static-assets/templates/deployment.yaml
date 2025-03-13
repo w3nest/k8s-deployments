@@ -22,18 +22,23 @@ spec:
         - name: includes-maintenance
           configMap:
             name: {{ include "static-assets.includes-maintenance-configmap.name" . }}
+        - name: assets-zip
+          configMap:
+            name: {{ include "static-assets.assets-zip-configmap.name" . }} 
       initContainers:
-        - name: clone-data
-          image: alpine/git
-          args:
-            - clone
-            - --branch
-            - {{ include "static-assets.repo.branch" . }}
-            - --depth
-            - "1"
-            - {{ .Values.repo.url }}
-            - .
+        - name: unzip-assets
+          image: busybox:1.35.0-uclibc
+          command: [
+          "sh", "-c",
+          "ls -lah /assets && \
+          base64 -d /assets/assets.zip > /tmp/assets.zip && \
+          unzip /tmp/assets.zip -d /tmp && \
+          mv /tmp/assets/* /git && \
+          echo 'Files in /git:' && \
+          ls /git" ]  # "sh", "-c", "unzip /assets/static-assets-assets-zip -d /git"
           volumeMounts:
+            - mountPath: /assets
+              name: assets-zip
             - mountPath: /git
               name: nginx-customization
       containers:
