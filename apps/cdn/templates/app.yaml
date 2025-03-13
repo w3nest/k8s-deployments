@@ -1,9 +1,0 @@
-{{ include "lib-backend.deployment" . }}
----
-{{ include "lib-backend.service" . }}
----
-{{ include "lib-backend.serviceAccount" . }}
----
-{{ include "lib-backend.ingress" .}}
----
-{{ include "lib-backend.serviceMonitor" . }}
