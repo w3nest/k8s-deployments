@@ -1,0 +1,13 @@
+apiVersion: v2
+name: pgadmin
+version: 1.0.0
+appVersion: 9.1.0
+
+dependencies:
+  - name: pgadmin4
+    version: 1.36.0
+    repository: https://helm.runix.net
+
+  - name: lib-configuration
+    version: 0.0.1
+    repository: https://gitlab.com/api/v4/projects/15166395/packages/helm/stable/

@@ -1,0 +1,10 @@
+
+pgadmin4:
+  fullnameOverride: pgadmin
+
+  existingSecret: pgadmin-secret
+  secretKeys:
+    pgadminPasswordKey: password-key
+
+  env:
+    email: "pgadmin@w3nest.com"
