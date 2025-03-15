@@ -1,0 +1,6 @@
+apiVersion: v2
+name: lib-configuration
+description: Configmap and Secrets utils
+type: library
+version: 0.0.1
+
