@@ -3,7 +3,7 @@ dependencies:
   repository: https://helm.runix.net
   version: 1.36.0
 - name: lib-configuration
-  repository: https://gitlab.com/api/v4/projects/15166395/packages/helm/stable/
+  repository: file://../../helm-libs/lib-configuration
   version: 0.0.1
-digest: sha256:26c65d0c143068396ff2bba731dc68be6b02aa5540a5191412d2e26347712670
-generated: "2025-03-14T18:15:53.755165252+01:00"
+digest: sha256:c481d0565544bca72544985c34ddcd92e05da197008424cf760dab6d252f2878
+generated: "2025-03-15T06:02:16.817047048+01:00"
