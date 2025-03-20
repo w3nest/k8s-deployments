@@ -70,6 +70,8 @@ explorer:
     - "explorer"
   env:
     - openidClient     # OPENID_BASE_URL, OPENID_CLIENT_ID, OPENID_CLIENT_SECRET
+    - minio            # MINIO_HOST_PORT, MINIO_ACCESS_KEY, MINIO_ACCESS_SECRET
+  tempVolume: true
 
 files: 
   fullnameOverride: "files"
