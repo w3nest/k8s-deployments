@@ -1,0 +1,21 @@
+{{- $platformDomain := include "w3nest.lookup.clusterDomain" . -}}
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: webpm-public-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /api/webpm/resources/QHczbmVzdC93ZWJwbS1jbGllbnQ=/$1/dist/@w3nest/webpm-client.$2
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: {{ $platformDomain }}
+    http:
+      paths:
+      # Capture version and extension
+      - path: /webpm/(.*)/webpm-client\.(.*)
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: webpm
+            port:
+              number: 80
