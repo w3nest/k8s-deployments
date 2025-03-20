@@ -5,7 +5,7 @@ server {
  	root /usr/share/nginx/default-route;
 
 	location = / {
-	    return 301 $scheme://$PLATFORM_HOST/applications/@youwol/platform/latest;
+	    return 301 $scheme://$PLATFORM_HOST/apps/@youwol/platform/latest;
 	}
 
 	location ^~ / {

@@ -59,4 +59,4 @@ spec:
                 port:
                   name: http
             pathType: Prefix
-            path: /applications/(.*)
+            path: /apps/(.*)

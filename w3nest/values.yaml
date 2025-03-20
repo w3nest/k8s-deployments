@@ -52,7 +52,7 @@ webpm-apps-server:
     - openidClient     # OPENID_BASE_URL, OPENID_CLIENT_ID, OPENID_CLIENT_SECRET
     - redis            # REDIS_HOST, REDIS_USERNAME, REDIS_PASSWORD
   ingressEnabled: true
-  ingressPath: "/applications"
+  ingressPath: "/apps"
 
 webpm-sessions-storage: 
   fullnameOverride: "webpm-sessions-storage"
