@@ -13,7 +13,7 @@ metadata:
     {{- include "w3nest.labels" . | nindent 4 }}
   annotations:
     cert-manager.io/cluster-issuer: letsencrypt-youwol
-
+    nginx.ingress.kubernetes.io/proxy-body-size: 50m
 spec:
   ingressClassName: nginx
   tls:
