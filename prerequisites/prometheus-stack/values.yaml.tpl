@@ -15,7 +15,7 @@ kube-prometheus-stack:
           k8s-sidecar-target-directory: "/tmp/dashboards/prometheus-stack"
     grafana.ini:
       server:
-        domain: "tooling.w3nest.minikube"
+        domain: ${TOOLING_DOMAIN}
         root_url: "https://%(domain)s/grafana"
         serve_from_sub_path: true
       auth.basic:
@@ -44,11 +44,11 @@ kube-prometheus-stack:
         cert-manager.io/cluster-issuer: letsencrypt-youwol
       ingressClassName: nginx
       hosts:
-        - "tooling.w3nest.minikube"
+        - ${TOOLING_DOMAIN}
       path: "/grafana"
       tls:
       - hosts:
-        - "tooling.w3nest.minikube"
+        - ${TOOLING_DOMAIN}
         secretName: tooling-tls
     admin:
       existingSecret: grafana-admin
