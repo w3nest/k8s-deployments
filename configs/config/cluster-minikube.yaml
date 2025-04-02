@@ -1,4 +1,5 @@
 clusterDomain: w3nest.minikube
+toolingDomain: tooling.w3nest.minikube
 permalinkDomain: l.w3nest.minikube
 staticDomain: static.w3nest.com
 version: v1

@@ -1,3 +1,11 @@
-{{- $values := .Files.Get "config/cluster.yaml" }}
+{{- if not .Values.env }}
+{{- fail "ERROR: You must set 'env' (e.g., --set env=minikube or --set env=w3nest.org)" }}
+{{- end }}
+{{- if and (ne .Values.env "minikube") (ne .Values.env "w3nest.org") }}
+{{- fail "ERROR: Invalid 'env' value. Allowed values: 'minikube', 'w3nest.org'" }}
+{{- end }}
+{{- $env := .Values.env | default "minikube" }} # Default to "minikube" if not set
+{{- $configFile := printf "config/cluster-%s.yaml" $env }}
+{{- $values := .Files.Get $configFile }}
 {{- $args := dict "root" . "name" "cluster-config" "values" $values }}
 {{- include "lib-configuration.config-map" $args }}
