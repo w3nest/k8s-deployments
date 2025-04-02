@@ -1,0 +1,59 @@
+[project]
+name = "w3k8s_adm"
+version = "0.1.0"
+description = "Python utilities to manage w3nest K8s data"
+requires-python = "~=3.10"
+classifiers = [
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+]
+dependencies = [
+    "kubernetes-asyncio==31.1.0",
+    "minio>=7.1.9,<8.0.0",
+    "tqdm>=4.64.1,<5.0.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pip-tools",
+    "pip-audit",
+    "pylint",
+    "pycodestyle",
+    "pydocstyle",
+    "isort",
+    "black[d]",
+    "mypy",
+    "pdoc",
+    "build",
+    "twine",
+    "types-PyYAML"
+]
+[build-system]
+requires = [
+    "setuptools>=67.7.2",
+]
+
+
+[tool.setuptools.packages.find]
+where = ["./"]
+include = ["w3k8s_adm","w3k8s_adm.*"]
+exclude = []
+
+[tool.isort]
+profile = "black"
+
+[tool.pylint.'MESSAGES CONTROL']
+disable = [
+    "missing-module-docstring",
+    "missing-function-docstring",
+    "missing-class-docstring",
+    "too-many-arguments",
+    "too-many-positional-arguments"
+]
+max-line-length = 120
+
+[tool.mypy]
+ignore_missing_imports = true

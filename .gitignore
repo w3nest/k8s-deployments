@@ -1,1 +1,5 @@
 /*.iml
+__pycache__
+*.egg-info
+startup-db
+py_w3k8s_adm/build
