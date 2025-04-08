@@ -1,0 +1,4 @@
+apiVersion: v2
+name: keycloak-backup
+description: Export Keycloak realms to PVC
+version: 0.1.0

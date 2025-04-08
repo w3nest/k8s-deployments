@@ -1,0 +1,75 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ .Values.job.name }}
+  namespace: {{ .Release.Namespace }}
+spec:
+  ttlSecondsAfterFinished: 300
+  template:
+    spec:
+      restartPolicy: Never
+      containers:
+        - name: keycloak-export
+          image: {{ .Values.job.image }}
+          command:
+            - /bin/sh
+            - -c
+            - |
+              /opt/keycloak/bin/kc.sh build && \
+              /opt/keycloak/bin/kc.sh export --dir {{ .Values.job.exportPath }} && \
+              echo "✅ Export complete"
+          env:
+            - name: KEYCLOAK_ADMIN
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.env.adminSecret }}
+                  key: username
+            - name: KEYCLOAK_ADMIN_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.env.adminSecret }}
+                  key: password
+            - name: KC_DB
+              value: postgres
+            - name: KC_DB_URL_HOST
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.env.dbSecret }}
+                  key: host
+            - name: KC_DB_URL_DATABASE
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.env.dbSecret }}
+                  key: dbname
+            - name: KC_DB_URL_PORT
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.env.dbSecret }}
+                  key: port
+            - name: KC_DB_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.env.dbSecret }}
+                  key: user
+            - name: KC_DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.env.dbSecret }}
+                  key: password
+          volumeMounts:
+            - name: export-volume
+              mountPath: {{ .Values.job.exportPath }}
+          volumeMounts:
+            - name: export-volume
+              mountPath: {{ .Values.job.exportPath }}
+      initContainers:
+        - name: wait-for-pvc
+          image: busybox
+          command: ['sh', '-c', 'until [ -d {{ .Values.job.exportPath }} ]; do echo "Waiting for PVC..."; sleep 2; done']
+          volumeMounts:
+            - name: export-volume
+              mountPath: {{ .Values.job.exportPath }}
+      volumes:
+        - name: export-volume
+          persistentVolumeClaim:
+            claimName: {{ .Values.pvc.name }}

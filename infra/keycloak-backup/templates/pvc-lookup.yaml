@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pvc-debug
+  namespace: infra
+spec:
+  containers:
+    - name: debug
+      image: busybox
+      command: ['sh', '-c', 'sleep 3600']
+      volumeMounts:
+        - name: export-volume
+          mountPath: /export
+  volumes:
+    - name: export-volume
+      persistentVolumeClaim:
+        claimName: keycloak-export-pvc
+  restartPolicy: Never
+  
