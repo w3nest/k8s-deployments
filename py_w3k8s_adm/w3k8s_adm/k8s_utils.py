@@ -77,3 +77,15 @@ async def port_fwd_service(
 
         # Run the command in the background
         subprocess.Popen(command)
+
+
+async def get_config_map(
+    k8s_config: Configuration,
+    namespace: str,
+    config_map: str,
+):
+
+    async with ApiClient(configuration=k8s_config) as api:
+
+        v1 = k8s_client.CoreV1Api(api)
+        return await v1.read_namespaced_config_map(name=config_map, namespace=namespace)

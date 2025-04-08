@@ -6,7 +6,7 @@ from w3k8s_adm.k8s_utils import get_secret, get_k8s_config, port_fwd_service
 PORT_FWD_MINIO = 9143
 
 
-async def start_minio_client(k8s_ctx):
+async def start_minio_client(k8s_ctx: str):
 
     k8s_config = await get_k8s_config(k8s_ctx)
     print(f"✅ Successfully retrieved K8s configuration for context '{k8s_ctx}'")
