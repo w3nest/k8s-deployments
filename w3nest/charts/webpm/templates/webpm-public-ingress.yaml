@@ -4,7 +4,7 @@ kind: Ingress
 metadata:
   name: webpm-public-ingress
   annotations:
-    nginx.ingress.kubernetes.io/rewrite-target: /api/webpm/resources/QHczbmVzdC93ZWJwbS1jbGllbnQ=/$1/dist/@w3nest/webpm-client.$2
+    nginx.ingress.kubernetes.io/rewrite-target: /api/assets-gateway/webpm/resources/QHczbmVzdC93ZWJwbS1jbGllbnQ=/$1/dist/@w3nest/webpm-client.$2
 spec:
   ingressClassName: nginx
   rules:
@@ -16,6 +16,6 @@ spec:
         pathType: ImplementationSpecific
         backend:
           service:
-            name: webpm
+            name: assets-gateway
             port:
               number: 80
