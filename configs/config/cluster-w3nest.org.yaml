@@ -1,4 +1,5 @@
 clusterDomain: w3nest.org
+clusterOrigin: https://w3nest.org
 toolingDomain: tooling.w3nest.org
 permalinkDomain: l.w3nest.org
 staticDomain: static.w3nest.org
