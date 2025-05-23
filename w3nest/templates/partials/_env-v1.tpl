@@ -1,6 +1,7 @@
 {{- define "w3nest.env-v1.spec" -}}
 {{ if default .Values.env false -}}
 {{- include "w3nest.env-v1.forwardedAllowIps" . -}}
+{{- include "w3nest.env-v1.w3nestOrigin" . -}}
 {{- include "w3nest.env-v1.openidBaseUrl" . -}}
 {{- include "w3nest.env-v1.openidClient" . -}}
 {{- include "w3nest.env-v1.keycloakAdmin" . -}}
@@ -14,6 +15,17 @@
 # Environment variables for openidBaseUrl
 - name: FORWARDED_ALLOW_IPS
   value: "*"
+{{ end -}}
+{{- end -}}
+
+{{- define "w3nest.env-v1.w3nestOrigin" -}}
+{{ if has "w3nestOrigin" .Values.env  -}}
+# Environment variables for W3NEST origin
+- name: W3NEST_ORIGIN
+  valueFrom:
+    configMapKeyRef:
+      name: cluster-config
+      key: clusterOrigin
 {{ end -}}
 {{- end -}}
 

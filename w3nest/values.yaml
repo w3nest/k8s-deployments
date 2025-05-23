@@ -11,6 +11,7 @@ accounts:
   fullnameOverride: "accounts"
   ingressEnabled: true
   env:
+    - w3nestOrigin     # W3Nest origin
     - forwardedAllowIps # FORWARDED_ALLOW_IPS
     - openidClient     # OPENID_BASE_URL, OPENID_CLIENT_ID, OPENID_CLIENT_SECRET
     - redis            # REDIS_HOST, REDIS_USERNAME, REDIS_PASSWORD
@@ -21,6 +22,7 @@ assets-gateway:
   containerArgs: 
     - "assets_gtw"
   env:
+    - w3nestOrigin     # W3Nest origin
     - openidClient     # OPENID_BASE_URL, OPENID_CLIENT_ID, OPENID_CLIENT_SECRET
     - redis            # REDIS_HOST, REDIS_USERNAME, REDIS_PASSWORD
   tempVolume: true
@@ -31,6 +33,7 @@ assets:
   containerArgs: 
     - "assets"
   env:
+    - w3nestOrigin     # W3Nest origin
     - openidClient     # OPENID_BASE_URL, OPENID_CLIENT_ID, OPENID_CLIENT_SECRET
     - minio            # MINIO_HOST_PORT, MINIO_ACCESS_KEY, MINIO_ACCESS_SECRET
   tempVolume: true
@@ -40,6 +43,7 @@ webpm:
   containerArgs: 
     - "webpm"
   env:
+    - w3nestOrigin     # W3Nest origin
     - openidClient     # OPENID_BASE_URL, OPENID_CLIENT_ID, OPENID_CLIENT_SECRET
     - minio            # MINIO_HOST_PORT, MINIO_ACCESS_KEY, MINIO_ACCESS_SECRET
   tempVolume: true
@@ -49,6 +53,7 @@ webpm-apps-server:
   containerArgs: 
     - "webpm_apps_server"
   env:
+    - w3nestOrigin     # W3Nest origin
     - openidClient     # OPENID_BASE_URL, OPENID_CLIENT_ID, OPENID_CLIENT_SECRET
     - redis            # REDIS_HOST, REDIS_USERNAME, REDIS_PASSWORD
   ingressEnabled: true
@@ -59,6 +64,7 @@ webpm-sessions-storage:
   containerArgs: 
     - "webpm_sessions_storage"
   env:
+    - w3nestOrigin     # W3Nest origin
     - openidClient     # OPENID_BASE_URL, OPENID_CLIENT_ID, OPENID_CLIENT_SECRET
     - redis            # REDIS_HOST, REDIS_USERNAME, REDIS_PASSWORD
     - minio            # MINIO_HOST_PORT, MINIO_ACCESS_KEY, MINIO_ACCESS_SECRET
@@ -69,6 +75,7 @@ explorer:
   containerArgs: 
     - "explorer"
   env:
+    - w3nestOrigin     # W3Nest origin
     - openidClient     # OPENID_BASE_URL, OPENID_CLIENT_ID, OPENID_CLIENT_SECRET
     - minio            # MINIO_HOST_PORT, MINIO_ACCESS_KEY, MINIO_ACCESS_SECRET
   tempVolume: true
@@ -78,6 +85,7 @@ files:
   containerArgs: 
     - "files"
   env:
+    - w3nestOrigin     # W3Nest origin
     - openidClient     # OPENID_BASE_URL, OPENID_CLIENT_ID, OPENID_CLIENT_SECRET
     - minio            # MINIO_HOST_PORT, MINIO_ACCESS_KEY, MINIO_ACCESS_SECRET
   tempVolume: true
