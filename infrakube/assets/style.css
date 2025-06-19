@@ -1,0 +1,45 @@
+
+
+.infrakube-LogHeaderView p{
+    margin: 0
+}
+/* Base table styling */
+table {
+    border-collapse: collapse;
+    width: 100%;
+    margin: 1em 0;
+    font-size: 0.95rem;
+    font-family: sans-serif;
+}
+
+/* Table borders and spacing */
+table th,
+table td {
+    border: 1px solid #ddd;
+    padding: 0.75em 1em;
+    text-align: left;
+}
+
+/* Header styling */
+table th {
+    background-color: #f4f4f4;
+    font-weight: bold;
+    color: #333;
+}
+
+/* Row background alternation */
+table tr:nth-child(even) {
+    background-color: #fafafa;
+}
+
+/* Hover effect */
+table tr:hover {
+    background-color: #f1f1f1;
+}
+
+/* Responsive text wrapping */
+table td,
+table th {
+    word-wrap: break-word;
+    max-width: 300px;
+}

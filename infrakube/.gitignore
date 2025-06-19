@@ -1,0 +1,15 @@
+node_modules
+**/node_modules/**/*
+dist/
+coverage/
+junit.xml
+webpm.zip
+__pycache__
+*.iml
+.w3nest/.template
+.env
+/src/tests/**/result.zip
+.venv
+*.egg-info
+deps
+w3nest_infrakube_backend/build

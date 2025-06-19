@@ -1,0 +1,15 @@
+node_modules
+dist/
+.template/
+coverage/
+junit.xml
+yarn.lock
+.gitignore
+.npmignore
+.prettierignore
+LICENSE
+yarn-error.log
+/*.iml
+src/auto-generated.ts
+yw_k8s_backend_project/
+assets/

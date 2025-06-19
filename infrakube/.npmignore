@@ -1,0 +1,7 @@
+coverage
+junit.xml
+dist/docs
+src/tests
+cdn.zip
+yw_k8s_backend_project
+*.egg-info
