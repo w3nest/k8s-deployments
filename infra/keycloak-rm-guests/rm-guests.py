@@ -38,6 +38,9 @@ class ConsoleContextReporter(ContextReporter):
 async def tear_down(context: Context):
 
     async with context.start(action="tear_down") as ctx:
+
+        await ctx.terminal("disconnected", f"tear_down")
+
         for k, v in Environment.port_fwds.items():
             await ctx.terminal("lookup", f"Kill port fwd on {k}")
             pid = v[1]
@@ -70,7 +73,6 @@ async def remove_guest(
             f"Start removing {guest.username} created at {creation_date}",
         )
         headers = ctx.headers()
-
         resp = await explorer.get_drives(
             group_id=f"private_{guest.id}",
             headers=headers,
@@ -116,7 +118,6 @@ async def remove_guests_chunk(
         with_headers={
             "authorization": f"Bearer {tokens_data.access_token}",
         },
-        on_exit=tear_down,
     ) as ctx:
 
         for guest in chunk:
@@ -172,16 +173,18 @@ async def remove_guests(
             if not valid_guests:
                 await ctx.terminal("success", f"No more guests to delete.")
                 break
-
-            await remove_guests_chunk(
-                k8s_ctx=k8s_ctx,
-                chunk=valid_guests,
-                guests_error=guests_error,
-                users_client=users_client,
-                admin_name=admin_name,
-                admin_pwd=admin_pwd,
-                context=ctx,
-            )
+            try:
+                await remove_guests_chunk(
+                    k8s_ctx=k8s_ctx,
+                    chunk=valid_guests,
+                    guests_error=guests_error,
+                    users_client=users_client,
+                    admin_name=admin_name,
+                    admin_pwd=admin_pwd,
+                    context=ctx,
+                )
+            except Exception as e:
+                print(f"Failed to remove chunk {e}")
 
 
 context = Context(logs_reporters=[ConsoleContextReporter()])
