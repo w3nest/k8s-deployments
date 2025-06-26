@@ -1,14 +1,19 @@
 import json
 
 import aiohttp
-from fastapi import APIRouter
-from kubernetes_asyncio.client.api_client import ApiClient
+from fastapi import APIRouter, Depends, Request
 
-from w3nest_infrakube_backend.environment import Environment
+from w3nest_infrakube_backend.environment import (
+    Configuration,
+    Environment,
+    format_entry_message,
+)
 
 LOKI_URL = "http://localhost:3100/loki/api/v1/query_range"
 
 router = APIRouter()
+
+TOPIC_ICON = "📋"
 
 
 async def query_loki(namespace: str):
@@ -36,10 +41,13 @@ def format_data(log):
 
 @router.get("/contexts/{k8s_ctx}/logs")
 async def get_logs(
+    request: Request,
     k8s_ctx: str,
+    config: Configuration = Depends(Environment.get_config),
 ):
-    async with ApiClient(
-        configuration=await Environment.get_k8s_config(k8s_ctx=k8s_ctx)
+    async with config.context(request).start(
+        action=format_entry_message(TOPIC_ICON, "Get Logs"),
+        with_attributes={"k8s_ctx": k8s_ctx},
     ):
         logs = await query_loki(namespace="apps")
         results = [

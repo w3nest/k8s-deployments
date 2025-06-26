@@ -4,12 +4,13 @@ Module gathering elements regarding the configuration of the server.
 
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Any
+from typing import Any, TypeVar
 
 from kubernetes_asyncio import client as k8s_client
 from kubernetes_asyncio import config as k8s_config
+from kubernetes_asyncio.client.api_client import ApiClient
 from starlette.requests import Request
-from w3nest_client import Context, ContextFactory
+from w3nest_client import BaseModel, Context, ContextFactory
 from w3nest_client.context.models import ProxiedBackendCtxEnv
 
 from w3nest_infrakube_backend.k8s_names import Names
@@ -87,6 +88,8 @@ class Environment:
 
     k8s_configs: dict[str, Any] = {}
 
+    k8s_api_store: dict[str, ApiClient] = {}
+
     k8s_names = Names()
 
     port_fwds: dict[str, tuple[int, int]] = {}
@@ -135,3 +138,32 @@ class Environment:
         await loader.load_and_set(k8s_configuration)
         Environment.k8s_configs[k8s_ctx] = k8s_configuration
         return k8s_configuration
+
+    @staticmethod
+    async def get_k8s_api(k8s_ctx: str):
+        if k8s_ctx in Environment.k8s_api_store:
+            return Environment.k8s_api_store[k8s_ctx]
+
+        k8s_api = ApiClient(
+            configuration=await Environment.get_k8s_config(k8s_ctx=k8s_ctx)
+        )
+        # pylint: disable=C2801
+        Environment.k8s_api_store[k8s_ctx] = await k8s_api.__aenter__()
+        return Environment.k8s_api_store[k8s_ctx]
+
+    @staticmethod
+    async def clear():
+        for v in Environment.k8s_api_store.values():
+            await v.close()
+
+
+def format_entry_message(icon: str, message: str) -> str:
+    return f"{icon} **{message}**"
+
+
+T = TypeVar("T", bound=BaseModel)
+
+
+async def log_resp(resp: T, ctx: Context) -> T:
+    await ctx.info("Response", data=resp)
+    return resp

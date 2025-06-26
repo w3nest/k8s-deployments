@@ -1,7 +1,7 @@
 import json
 import sys
 
-from fastapi import APIRouter, Request
+from fastapi import APIRouter, Depends, Request
 from minio import Minio
 from urllib3.exceptions import MaxRetryError
 from w3nest_client.common.cache import LocalCacheClient
@@ -11,7 +11,11 @@ from w3nest_client.oidc import (
     PrivateClient,
 )
 
-from w3nest_infrakube_backend.environment import Environment
+from w3nest_infrakube_backend.environment import (
+    Configuration,
+    Environment,
+    format_entry_message,
+)
 from w3nest_infrakube_backend.routers.config_maps.router import (
     get_config_map,
 )
@@ -28,6 +32,8 @@ from w3nest_infrakube_backend.routers.w3nest.models import (
 LOKI_URL = "http://localhost:3100/loki/api/v1/query_range"
 
 router = APIRouter()
+
+TOPIC_ICON = "👑"
 
 
 async def minio_client(k8s_ctx: str) -> Minio:
@@ -101,9 +107,11 @@ async def users_mgr_client(k8s_ctx: str) -> KeycloakUsersManagement:
 async def get_guests_ep(
     request: Request,
     k8s_ctx: str,
+    config: Configuration = Depends(Environment.get_config),
 ) -> list[GuestUser]:
-    async with Environment.get_config().context(request=request).start(
-        action="get_guests_ep"
+
+    async with config.context(request=request).start(
+        action=format_entry_message(TOPIC_ICON, "Get Guests")
     ) as ctx:
         users_client = await users_mgr_client(k8s_ctx=k8s_ctx)
         resp = await users_client.get_temporary_users(first=0, context=ctx)
@@ -122,10 +130,10 @@ async def get_guests_ep(
 async def delete_guests_ep(
     request: Request,
     k8s_ctx: str,
+    config: Configuration = Depends(Environment.get_config),
 ):
-    async with Environment.get_config().context(request=request).start(
-        action="delete_guests_ep"
-    ) as ctx:
+    async with config.context(request=request).start(action="Delete Guests") as ctx:
+
         users_client = await users_mgr_client(k8s_ctx=k8s_ctx)
         guests = await users_client.get_temporary_users(first=0, context=ctx)
         minio = await minio_client(k8s_ctx=k8s_ctx)

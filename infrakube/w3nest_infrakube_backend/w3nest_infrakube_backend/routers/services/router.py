@@ -1,30 +1,46 @@
 import subprocess
-from socket import AF_INET, SOCK_STREAM, socket
 import time
+from socket import AF_INET, SOCK_STREAM, socket
 
-from fastapi import APIRouter
+from fastapi import APIRouter, Depends, Request
 from kubernetes_asyncio import client as k8s_client
 from kubernetes_asyncio.client.api_client import ApiClient
 
-from w3nest_infrakube_backend.environment import Environment
+from w3nest_infrakube_backend.environment import (
+    Configuration,
+    Environment,
+    format_entry_message,
+    log_resp,
+)
 
 from .schemas import PortForwardBody, PortForwardResponse, Service, ServiceList
 
 router = APIRouter()
+
+TOPIC_ICON = "🌐"
 
 
 @router.get(
     "/contexts/{k8s_ctx}/namespaces/{namespace_name}/services",
     response_model=ServiceList,
 )
-async def get_services(k8s_ctx: str, namespace_name: str) -> ServiceList:
+async def get_services(
+    request: Request,
+    k8s_ctx: str,
+    namespace_name: str,
+    config: Configuration = Depends(Environment.get_config),
+) -> ServiceList:
 
-    async with ApiClient(
-        configuration=await Environment.get_k8s_config(k8s_ctx=k8s_ctx)
-    ) as k8s_api:
+    async with config.context(request).start(
+        action=format_entry_message(TOPIC_ICON, "List Services"),
+        with_attributes={"k8s_ctx": k8s_ctx, "namespace_name": namespace_name},
+    ) as ctx:
+        k8s_api = await Environment.get_k8s_api(k8s_ctx)
         v1 = k8s_client.CoreV1Api(k8s_api)
         services = await v1.list_namespaced_service(namespace=namespace_name)
-        return ServiceList.from_k8s(k8s_ctx=k8s_ctx, services=services)
+        return await log_resp(
+            ServiceList.from_k8s(k8s_ctx=k8s_ctx, services=services), ctx
+        )
 
 
 @router.get(
@@ -32,14 +48,23 @@ async def get_services(k8s_ctx: str, namespace_name: str) -> ServiceList:
     response_model=Service,
 )
 async def get_service(
+    request: Request,
     k8s_ctx: str,
     namespace_name: str,
     service_name: str,
+    config: Configuration = Depends(Environment.get_config),
 ) -> Service:
 
-    async with ApiClient(
-        configuration=await Environment.get_k8s_config(k8s_ctx=k8s_ctx)
-    ) as k8s_api:
+    async with config.context(request).start(
+        action=format_entry_message(TOPIC_ICON, "Get Service"),
+        with_attributes={
+            "k8s_ctx": k8s_ctx,
+            "namespace_name": namespace_name,
+            "service_name": service_name,
+        },
+    ) as ctx:
+
+        k8s_api = await Environment.get_k8s_api(k8s_ctx)
         v1 = k8s_client.CoreV1Api(k8s_api)
         service = await v1.read_namespaced_service(
             name=service_name, namespace=namespace_name
@@ -54,7 +79,9 @@ async def get_service(
         pods = await v1.list_namespaced_pod(
             namespace=namespace_name, label_selector=label_selector_str
         )
-        return Service.from_k8s(k8s_ctx=k8s_ctx, service=service, pods=pods.items)
+        return await log_resp(
+            Service.from_k8s(k8s_ctx=k8s_ctx, service=service, pods=pods.items), ctx
+        )
 
 
 def find_available_port(start: int, end: int) -> int:
@@ -124,7 +151,7 @@ async def port_fwd(
         process = subprocess.Popen(command)
         print(f"⏳ Wait for port-forward on '{service_name} -> localhost:{port}'")
         wait_for_port("localhost", port)
-        print(f"✅ Port forward listening\n")
+        print("✅ Port forward listening\n")
         Environment.port_fwds[key] = (port, process.pid)
         return PortForwardResponse(
             port=port, url=f"http://localhost:{port}", pid=process.pid
@@ -136,15 +163,29 @@ async def port_fwd(
     response_model=PortForwardResponse,
 )
 async def port_forward_ep(
+    request: Request,
     k8s_ctx: str,
     namespace_name: str,
     service_name: str,
     body: PortForwardBody,
+    config: Configuration = Depends(Environment.get_config),
 ) -> PortForwardResponse:
 
-    return await port_fwd(
-        k8s_ctx=k8s_ctx,
-        namespace_name=namespace_name,
-        service_name=service_name,
-        port=body.port,
-    )
+    async with config.context(request).start(
+        action=format_entry_message(TOPIC_ICON, "Port Forward"),
+        with_attributes={
+            "k8s_ctx": k8s_ctx,
+            "namespace_name": namespace_name,
+            "service_name": service_name,
+        },
+    ) as ctx:
+
+        return await log_resp(
+            await port_fwd(
+                k8s_ctx=k8s_ctx,
+                namespace_name=namespace_name,
+                service_name=service_name,
+                port=body.port,
+            ),
+            ctx,
+        )
