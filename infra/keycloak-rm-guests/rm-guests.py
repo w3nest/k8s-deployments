@@ -2,6 +2,7 @@ import asyncio
 from datetime import datetime
 import getpass
 import os
+from pathlib import Path
 import signal
 
 import psutil
@@ -87,6 +88,9 @@ async def remove_guest(
         )
         await users_client.delete_user(user_id=guest.id, context=ctx)
         await ctx.terminal("success", f"Guest {guest.id} deleted")
+
+        with open(Path(__file__).parent / "output_logs.txt", "a") as file:
+            file.writelines([f"{guest.id} {guest.createdTimestamp}\n"])
 
 
 async def remove_guests_chunk(
