@@ -1,5 +1,155 @@
 # Minikube In `ubuntu@54.39.16.218`
 
+
+<note level="hint" expendable="true" title="Restart Minikube and Services after OVH Server Reboot" expandable="true">
+
+**1. Connect the OVH server**
+
+```bash
+ssh ubuntu@54.39.16.218
+```
+
+Enter the credentials.
+
+**2. Check server health**
+
+```bash
+free -h              # memory usage
+df -h                # disk space
+systemctl status docker
+systemctl status kubelet
+```
+
+---
+
+**3. Start Minikube**
+
+```bash
+minikube status
+minikube start
+minikube status
+minikube ip         # usually 192.168.49.2, verify
+kubectl get nodes
+```
+
+> ⚠️ Minikube might assign a different IP after reboot—always check `minikube ip`.
+
+Make sure:
+```
+kubectl cluster-info
+```
+Provide `Kubernetes control plane is running at https://192.168.49.2:8443`
+
+Then port forward kubernetes cluster:
+
+```
+ssh -L 8443:192.168.49.2:8443 ubuntu@54.39.16.218 -N
+```
+
+---
+
+**4. Verify cluster**
+
+```bash
+kubectl get pods -A
+kubectl get services -A
+```
+
+---
+
+**5. Restart critical pods (if needed)**
+
+**Keycloak:**
+
+```bash
+kubectl get pods -n infra
+kubectl delete pod keycloak-0 -n infra
+kubectl delete pod keycloak-1 -n infra
+```
+
+**Dashboard Kong:**
+
+```bash
+kubectl get pods -n monitoring
+kubectl delete pod dashboard-kong-54b767c9d4-h85vf -n monitoring
+```
+
+---
+
+**6. Access Minikube Dashboard**
+
+Start the dashboard:
+
+```bash
+minikube dashboard --port=46000
+```
+
+Forward the port through SSH:
+
+```bash
+ssh -L 8001:127.0.0.1:46000 ubuntu@54.39.16.218 -N
+```
+
+Navigate to:
+
+```
+http://localhost:8001/api/v1/namespaces/kubernetes-dashboard/services/http:kubernetes-dashboard:/proxy
+```
+
+---
+
+**7. Sanity check**
+
+After everything is running:
+
+```bash
+kubectl get nodes
+kubectl get pods -A
+kubectl get services -A
+```
+
+```
+minikube status
+minikube start
+minikube ip (should be 192.168.49.2)
+kubectl get nodes
+```
+
+Then port forward kubernetes cluster:
+
+```
+ssh -L 8443:192.168.49.2:8443 ubuntu@54.39.16.218 -N
+```
+
+Pods requiring restart:
+*  Keycloak:
+```
+kubectl get pods -n infra
+kubectl delete pod keycloak-0 -n infra
+kubectl delete pod keycloak-1 -n infra
+``` 
+*  dashboard Kong:
+```
+kubectl get pods -n monitoring
+kubectl delete pod dashboard-kong-54b767c9d4-h85vf -n monitoring
+```  
+
+In case of troubles, activate minikube dashboard:
+```
+minikube dashboard --port 46000
+```
+Then port forward:
+```
+ssh -L 8001:127.0.0.1:46000 ubuntu@54.39.16.218 -N
+```
+And navigate to 
+```
+http://localhost:8001/api/v1/namespaces/kubernetes-dashboard/services/http:kubernetes-dashboard:/proxy
+```
+
+</note>
+
+
 ## Installation
 
 
@@ -99,13 +249,13 @@ kubectl get nodes
 ### Minikube Dashboard
 
 <k8sShell>
-minikube dashboard
+minikube dashboard --port 46000
 </k8sShell>
 
-The port forward from the local PC (**adjust the `46401` port**):
+Then port forward from the local PC:
 
 <k8sShell>
-ssh -L 8001:127.0.0.1:46401 ubuntu@54.39.16.218
+ssh -L 8001:127.0.0.1:46000 ubuntu@54.39.16.218
 </k8sShell>
 
 Visit [the dashboard](http://127.0.0.1:8001/api/v1/namespaces/kubernetes-dashboard/services/http:kubernetes-dashboard:/proxy/).
