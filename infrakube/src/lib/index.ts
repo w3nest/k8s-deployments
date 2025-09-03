@@ -18,7 +18,7 @@ export type AppNav = Navigation<
     DefaultLayout.NavHeader
 >
 
-export type ColabState = {
+export type AppState = {
     router: Router
 }
 
@@ -28,10 +28,10 @@ export const metadata = () => ({
 })
 
 export const navigation = ({
-    colabState,
+    appState,
     basePath,
 }: {
-    colabState: ColabState
+    appState: AppState
     basePath: string
 }): Navigation<DefaultLayout.NavLayout, DefaultLayout.NavHeader> => {
     const backend$ = from(
@@ -48,7 +48,7 @@ export const navigation = ({
         shareReplay(1),
     )
 
-    const state = new State({ backend$, colabState, basePath })
+    const state = new State({ backend$, appState, basePath })
 
     return {
         name: 'w3Nest K8s',

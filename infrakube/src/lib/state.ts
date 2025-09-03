@@ -34,7 +34,7 @@ import {
 } from './models'
 import { setup } from '../auto-generated'
 
-export type ColabState = {
+export type AppState = {
     router: Router
 }
 
@@ -43,7 +43,7 @@ export class State {
     public readonly basePath: string
     public readonly backend$: Observable<Backend>
     public readonly client: Client
-    public readonly colabState: ColabState
+    public readonly appState: AppState
 
     public readonly router: Router
 
@@ -56,11 +56,11 @@ export class State {
 
     constructor(params: {
         backend$: Observable<Backend>
-        colabState: ColabState
+        appState: AppState
         basePath: string
     }) {
         Object.assign(this, params)
-        this.router = this.colabState.router
+        this.router = this.appState.router
         this.client = new Client({ backend$: this.backend$ })
         this.k8sContexts$ = this.client.contexts().pipe(
             map(({ items }) => {
