@@ -6,7 +6,7 @@
     "homepage": "https://github.com/w3nest/infrakube#README.md",
     "main": "./dist/@w3nest/infrakube.js",
     "files": [
-        "dist/src",
+        "dist",
         "assets"
     ],
     "scripts": {
@@ -14,8 +14,9 @@
         "setup": "python .w3nest/setup.py",
         "build": "yarn build:prod",
         "pre-build": "yarn clean",
-        "build:dev": "yarn pre-build && webpack --mode development",
-        "build:prod": "yarn pre-build && webpack --mode production",
+        "post-build": "del-cli dist/src/tests",
+        "build:dev": "yarn pre-build && webpack --mode development && yarn post-build",
+        "build:prod": "yarn pre-build && webpack --mode production && yarn post-build",
         "lint-check": "yarn lint-prettier-check && yarn lint-eslint-check",
         "lint-prettier-check": "prettier --check ./src",
         "lint-prettier-write": "prettier --write ./src",
@@ -50,27 +51,27 @@
         "rxjs": "^7.8.2"
     },
     "devDependencies": {
-        "@types/jest": "^29.5.4",
-        "@types/node": "^22.13.4",
+        "@types/jest": "^30.0.0",
+        "@types/node": "^24.3.0",
         "@types/webpack": "^5.28.5",
-        "del-cli": "^5.1.0",
-        "eslint": "9.14.0",
-        "eslint-config-prettier": "9.1.0",
-        "eslint-plugin-jest": "^28.9.0",
+        "del-cli": "^6.0.0",
+        "eslint": "9.34.0",
+        "eslint-config-prettier": "10.1.8",
+        "eslint-plugin-jest": "^29.0.1",
         "isomorphic-fetch": "^3.0.0",
-        "jest": "^29.7.0",
-        "jest-environment-jsdom": "^29.7.0",
+        "jest": "^30.1.2",
+        "jest-environment-jsdom": "^30.1.2",
         "jest-junit": "^16.0.0",
-        "prettier": "^3.2.5",
+        "prettier": "^3.6.2",
         "prettier-plugin-properties": "^0.3.0",
-        "ts-jest": "^29.2.5",
-        "ts-loader": "9.5.2",
+        "ts-jest": "^29.4.1",
+        "ts-loader": "9.5.4",
         "ts-node": "10.9.2",
-        "tsx": "^4.19.2",
-        "typedoc": "^0.27.7",
-        "typescript": "5.7.3",
-        "typescript-eslint": "8.14.0",
-        "webpack": "^5.98.0",
+        "tsx": "^4.20.5",
+        "typedoc": "^0.28.12",
+        "typescript": "5.9.2",
+        "typescript-eslint": "8.41.0",
+        "webpack": "^5.101.3",
         "webpack-bundle-analyzer": "^4.10.2",
         "webpack-cli": "6.0.1"
     },
@@ -93,20 +94,20 @@
             "rx-vdom": [
                 "rx-vdom_APIv01"
             ],
-            "rxjs": [
-                "rxjs_APIv7"
+            "@w3nest/webpm-client": [
+                "@w3nest/webpm-client_APIv01"
             ],
             "mkdocs-ts": [
                 "mkdocs-ts_APIv05"
             ],
-            "@w3nest/webpm-client": [
-                "@w3nest/webpm-client_APIv01"
+            "rxjs/fetch": [
+                "rxjs_APIv7/fetch"
             ],
             "@w3nest/rx-tree-views": [
                 "@w3nest/rx-tree-views_APIv02"
             ],
-            "rxjs/fetch": [
-                "rxjs_APIv7/fetch"
+            "rxjs": [
+                "rxjs_APIv7"
             ]
         }
     }
